@@ -1,0 +1,19 @@
+{
+  "name": "mixdown",
+  "version": "1.0.0",
+  "description": "a app for building music sites ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/fizzyliquid/mixdown.git"
+  },
+  "keywords": [
+    "music"
+  ],
+  "author": "Trevor Joseph",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/fizzyliquid/mixdown#readme"
+}
