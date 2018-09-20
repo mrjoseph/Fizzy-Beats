@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import App from './app';
-const html = (root) => (`
+
+const html = root => (`
     <!doctype html>
     <html>
       <head>
         <title>
-        
+        Mixdown
         </title>
       </head>
       <body>
@@ -16,14 +17,13 @@ const html = (root) => (`
     </html>
   `);
 
-const renderHTML = (req,res) => {
+const renderHTML = (req, res) => {
   const context = {
 
   };
-  const root = ReactDomServer.renderToString(
-    <StaticRouter location={req.url} context={context}>
+  const root = ReactDomServer.renderToString(<StaticRouter location={req.url} context={context}>
     <App />
-    </StaticRouter>);
+  </StaticRouter>);
   return html(root);
 };
 

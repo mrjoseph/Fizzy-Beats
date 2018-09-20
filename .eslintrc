@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "globals": {
+    "document": true,
+    "window": true
+  },
+  "rules": {
+    "import/no-named-as-default": 0,
+    "import/eslint-disable-no-undef": 0
+  }
+}
