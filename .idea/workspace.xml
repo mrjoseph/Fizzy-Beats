@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="230c784e-7104-436d-92cb-6ed0d99dbb8f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/webroot/client/views/about/about.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webroot/client/views/home/home.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webroot/server/routes/app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/server/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/server/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/server/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,13 +27,13 @@
           <entry key="env" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="js" value="5" />
-          <entry key="json" value="1" />
+          <entry key="json" value="2" />
           <entry key="jsx" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JSON" value="1" />
+          <entry key="JSON" value="2" />
           <entry key="JSX Harmony" value="4" />
           <entry key="JavaScript" value="5" />
           <entry key="PLAIN_TEXT" value="2" />
@@ -48,17 +43,17 @@
         <counts>
           <entry key="env" value="13" />
           <entry key="gitignore" value="1" />
-          <entry key="js" value="1232" />
-          <entry key="json" value="44" />
+          <entry key="js" value="1254" />
+          <entry key="json" value="52" />
           <entry key="jsx" value="235" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="12" />
-          <entry key="JSON" value="44" />
+          <entry key="JSON" value="52" />
           <entry key="JSX Harmony" value="235" />
-          <entry key="JavaScript" value="1220" />
+          <entry key="JavaScript" value="1242" />
           <entry key="PLAIN_TEXT" value="14" />
         </counts>
       </usages-collector>
@@ -69,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webroot/server/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+            <state relative-caret-position="271">
+              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -131,6 +126,7 @@
         <option value="$PROJECT_DIR$/webroot/server/server.js" />
         <option value="$PROJECT_DIR$/webroot/client/views/about/about.jsx" />
         <option value="$PROJECT_DIR$/webroot/server/routes/app.jsx" />
+        <option value="$PROJECT_DIR$/nodemon.json" />
         <option value="$PROJECT_DIR$/webroot/server/routes/index.js" />
       </list>
     </option>
@@ -172,40 +168,6 @@
               <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
               <item name="mixdown" type="462c0819:PsiDirectoryNode" />
               <item name="webroot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="about" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -254,12 +216,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1537364901545</updated>
-      <workItem from="1537364903502" duration="10171000" />
+      <workItem from="1537364903502" duration="11174000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10171000" />
+    <option name="totallyTimeSpent" value="11174000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -361,10 +323,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodemon.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webroot/server/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+        <state relative-caret-position="271">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

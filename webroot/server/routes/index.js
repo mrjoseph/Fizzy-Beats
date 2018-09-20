@@ -17,7 +17,9 @@ const html = (root) => (`
   `);
 
 const renderHTML = (req,res) => {
-  const context = {};
+  const context = {
+
+  };
   const root = ReactDomServer.renderToString(
     <StaticRouter location={req.url} context={context}>
     <App />
