@@ -1,8 +1,9 @@
 import express from 'express';
 import renderHTML from './routes/index';
+
 const app = express();
 
-app.use('/',(req,res) => {
+app.use('/', (req, res) => {
   res.send(renderHTML(req, res));
 });
 
@@ -12,7 +13,6 @@ app.listen(PORT, () => {
 });
 
 /* App set up
-* TODO Add react to render out first page
 * TODO Add react router to handle navigation server side
 * TODO add Redux to handle app state server side
 * TODO add redux logger for development build
@@ -20,7 +20,9 @@ app.listen(PORT, () => {
 * TODO Handle client side rendering
 * TODO Handle bundling client side assets using webPack
 * TODO Set up unit tests
-* TODO Set-up MongoDB and Mongoose
+* TODO Set-up MongoDB and Mongoose models
+* TODO set up social media accounts, TW, YouTube, SC, BandCamp
+* TODO How do we render content in the header?
 * */
 
 /* Design app

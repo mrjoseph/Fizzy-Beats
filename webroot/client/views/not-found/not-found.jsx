@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import queryString from 'query-string';
 
-class About extends Component {
+class NotFound extends Component {
   render() {
     const { location } = this.props;
     const { foo } = queryString.parse(location.search);
     return (
       <div>
         <h1>
-          About my app
-          {' '}
-          {foo}
+          Page not found
         </h1>
       </div>
     );
   }
 }
-
-About.propTypes = {
-  location: PropTypes.objectOf(PropTypes.object).isRequired,
-};
-export default About;
+export default withRouter(NotFound);

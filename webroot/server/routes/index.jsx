@@ -18,12 +18,12 @@ const html = root => (`
   `);
 
 const renderHTML = (req, res) => {
-  const context = {
-
-  };
-  const root = ReactDomServer.renderToString(<StaticRouter location={req.url} context={context}>
-    <App />
-  </StaticRouter>);
+  const context = {};
+  const root = ReactDomServer.renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <App />
+    </StaticRouter>,
+  );
   return html(root);
 };
 
