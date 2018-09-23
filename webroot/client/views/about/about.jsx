@@ -19,6 +19,9 @@ class About extends Component {
 }
 
 About.propTypes = {
-  location: PropTypes.objectOf(PropTypes.object).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
+  }).isRequired,
 };
 export default About;

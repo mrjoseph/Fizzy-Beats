@@ -13,6 +13,7 @@ const html = root => (`
       </head>
       <body>
         <div id="root">${root}</div>
+        <script src="/js/bundle.js"></script>
       </body>
     </html>
   `);
