@@ -1,11 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import { Route, Switch } from 'react-router-dom';
 import Home from './views/home/home';
 import About from './views/about/about';
 import NotFound from './views/not-found/not-found';
-
-
 
 const App = () => (
   <Switch>
