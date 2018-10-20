@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="230c784e-7104-436d-92cb-6ed0d99dbb8f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/webroot/template/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webroot/utils/parseHtml.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/server/routes/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/server/routes/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/server/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,7 +31,7 @@
           <entry key="eslintrc" value="3" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="2" />
-          <entry key="js" value="63" />
+          <entry key="js" value="64" />
           <entry key="json" value="12" />
           <entry key="jsx" value="29" />
         </counts>
@@ -49,7 +43,7 @@
           <entry key="HTML" value="2" />
           <entry key="JSON" value="14" />
           <entry key="JSX Harmony" value="29" />
-          <entry key="JavaScript" value="63" />
+          <entry key="JavaScript" value="64" />
           <entry key="PLAIN_TEXT" value="3" />
         </counts>
       </usages-collector>
@@ -60,7 +54,7 @@
           <entry key="env" value="13" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="4" />
-          <entry key="js" value="2132" />
+          <entry key="js" value="2355" />
           <entry key="json" value="149" />
           <entry key="jsx" value="1753" />
         </counts>
@@ -71,7 +65,7 @@
           <entry key="HTML" value="21" />
           <entry key="JSON" value="153" />
           <entry key="JSX Harmony" value="1748" />
-          <entry key="JavaScript" value="2120" />
+          <entry key="JavaScript" value="2343" />
           <entry key="PLAIN_TEXT" value="14" />
         </counts>
       </usages-collector>
@@ -110,15 +104,24 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/webroot/server/routes/index.jsx">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="283">
-                  <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+                <state relative-caret-position="403">
+                  <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
                     <element signature="e#241#276#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/webpack.config.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-184">
+                  <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -210,11 +213,11 @@
         <option value="$PROJECT_DIR$/webroot/client/views/home/home.css" />
         <option value="$PROJECT_DIR$/webroot/server/server.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/webroot/template/index.html" />
         <option value="$PROJECT_DIR$/webroot/utils/parseHtml.js" />
         <option value="$PROJECT_DIR$/webroot/server/routes/index.jsx" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
       </list>
     </option>
   </component>
@@ -260,26 +263,12 @@
             <path>
               <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
               <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
               <item name="mixdown" type="462c0819:PsiDirectoryNode" />
               <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mixdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mixdown" type="462c0819:PsiDirectoryNode" />
-              <item name="webroot" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -383,7 +372,7 @@
       <workItem from="1537364903502" duration="12611000" />
       <workItem from="1537475808706" duration="8070000" />
       <workItem from="1537647481679" duration="9967000" />
-      <workItem from="1540015276149" duration="17971000" />
+      <workItem from="1540015276149" duration="19247000" />
     </task>
     <servers />
   </component>
@@ -405,7 +394,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49229000" />
+    <option name="totallyTimeSpent" value="50505000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -418,7 +407,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16701902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -433,7 +421,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3060241" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.25180724" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Quokka" order="11" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -678,13 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1032">
-          <caret line="43" column="12" lean-forward="true" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webroot/template/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -711,12 +692,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webroot/server/routes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        <state relative-caret-position="403">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#241#276#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-184">
+          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
         </state>
       </provider>
     </entry>
