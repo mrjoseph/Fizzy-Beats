@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import App from './app';
+import App from '../../client/app';
 
 const html = root => (`
     <!doctype html>

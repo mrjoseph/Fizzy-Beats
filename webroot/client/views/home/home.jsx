@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Home = () =>
-  <div>
-    <h1>Hello World React</h1>
-  </div>
+class Home extends Component {
+  render() {
+    return (
+      <div>
+        <div>Mixdown v1.0.0</div>
+        {console.log('hello world')}
+      </div>
+    );
+  };
+};
 
 export default Home;
