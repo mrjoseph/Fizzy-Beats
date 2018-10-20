@@ -1,22 +1,10 @@
 import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import App from './app';
-
-const html = root => (`
-    <!doctype html>
-    <html>
-      <head>
-        <title>
-        Mixdown
-        </title>
-      </head>
-      <body>
-        <div id="root">${root}</div>
-        <script src="/js/bundle.js"></script>
-      </body>
-    </html>
-  `);
+import parseHtml from '../../utils/parseHtml';
+const htmlTemplate = path.resolve(__dirname, '../../template/index.html');
+import App from '../../client/app';
+import path from 'path'
 
 const renderHTML = (req, res) => {
   const context = {};
@@ -25,7 +13,7 @@ const renderHTML = (req, res) => {
       <App />
     </StaticRouter>,
   );
-  return html(root);
+  return parseHtml(root,htmlTemplate);
 };
 
 export default renderHTML;

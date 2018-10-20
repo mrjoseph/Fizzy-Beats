@@ -16,12 +16,8 @@ app.listen(PORT, () => {
 });
 
 /* App set up
-* TODO Add react router to handle navigation server side
 * TODO add Redux to handle app state server side
 * TODO add redux logger for development build
-* TODO handle build for dev and prod
-* TODO Handle client side rendering
-* TODO Handle bundling client side assets using webPack
 * TODO Set-up MongoDB and Mongoose models
 * TODO set up social media accounts, TW, YouTube, SC, BandCamp
 * TODO How do we render content in the header?
