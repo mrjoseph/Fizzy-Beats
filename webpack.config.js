@@ -1,5 +1,13 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+const devServerHTML = () => {
+  return new HtmlWebPackPlugin({
+    template: "./template/index.html",
+    filename: "./index.html"
+  });
+}
 module.exports = {
   entry: './webroot/client/index.js',
   output: {
@@ -11,6 +19,15 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: { minimize: true }
+          }
+        ]
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -25,6 +42,7 @@ module.exports = {
     ]
   },
   plugins: [
+    devServerHTML(),
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
       chunkFilename: "[id].css"

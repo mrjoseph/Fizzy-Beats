@@ -4,9 +4,10 @@
   "description": "a app for building music sites ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -e js,jsx webroot/server/index.js",
+    "server": "nodemon -e js,jsx webroot/server/index.js",
     "test": "jest",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "start": "webpack-dev-server --mode=development --open"
   },
   "repository": {
     "type": "git",
