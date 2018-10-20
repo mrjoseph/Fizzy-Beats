@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import App from '../../client/app';
-
 const html = root => (`
     <!doctype html>
     <html>
       <head>
+      <link rel="stylesheet" href="/css/main.css">
         <title>
         Mixdown
         </title>
