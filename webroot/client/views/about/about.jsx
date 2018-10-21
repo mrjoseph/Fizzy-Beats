@@ -9,7 +9,7 @@ class About extends Component {
     return (
       <div>
         <h1>
-          About my app
+          About my app...
           {' '}
           {foo}
         </h1>
@@ -21,12 +21,12 @@ class About extends Component {
 About.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
-    search: PropTypes.objectOf({
-    }).isRequired,
+    search:PropTypes.objectOf(PropTypes.string),
   }).isRequired,
 };
 
 About.defaultProps = {
   pathname: '',
+  search: '',
 }
 export default About;

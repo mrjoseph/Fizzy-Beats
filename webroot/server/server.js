@@ -20,10 +20,15 @@ app.listen(PORT, () => {
 * TODO add redux logger for development build
 * TODO Set-up MongoDB and Mongoose models
 * TODO set up social media accounts, TW, YouTube, SC, BandCamp
-* TODO How do we render content in the header?
+* TODO How do we render content in the header? React helmet
 * TODO add pre commit hook
+* todo graphql
+* TODO Build assets
+* TODO SASS / Base css / css modules
+* TODO FAVICON
 * */
 
 /* Design app
 * TODO Design homespage
+* TODO Design admin
 * */
