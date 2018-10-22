@@ -16,6 +16,7 @@ app.listen(PORT, () => {
 });
 
 /* App set up
+* TODO add 404 and 500 pages
 * TODO add Redux to handle app state server side
 * TODO add redux logger for development build
 * TODO Set-up MongoDB and Mongoose models
