@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './home.css';
+import { Container, Title, Box } from './home.styles';
+
 class Home extends Component {
   render() {
-    console.log('home');
     return (
-      <div className="container">
-        <h1>Mixdown v1.0.0</h1>
-      </div>
+      <Box>
+        <Title> Fizzy Beats </Title>
+      </Box>
     );
   };
 };
