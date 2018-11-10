@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`my first test should console.log component 1`] = `
+exports[`<about /> snapshot render component should console.log component 1`] = `
 <div>
   <h1>
-    About my app
+    About my app...
      
   </h1>
 </div>

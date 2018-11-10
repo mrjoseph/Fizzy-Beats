@@ -1,11 +1,27 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import  mongoose from 'mongoose';
+import graphqlHTTP from 'express-graphql';
 import renderHTML from './routes/index';
+import schema from './graphql-schema/user/index';
+
+const uri = `mongodb://127.0.0.1:27017/mixdown`;
+
+mongoose.connect(uri);
+
+mongoose.connection.once('open', () => {
+  console.log('connection to database');
+});
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('build'));
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true
+}));
 app.use('/', (req, res) => {
   res.send(renderHTML(req, res));
 });

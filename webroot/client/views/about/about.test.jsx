@@ -10,11 +10,11 @@ const props = {
   },
 };
 
-describe('my first test', () => {
-  it('should console.log component', () => {
-    const tree = renderer
-      .create(<About {...props} />)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+describe('<about />', () => {
+  describe('snapshot render component', () => {
+    it('should console.log component', () => {
+      const tree = renderer.create(<About {...props} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
 });
