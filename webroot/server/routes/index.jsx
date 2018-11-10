@@ -7,13 +7,13 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ServerStyleSheet } from 'styled-components';
 import fetch from 'node-fetch';
-
 import parseHtml from '../../utils/parseHtml';
 const htmlTemplate = path.resolve(__dirname, '../../template/index.html');
 import App from '../../client/app';
-import path from 'path'
+import path from 'path';
 
 const renderHTML = (req, res) => {
+  if(typeof window === 'undefined')  global.window = {};
   const client = new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
