@@ -42,7 +42,7 @@ const renderHTML = async (req, res) => {
         </StaticRouter>
       </ApolloProvider>
     );
-
+    console.log(client);
     return parseHtml(root,htmlTemplate, styles, title, client);
 
   } catch(e) {
