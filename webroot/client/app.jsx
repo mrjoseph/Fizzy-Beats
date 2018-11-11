@@ -5,12 +5,22 @@ import User from './views/user/user';
 import About from './views/about/about';
 import NotFound from './views/not-found/not-found';
 import './main.css';
+
+
 const App = () => (
+<div>
+  <header>
+    header
+  </header>
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
     <Route exact path="/user" component={User} />
     <Route component={NotFound} />
   </Switch>
+  <footer>
+    footer
+  </footer>
+</div>
 );
 export default App;

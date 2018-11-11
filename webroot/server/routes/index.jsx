@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, renderToStringWithData } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -12,12 +11,16 @@ const htmlTemplate = path.resolve(__dirname, '../../template/index.html');
 import App from '../../client/app';
 import path from 'path';
 
-const renderHTML = (req, res) => {
+const renderHTML = async (req, res) => {
   if(typeof window === 'undefined')  global.window = {};
   const client = new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
-      uri: 'http://localhost:4000/graphql',
+      uri: 'http://localhost:5000/graphql',
+      onError: ({ networkError, graphQLErrors }) => {
+        console.log('graphQLErrors', graphQLErrors)
+        console.log('networkError', networkError)
+      },
       fetch: fetch,
       credentials: 'same-origin',
       headers: {
@@ -30,14 +33,21 @@ const renderHTML = (req, res) => {
   const sheet = new ServerStyleSheet();
   const styles = sheet.getStyleTags();
   const title = 'Mixdown v1';
-  const root = ReactDomServer.renderToString(
-    <ApolloProvider client={client}>
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    </ApolloProvider>,
-  );
-  return parseHtml(root,htmlTemplate, styles, title, client);
+
+  try {
+    const root = await renderToStringWithData(
+      <ApolloProvider client={client}>
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      </ApolloProvider>
+    );
+
+    return parseHtml(root,htmlTemplate, styles, title, client);
+
+  } catch(e) {
+    console.log(e);
+  }
 };
 
 export default renderHTML;
