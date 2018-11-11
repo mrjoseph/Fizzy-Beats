@@ -22,8 +22,8 @@ app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }));
-app.use('/', (req, res) => {
-  res.send(renderHTML(req, res));
+app.use('/', async (req, res) => {
+  res.send(await renderHTML(req, res));
 });
 
 const PORT = 5000;

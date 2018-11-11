@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
       filename: 'js/bundle.js',
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.mjs','.js', '.jsx']
     },
     module: {
       rules: [

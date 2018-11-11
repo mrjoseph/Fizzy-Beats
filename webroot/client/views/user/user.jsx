@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
 
-const getBooksQuery = gql`
-    {
-        Users {
-            name
-            id
-        }
-    }
+const getUserQuery = gql`
+{
+  users {
+    email
+    username
+    id
+  }
+}
 `;
 
 class User extends Component {
   render(){
     const { data: { users } } = this.props;
-    console.log(users);
-    if(books) {
+    if(users) {
       return(
         <div>
           <ul>
-            {books.map((book) => {
+            {users.map((user) => {
               return (
-                <li key={book.id}>{book.name}</li>
+                <li key={user.id}>{user.username}</li>
               );
             })}
           </ul>
@@ -33,4 +33,4 @@ class User extends Component {
   }
 }
 
-export default graphql(getBooksQuery)(User);
+export default graphql(getUserQuery)(User);
