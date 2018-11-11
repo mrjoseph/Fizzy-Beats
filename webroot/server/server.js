@@ -36,14 +36,13 @@ app.listen(PORT, () => {
 
 /* App set up
 * TODO and 500 pages
-* TODO add environment veriables
+* TODO add environment variables
 * TODO add Redux to handle app state server side
 * TODO add redux logger for development build
 * TODO set up social media accounts, TW, YouTube, SC, BandCamp
 * TODO How do we render content in the header? React helmet
 * TODO add pre commit hook
 * TODO Build assets
-* TODO SASS / Base css / css modules
 * TODO FAVICON
 * */
 
