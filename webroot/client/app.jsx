@@ -4,14 +4,13 @@ import Home from './views/home/home';
 import User from './views/user/user';
 import About from './views/about/about';
 import NotFound from './views/not-found/not-found';
+import Header from './components/header/Header';
 import './main.css';
 
 
 const App = () => (
 <div>
-  <header>
-    header
-  </header>
+  <Header />
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
