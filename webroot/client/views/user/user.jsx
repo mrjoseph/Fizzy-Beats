@@ -21,7 +21,11 @@ class User extends Component {
           <ul>
             {users.map((user) => {
               return (
-                <li key={user.id}>{user.username}</li>
+                <li key={user.id}>
+                  {user.username}
+                  {user.email}
+                  {user.password}
+                  </li>
               );
             })}
           </ul>
