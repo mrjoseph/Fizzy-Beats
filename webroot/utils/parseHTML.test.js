@@ -41,7 +41,6 @@ describe('../utils/parseHTML()', () => {
 
       fs.readFileSync.mockReturnValue(markup);
       const result = parseHTML(root, htmlTemplate, styles, title, client);
-      console.log(result);
       expect(result).toEqual(markup);
     });
   });

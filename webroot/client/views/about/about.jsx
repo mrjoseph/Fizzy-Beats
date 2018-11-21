@@ -27,6 +27,5 @@ About.propTypes = {
 
 About.defaultProps = {
   pathname: '',
-  search: '',
 }
 export default About;
