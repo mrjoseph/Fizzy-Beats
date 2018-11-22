@@ -7,7 +7,7 @@
     "start:server": "nodemon -e js,jsx webroot/server/index.js",
     "test": "jest --watch",
     "build": "webpack --mode=production",
-    "startdev": "webpack-dev-server --mode=development --open",
+    "start:dev": "webpack-dev-server --mode=development --open",
     "start:db": "./start-db.sh",
     "stop:db": " mongod --quiet"
   },
