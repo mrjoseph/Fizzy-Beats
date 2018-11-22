@@ -16,7 +16,7 @@ export const UserType = new GraphQLObjectType({
     id: {type: GraphQLID},
     username: { type: GraphQLString },
     email: { type: GraphQLString },
-    salt: { type: GraphQLString },
+    // salt: { type: GraphQLString },
     password: { type: GraphQLString },
   }),
 });
@@ -41,16 +41,17 @@ const Mutations = new GraphQLObjectType({
       args: {
         username: {type: new GraphQLNonNull(GraphQLString) },
         email: {type: new GraphQLNonNull(GraphQLString) },
-        salt: {type: new GraphQLNonNull(GraphQLString) },
+        //salt: {type: new GraphQLNonNull(GraphQLString) },
         password: {type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         let user = new User({
           username:args.username,
           email: args.email,
-          salt: args.salt,
+          // salt: args.salt,
           password: args.password
         });
+        console.log('user', user);
         return user.save();
       }
     },
