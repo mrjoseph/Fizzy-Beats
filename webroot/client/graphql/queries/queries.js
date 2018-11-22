@@ -14,6 +14,8 @@ mutation(
     id,
     username,
     email,
+    password,
+    salt,
   }
 }
 `;
@@ -25,6 +27,7 @@ export const GET_USER_QUERY = gql`
     username
     id
     password
+    salt
   }
 }
 `;

@@ -12,21 +12,14 @@ const sha512 = (password, salt) => {
   };
 };
 
-const slatHashPassword = (userPassword) => {
+export const slatHashPassword = (userPassword) => {
   const salt = genRandomString(16);
-  const passwordData = sha512(userPassword, salt);
-  return passwordData;
+  return sha512(userPassword, salt);
 };
 
-const unHashPassword = (password, salt) => {
+export const unHashPassword = (password, salt) => {
   const hash = crypto.createHmac('sha512', salt);
   hash.update(password);
   return hash.digest('hex');
-};
-
-// export default slatHashPassword;
-module.exports = {
-  slatHashPassword: slatHashPassword,
-  unHashPassword: unHashPassword,
 };
 

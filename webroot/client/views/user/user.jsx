@@ -25,6 +25,7 @@ class User extends Component {
                   {user.username}
                   {user.email}
                   {user.password}
+                  {user.salt}
                   </li>
               );
             })}

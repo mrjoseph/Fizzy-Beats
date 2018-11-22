@@ -22,7 +22,10 @@ class Register extends Component {
               {users.map((user) => {
                 return (
                     <li key={user.id}>
-                      <b>Username: </b>{user.username}{', '}{user.email}{', '}{user.password}
+                      <div><strong>Username: </strong> {user.username}</div>
+                      <div><strong>Email: </strong>{user.email}</div>
+                      <div><strong>Password: </strong>{user.password}</div>
+                      <div><strong>Salt: </strong>{user.salt}</div>
                     </li>
                 );
               })}
