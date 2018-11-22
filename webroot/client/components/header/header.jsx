@@ -4,7 +4,7 @@ class Header extends Component {
   render (){
     return (
       <header>
-        <img src={img} width="100" height="50" />
+        FIZZY BEATS
       </header>
     )
   }

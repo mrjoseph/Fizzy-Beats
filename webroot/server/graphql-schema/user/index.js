@@ -1,5 +1,7 @@
+import { slatHashPassword } from '../../utils/encription';
 const graphql = require('graphql');
 const User = require('../../mongoDb-models/user');
+
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -41,16 +43,18 @@ const Mutations = new GraphQLObjectType({
       args: {
         username: {type: new GraphQLNonNull(GraphQLString) },
         email: {type: new GraphQLNonNull(GraphQLString) },
-        salt: {type: new GraphQLNonNull(GraphQLString) },
+        //salt: {type: new GraphQLNonNull(GraphQLString) },
         password: {type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
+        const { passwordHash, salt } = slatHashPassword(args.password);
         let user = new User({
           username:args.username,
           email: args.email,
-          salt: args.salt,
-          password: args.password
+          salt: salt,
+          password: passwordHash
         });
+        console.log('user', user);
         return user.save();
       }
     },
