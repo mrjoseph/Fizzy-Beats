@@ -4,7 +4,6 @@ exports[`<about /> snapshot render component should console.log component 1`] = 
 <div>
   <h1>
     About my app...
-     
   </h1>
 </div>
 `;

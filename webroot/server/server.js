@@ -1,12 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import graphqlHTTP from 'express-graphql';
+import cors from 'cors';
 import renderHTML from './routes/index';
 import schema from './graphql-schema/user/index';
-import cors from 'cors';
 
-const uri = `mongodb://127.0.0.1:27017/mixdown`;
+const uri = 'mongodb://127.0.0.1:27017/mixdown';
 
 mongoose.connect(uri);
 
@@ -22,10 +22,10 @@ app.use(express.static('build'));
 
 app.use('/graphql', graphqlHTTP({
   schema,
-  graphiql: true
+  graphiql: true,
 }));
 app.use('/', async (req, res) => {
-  const html = await renderHTML(req, res)
+  const html = await renderHTML(req, res);
   res.send(html);
 });
 

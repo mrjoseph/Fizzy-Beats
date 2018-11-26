@@ -1,3 +1,4 @@
+import jsonwebtoken from 'jsonwebtoken';
 import { slatHashPassword } from '../../utils/encription';
 const graphql = require('graphql');
 const User = require('../../mongoDb-models/user');
@@ -9,66 +10,92 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
 } = graphql;
 
 export const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: {type: GraphQLID},
+    id: { type: GraphQLID },
     username: { type: GraphQLString },
     email: { type: GraphQLString },
     salt: { type: GraphQLString },
     password: { type: GraphQLString },
+    status: { type: GraphQLString },
+    auth: { type: GraphQLString },
   }),
 });
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    users:{
+    users: {
       type: new GraphQLList(UserType),
-      resolve(parent,args) {
+      resolve(parent, args) {
         return User.find({});
-      }
-    }
-  }
+      },
+    },
+    user: {
+      type: UserType,
+      args: {
+        username: { type: GraphQLString },
+      },
+      resolve: async (parent, args) => {
+        const user = await User.findOne({ username: args.username });
+        return user;
+      },
+    },
+  },
 });
 
 const Mutations = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    // HANDLE USER SIGN UP
     addUser: {
       type: UserType,
       args: {
-        username: {type: new GraphQLNonNull(GraphQLString) },
-        email: {type: new GraphQLNonNull(GraphQLString) },
-        //salt: {type: new GraphQLNonNull(GraphQLString) },
-        password: {type: new GraphQLNonNull(GraphQLString) },
+        username: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        status: { type: GraphQLString },
+        auth: { type: GraphQLString },
       },
-      resolve(parent, args) {
+      resolve: async (parent, args) => {
         const { passwordHash, salt } = slatHashPassword(args.password);
-        let user = new User({
-          username:args.username,
+        const user = new User({
+          username: args.username,
           email: args.email,
-          salt: salt,
-          password: passwordHash
+          salt,
+          password: passwordHash,
         });
-        console.log('user', user);
-        return user.save();
-      }
+        const existingUser = await User.findOne({ email: args.email });
+        if (existingUser) {
+          return { status: 'USER_EXISTS' };
+        }
+        user.save();
+        const auth = jsonwebtoken.sign({ username: user.username, id: user.id, email: user.email },
+          'my_secret_jwt',
+          { expiresIn: '1y' });
+        return {
+          auth,
+          username: args.username,
+          email: args.email,
+          status: 'SUCCESS',
+        };
+      },
     },
     removeUser: {
       type: UserType,
       args: { id: { type: GraphQLID } },
-      resolve(parent, args){
+      resolve(parent, args) {
         return User.findByIdAndRemove(args.id);
-      }
+      },
     },
-    }
+  },
 });
 
 export default new GraphQLSchema({
   query: RootQuery,
-  mutation: Mutations
+  mutation: Mutations,
 });

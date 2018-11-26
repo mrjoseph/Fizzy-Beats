@@ -1,6 +1,7 @@
 // frame works
 import { mockServer } from 'graphql-tools';
 import schema, { UserType } from './index';
+
 const graphql = require('graphql');
 
 const {
@@ -10,7 +11,7 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
 } = graphql;
 describe('mock server', () => {
   it('should mock the server call', async () => {
@@ -23,25 +24,25 @@ describe('mock server', () => {
           password,
         }
     }`);
-    const expected =  {
+    const expected = {
       data: {
         users: [
           {
-            "username": "Hello"
+            username: 'Hello',
           },
           {
-            "username": "Hello"
+            username: 'Hello',
           },
-        ]
-      }
-    }
+        ],
+      },
+    };
     expect(response).toMatchObject(expected);
   });
 });
 describe('UserTypes', () => {
   let userTypeFields;
   beforeEach(() => {
-   userTypeFields = UserType.getFields();
+    userTypeFields = UserType.getFields();
   });
 
   it('Should have type of id', () => {
@@ -65,5 +66,31 @@ describe('UserTypes', () => {
   it('Should have type of password', () => {
     expect(userTypeFields).toHaveProperty('password');
     expect(userTypeFields.username.type).toMatchObject(GraphQLString);
+  });
+
+  it('should mock the server call', async () => {
+    const myMockServer = mockServer(schema, {
+      String: () => 'hello',
+    });
+
+    const response = await myMockServer.query(`mutation {
+  addUser(username:"testUser", password: "password",email:"test@test.com") {
+    username,
+    password,
+    email
+  }
+}`);
+    const expected = {
+      data:
+          {
+            addUser:
+                {
+                  username: 'hello',
+                  password: 'hello',
+                  email: 'hello',
+                },
+          },
+    };
+    expect(response).toMatchObject(expected);
   });
 });

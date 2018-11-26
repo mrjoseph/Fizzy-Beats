@@ -8,5 +8,8 @@
   "rules": {
     "import/no-named-as-default": 0,
     "import/eslint-disable-no-undef": 0
+  },
+  "env": {
+    "jest": true
   }
 }

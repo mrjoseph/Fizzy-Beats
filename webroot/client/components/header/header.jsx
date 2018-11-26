@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import img from './images/2013-12-18.jpg';
-class Header extends Component {
-  render (){
-    return (
-      <header>
-        FIZZY BEATS
-      </header>
-    )
-  }
+import React from 'react';
+import HeaderNav from '../header-hav/HeaderNav';
+
+function Header({ history }) {
+  return (
+    <header>
+      <HeaderNav history={history} />
+    </header>
+  );
 }
 
 export default Header;

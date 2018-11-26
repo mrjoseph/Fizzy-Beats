@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
-import { ADD_USER_MUTATION, GET_USER_QUERY } from '../../graphql/queries/queries';
+import PropTypes from 'prop-types';
+import AuthService from '../../AuthService/AuthService';
 
 class Register extends Component {
   constructor(props) {
@@ -9,77 +9,70 @@ class Register extends Component {
       username: 'Anna Havunta',
       password: 'password',
       // confirmPassword: '',
-      email: 'anna.havunta@gmail.com'
+      email: 'anna.havunta@gmail.com',
+      status: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.Auth = new AuthService();
   }
-  currentUsers(){
-    const { getUserQuery: { users } } = this.props;
-    if(users) {
-      return(
-          <div>
-            <ul>
-              {users.map((user) => {
-                return (
-                    <li key={user.id}>
-                      <div><strong>Username: </strong> {user.username}</div>
-                      <div><strong>Email: </strong>{user.email}</div>
-                      <div><strong>Password: </strong>{user.password}</div>
-                      <div><strong>Salt: </strong>{user.salt}</div>
-                    </li>
-                );
-              })}
-            </ul>
-          </div>
-      );
-    } return (
-        <div>loading</div>
-    )
-  }
-  handleSubmit(e){
+
+  handleSubmit(e) {
     e.preventDefault();
     const { addUser } = this.props;
-
-    const { username, email, password } = this.state;
-    console.log(username, email, password);
-    addUser(
-        { variables:
-              { username,
-                email,
-                password
-              },
-          refetchQueries: [{ query: GET_USER_QUERY }]
-        },
-    );
+    this.Auth.register(addUser, this.state).then((data) => {
+      this.setState({ status: data.addUser.status });
+    });
   }
 
-  render(){
-    return(
-        <div>
-          {this.currentUsers()}
-          <form id="add-book" onSubmit={this.handleSubmit}>
-            <div className="field">
-              <label>Username:</label>
-              <input type="text" onChange={(e) => this.setState({username: e.target.value})} value={this.state.username}/>
-            </div>
-            <div className="field">
-              <label>Email Address</label>
-              <input type="text" onChange={(e) => this.setState({email: e.target.value})} value={this.state.email}/>
-            </div>
-            <div className="field">
-              <label>Password:</label>
-              <input type="text" onChange={(e) => this.setState({password: e.target.value})} value={this.state.password}/>
-            </div>
+  componentWillMount() {
+    if (this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+    }
+  }
 
-            <button>Sign up</button>
-          </form>
-        </div>
+  componentDidUpdate() {
+    if (this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Register...</h1>
+        {this.state.status ? (
+          <div>
+            {' '}
+            {this.state.status}
+          </div>
+        ) : (<div> user added</div>)}
+        <form id="form" onSubmit={e => this.handleSubmit(e)}>
+          <div className="field">
+            <label>Username:</label>
+            <input type="text" onChange={e => this.setState({ username: e.target.value })} value={this.state.username} />
+          </div>
+          <div className="field">
+            <label>Email Address</label>
+            <input type="text" onChange={e => this.setState({ email: e.target.value })} value={this.state.email} />
+          </div>
+          <div className="field">
+            <label>Password:</label>
+            <input type="text" onChange={e => this.setState({ password: e.target.value })} value={this.state.password} />
+          </div>
+
+          <button className="submit">Sign up</button>
+        </form>
+      </div>
     );
   }
 }
 
-export default compose(
-    graphql(GET_USER_QUERY, {name: "getUserQuery"}),
-    graphql(ADD_USER_MUTATION, {name: "addUser"}),
-)(Register);
+Register.propTypes = {
+  addUser: PropTypes.func,
+};
 
+Register.defaultProps = {
+  addUser: () => {},
+};
+
+export default Register;

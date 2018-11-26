@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import './home.css';
+import './login.css';
 // import { Container, Title, Box } from './home.styles';
 
-class Home extends Component {
+class Login extends Component {
   render() {
     return (
-      <h1>Home</h1>
+      <h1>Login...</h1>
     );
   }
 }
 
-export default Home;
+export default Login;

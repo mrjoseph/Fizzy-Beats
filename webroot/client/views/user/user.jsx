@@ -38,4 +38,5 @@ class User extends Component {
   }
 }
 
+
 export default graphql(getUserQuery)(User);
