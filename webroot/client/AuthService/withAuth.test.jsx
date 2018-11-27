@@ -4,10 +4,10 @@ import AuthService from './AuthService';
 import withAuth from './withAuth';
 
 jest.mock('./AuthService');
-
+let returnValue;
 AuthService.mockImplementation(
   () => ({
-    loggedIn: () => false,
+    loggedIn: () => returnValue,
     logout: () => jest.fn(),
   }),
 );
@@ -28,9 +28,24 @@ describe('withAuth', () => {
   describe('If we are not logged in', () => {
     it('should redirect us to the /register page', () => {
       localStorage.setItem('id_token', 'foobar');
+      returnValue = false;
       shallow(<HOC {...props} />);
       expect(replaceSpy).toHaveBeenCalled();
       expect(replaceSpy).toHaveBeenCalledWith('/register');
+    });
+    it('should redirect us to the /register page', () => {
+      localStorage.setItem('id_token', 'foobar');
+      returnValue = true;
+      shallow(<HOC {...props} />);
+      expect(replaceSpy).toHaveBeenCalled();
+      expect(replaceSpy).toHaveBeenCalledWith('/login');
+    });
+    it('should redirect us to the /register page', () => {
+      localStorage.setItem('id_token', 'foobar');
+      returnValue = {};
+      shallow(<HOC {...props} />);
+      expect(replaceSpy).toHaveBeenCalled();
+      expect(replaceSpy).toHaveBeenCalledWith('/login');
     });
   });
 });

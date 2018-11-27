@@ -11,7 +11,6 @@ const withAuth = AuthComponent => class AuthWrapped extends Component {
   }
 
   componentWillMount() {
-    console.log('!Auth.loggedIn()', this.Auth.loggedIn());
     if (!this.Auth.loggedIn()) {
       this.props.history.replace('/register');
     } else {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import withAuth from '../../AuthService/withAuth';
+
 class Profile extends Component {
   render() {
     return (

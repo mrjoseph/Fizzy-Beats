@@ -27,7 +27,7 @@ export default class AuthService {
     localStorage.setItem(this.token, this.authToken);
   }
 
-  static isTokenExpired(token) {
+  isTokenExpired(token) {
     try {
       const decoded = decode(token);
       return decoded.exp < Date.now() / 1000;
