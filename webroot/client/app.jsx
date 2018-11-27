@@ -9,6 +9,7 @@ import NotFound from './views/not-found/not-found';
 import Header from './components/header/header';
 import Login from './views/login/Login';
 import './main.css';
+import './bootstrap.min.css';
 
 
 class App extends Component {

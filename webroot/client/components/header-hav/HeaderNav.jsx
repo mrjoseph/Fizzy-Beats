@@ -18,51 +18,53 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className="navbar">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-brand" to="/">
             <strong>Fizzy Beats</strong>
           </Link>
         </div>
-        <div className="navbar-menu">
-          <ul className="navbar-end">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
             {Auth.getProfile() && (
-            <li>
-              { Auth.getProfile().username}
-            </li>
+              <li className="nav-item active">
+                <span className="btn btn-link">
+                  {' '}
+                  { Auth.getProfile().username}
+                </span>
+              </li>
             )}
-            <li>
-              <Link to="/about" className="navbar-item">
+
+            <li className="nav-item">
+              <Link to="/about" className="nav-link">
                   About
               </Link>
             </li>
             { Auth.loggedIn() ? (
-              <li>
-                <Link to="/profile" className="navbar-item">
+              <li className="nav-item">
+                <Link to="/profile" className="nav-link">
                   Profile
                 </Link>
               </li>
             ) : (
-              <li>
-                <Link to="/login" className="navbar-item">
+              <li className="nav-item">
+                <Link to="/login" className="nav-link">
            Login
                 </Link>
               </li>
             )}
-            <div className="navbar-item join">
-              {!Auth.loggedIn() && (
-              <li>
-                <Link to="/register" className="navbar-item">
+            {!Auth.loggedIn() && (
+            <li className="nav-item">
+              <Link to="/register" className="nav-link">
                       Register
-                </Link>
+              </Link>
+            </li>
+            )}
+            {Auth.loggedIn() && (
+              <li className="nav-item">
+                <button onClick={this.handleLogout} className="btn btn-link">Logout</button>
               </li>
-              )}
-              {Auth.loggedIn() && (
-              <li>
-                <button onClick={this.handleLogout}>Logout</button>
-              </li>
-              )}
-            </div>
+            )}
           </ul>
         </div>
       </nav>
