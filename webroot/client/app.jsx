@@ -8,8 +8,9 @@ import Profile from './views/profile/Profile';
 import NotFound from './views/not-found/not-found';
 import Header from './components/header/header';
 import Login from './views/login/Login';
-import './main.css';
+
 import './bootstrap.min.css';
+import './main.css';
 
 
 class App extends Component {

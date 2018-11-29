@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AuthService from '../../AuthService/AuthService';
-import Input from '../../components/Form/input/Input';
+import Input from '../../components/form/input/Input';
+import { Form, Title } from './Register.styles';
+import validation from '../../components/form/validation/validation';
+
 
 const USERNAME = [
-  {
+  { Component: Input,
     text: 'username',
     name: 'username',
     type: 'text',
@@ -13,6 +16,7 @@ const USERNAME = [
 
 const PASSWORD = [
   {
+    Component: Input,
     text: 'password',
     name: 'password',
     type: 'password',
@@ -20,6 +24,7 @@ const PASSWORD = [
 ];
 const EMAIL = [
   {
+    Component: Input,
     text: 'email',
     name: 'email',
     type: 'text',
@@ -49,66 +54,20 @@ class Register extends Component {
     this.Auth = new AuthService();
   }
 
-  validate(fieldName, value) {
-    let validUsername;
-    let validEmail;
-    let validPassword;
-    switch (fieldName) {
-      case 'username':
-        validUsername = value.match(/[a-z]{3}/);
-        if (Array.isArray(validUsername)) {
-          this.setState({
-            usernameValid: true,
-            formErrors: { username: '' },
-          });
-        } else {
-          this.setState({
-            usernameValid: false,
-            formErrors: { username: 'empty username' },
-          });
-        }
-        break;
-      case 'email':
-        validEmail = value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
-        if (Array.isArray(validEmail)) {
-          this.setState({
-            emailValid: true,
-            formErrors: { email: '' },
-          });
-        } else {
-          this.setState({
-            emailValid: false,
-            formErrors: { email: 'is invalid' },
-          });
-        }
-        break;
-      case 'password':
-        validPassword = value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/i);
-        if (Array.isArray(validPassword)) {
-          this.setState({
-            passwordValid: true,
-            formErrors: { password: '' },
-          });
-        } else {
-          this.setState({
-            passwordValid: false,
-            formErrors: { password: 'password invalid' },
-          });
-        }
-        break;
-      default:
-        break;
-    }
-  }
-
   handleBlur(e) {
+    const { formErrors } = this.state;
     const { value, name } = e.target;
-    this.setState({ [name]: value }, () => this.validate(name, value));
+    this.setState({ [name]: value }, () => {
+      this.setState(validation(name, value, formErrors))
+    });
   }
 
   handleChange(e) {
+    const { formErrors } = this.state;
     const { value, name } = e.target;
-    this.setState({ [name]: value }, () => this.validate(name, value));
+    this.setState({ [name]: value }, () => {
+      this.setState(validation(name, value, formErrors))
+    });
   }
 
   handleSubmit(e) {
@@ -132,24 +91,38 @@ class Register extends Component {
   }
 
   render() {
-    const { formErrors, emailValid, passwordValid } = this.state;
+    const {
+      formErrors, emailValid, passwordValid, status, usernameValid,
+    } = this.state;
     return (
-      <div>
-        <h1>Register...</h1>
-        {this.state.status && (<div>{this.state.status}</div>)}
-        <form id="form" onSubmit={e => this.handleSubmit(e)}>
-          {LOGIN.map(elements => elements.map(props => (
-            <Input
-              formErrors={formErrors}
-              key={props.name}
-              onChange={this.handleChange}
-              handleBlur={this.handleBlur}
-              defaultValue={this.state[props.text]}
-              {...props}
-            />
-          )))}
-          <button className="submit" disabled={(!emailValid || !passwordValid)}>Sign up</button>
-        </form>
+      <div className="container">
+        <Title>Register</Title>
+        {status && (
+        <div className="alert alert-primary" role="alert">
+          It looks like you already have a account
+        </div>
+        )}
+        <Form id="form" onSubmit={this.handleSubmit}>
+          {LOGIN.map(elements => elements.map(props => {
+            const { Component, ...rest } = props;
+            return (
+                <Component
+                    formErrors={formErrors}
+                    key={props.name}
+                    onChange={this.handleChange}
+                    handleBlur={this.handleBlur}
+                    {...rest}
+                />
+            )
+          }))}
+          <button
+            className={`submit btn ${(emailValid && passwordValid && usernameValid) ? 'btn-success' : 'btn-secondary'}`}
+            type="submit"
+            disabled={(!emailValid || !passwordValid || !usernameValid)}
+          >
+            Sign up
+          </button>
+        </Form>
       </div>
     );
   }

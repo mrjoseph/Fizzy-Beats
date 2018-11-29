@@ -1,0 +1,8 @@
+/*.input:focus + span {*/
+     /*opacity: 1;*/
+     /*top: 10px;*/
+ /*}*/
+
+input.error{
+    border:1px solid red;
+}

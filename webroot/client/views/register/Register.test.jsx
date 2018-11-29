@@ -17,7 +17,7 @@ describe('Register', () => {
   });
 
   describe('When Submitting the registration form', () => {
-    describe('Button Click', () => {
+    describe('submit', () => {
       it('Should call my handleSubmit', () => {
         const form = component.find('#form');
         const state = {
@@ -29,11 +29,6 @@ describe('Register', () => {
         form.simulate('submit', { preventDefault() {} });
         expect(spy).toHaveBeenCalled();
         expect(addUserSpy).toHaveBeenCalled();
-        const update = () => {};
-        const calledWith = {
-          variables: state,
-          update,
-        };
       });
     });
   });
