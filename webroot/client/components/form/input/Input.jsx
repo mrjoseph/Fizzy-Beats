@@ -5,20 +5,6 @@ import { Label, Span, InputStyled } from './Input.styles';
 import './input.css';
 
 class Input extends Component {
-  errorWarnings() {
-    const { formErrors, name } = this.props;
-    return formErrors && Object.keys(formErrors).map((key) => {
-      if (name === key && formErrors[key]) {
-        return (
-          <div key={key}>
-            {formErrors[key]}
-          </div>
-        );
-      }
-      return null;
-    });
-  }
-
   errorClass() {
     const { formErrors, name } = this.props;
     return (formErrors[name] && formErrors[name].field === name) && !formErrors[name].valid;
@@ -57,8 +43,5 @@ Input.propTypes = {
   text: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-};
-Input.defaultProps = {
-  // defaultValue: [],
 };
 export default Input;
