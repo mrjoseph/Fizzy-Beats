@@ -7,7 +7,7 @@ Decided to rebuild my digital music site in Node, Express GraphQL, React. The ol
 
 ### Register
 1. ~~mvp register form~~
-1. confirm password before submission
-2. clientside validation
+1. ~~confirm password before submission~~
+2. ~~clientside validation~~
+1. ~~check account does not exist~~
 1. server side validation
-1. check account does not exist
