@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import AuthService from '../../AuthService/AuthService';
 import Input from '../../components/form/input/Input';
 import { Form, Title } from './Register.styles';
@@ -43,7 +44,7 @@ class Register extends Component {
       // confirmPassword: '',
       email: '',
       status: null,
-      formErrors: { username: '', email: '', password: '' },
+      formErrors: {},
       usernameValid: false,
       emailValid: false,
       passwordValid: false,
@@ -76,6 +77,15 @@ class Register extends Component {
     this.Auth.register(addUser, this.state).then((data) => {
       this.setState({ status: data.addUser.status });
     });
+  }
+
+
+  submitDisabled(){
+    const username = _.get(this.state.formErrors, 'username.valid', false);
+    const password = _.get(this.state.formErrors, 'password.valid', false);
+    const email = _.get(this.state.formErrors, 'email.valid', false);
+    return (!username || !password || !email);
+
   }
 
   componentWillMount() {
@@ -116,9 +126,9 @@ class Register extends Component {
             )
           }))}
           <button
-            className={`submit btn ${(emailValid && passwordValid && usernameValid) ? 'btn-success' : 'btn-secondary'}`}
+            className={`submit btn ${!this.submitDisabled() ? 'btn-success' : 'btn-secondary'}`}
             type="submit"
-            disabled={(!emailValid || !passwordValid || !usernameValid)}
+            disabled={this.submitDisabled()}
           >
             Sign up
           </button>

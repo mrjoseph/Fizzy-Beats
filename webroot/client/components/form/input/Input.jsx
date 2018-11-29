@@ -5,7 +5,6 @@ import { Label, Span, InputStyled } from './Input.styles';
 import './input.css';
 
 class Input extends Component {
-
   errorWarnings() {
     const { formErrors, name } = this.props;
     return formErrors && Object.keys(formErrors).map((key) => {
@@ -22,17 +21,14 @@ class Input extends Component {
 
   errorClass() {
     const { formErrors, name } = this.props;
-    return Object.keys(formErrors).filter((key) => {
-      if (name === key && formErrors[key]) {
-        return formErrors[key];
-      }
-    });
+    return (formErrors[name] && formErrors[name].field === name) && !formErrors[name].valid;
   }
 
   render() {
     const {
       name, text, onChange, type, handleBlur,
     } = this.props;
+    this.errorClass();
     return (
       <div className="field">
         <Label htmlFor={name}>
@@ -42,11 +38,11 @@ class Input extends Component {
             onBlur={handleBlur}
             name={name}
             placeholder={name}
-            className={classNames('input', { error: !!(this.errorClass().length) })}
+            className={classNames('input', { error: this.errorClass() })}
           />
           <Span>{text}</Span>
         </Label>
-        {/*{this.errorWarnings()}*/}
+        {/* {this.errorWarnings()} */}
       </div>
     );
   }
@@ -55,7 +51,9 @@ class Input extends Component {
 Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  formErrors: PropTypes.objectOf(PropTypes.string).isRequired,
+  formErrors: PropTypes.shape({
+    valid: PropTypes.bool,
+  }).isRequired,
   text: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
