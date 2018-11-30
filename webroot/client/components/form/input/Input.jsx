@@ -23,6 +23,7 @@ class Input extends Component {
             onChange={onChange}
             onBlur={handleBlur}
             name={name}
+            id={name}
             placeholder={name}
             className={classNames('input', { error: this.errorClass() })}
           />

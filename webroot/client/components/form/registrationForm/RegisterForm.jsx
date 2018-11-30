@@ -1,0 +1,132 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Input from '../input/Input';
+import _ from 'lodash';
+import validation from '../validation/validation';
+import { Form, Title } from '../../../views/register/Register.styles';
+import AuthService from '../../../AuthService/AuthService';
+
+const USERNAME = [
+  { Component: Input,
+    text: 'username',
+    name: 'username',
+    type: 'text',
+  },
+];
+
+const PASSWORD = [
+  {
+    Component: Input,
+    text: 'password',
+    name: 'password',
+    type: 'password',
+  },
+];
+const EMAIL = [
+  {
+    Component: Input,
+    text: 'email',
+    name: 'email',
+    type: 'text',
+  },
+];
+
+const LOGIN = [USERNAME, EMAIL, PASSWORD];
+
+
+class RegisterForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      // confirmPassword: '',
+      email: '',
+      status: null,
+      formErrors: {},
+    };
+    this.Auth = new AuthService();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+
+  }
+
+  handleBlur(e) {
+    const { formErrors } = this.state;
+    const { value, name } = e.target;
+    this.setState({ [name]: value }, () => {
+      this.setState(validation(name, value, formErrors))
+    });
+  }
+
+  handleChange(e) {
+    const { formErrors } = this.state;
+    const { value, name } = e.target;
+    this.setState({ [name]: value }, () => {
+      this.setState(validation(name, value, formErrors))
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { addUser } = this.props;
+    this.Auth.register(addUser, this.state).then((data) => {
+      this.setState({ status: data.addUser.status });
+    });
+  }
+
+
+  submitDisabled(){
+    const username = _.get(this.state.formErrors, 'username.valid', false);
+    const password = _.get(this.state.formErrors, 'password.valid', false);
+    const email = _.get(this.state.formErrors, 'email.valid', false);
+    return (!username || !password || !email);
+
+  }
+  render() {
+    const {
+      formErrors, emailValid, passwordValid, status, usernameValid,
+    } = this.state;
+    return (
+        <div className="container">
+          {status && (
+              <div className="alert alert-primary" role="alert">
+                It looks like you already have a account
+              </div>
+          )}
+          <Form id="form" onSubmit={this.handleSubmit}>
+            {LOGIN.map(elements => elements.map(props => {
+              const { Component, ...rest } = props;
+              return (
+                  <Component
+                      formErrors={formErrors}
+                      key={props.name}
+                      onChange={this.handleChange}
+                      handleBlur={this.handleBlur}
+                      {...rest}
+                  />
+              )
+            }))}
+            <button
+              className={`submit btn ${!this.submitDisabled() ? 'btn-success' : 'btn-secondary'}`}
+              type="submit"
+              disabled={this.submitDisabled()}
+            >
+              Sign up
+            </button>
+          </Form>
+        </div>
+    );
+  }
+}
+
+RegisterForm.propTypes = {
+  addUser: PropTypes.func,
+};
+
+RegisterForm.defaultProps = {
+  addUser: () => {},
+};
+
+export default RegisterForm;
