@@ -2,7 +2,7 @@ import Input from '../input/Input';
 
 const USERNAME = [
   {
-    Component: Input,
+    Components: Input,
     text: 'username',
     name: 'username',
     type: 'text',
@@ -11,7 +11,7 @@ const USERNAME = [
 
 const PASSWORD = [
   {
-    Component: Input,
+    Components: Input,
     text: 'password',
     name: 'password',
     type: 'password',
@@ -19,13 +19,13 @@ const PASSWORD = [
 ];
 const EMAIL = [
   {
-    Component: Input,
+    Components: Input,
     text: 'email',
     name: 'email',
     type: 'text',
   },
 ];
 
-const LOGIN = [USERNAME, EMAIL, PASSWORD];
+export const REGISTER = [USERNAME, EMAIL, PASSWORD];
 
-export default LOGIN;
+export const LOGIN = [EMAIL, PASSWORD];

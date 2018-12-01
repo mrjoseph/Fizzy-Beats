@@ -4,14 +4,12 @@ exports[`Register view When loading check if the user is logged in and Should lo
 <div
   className="container"
 >
-  <h3
-    className="Registerstyles__Title-e9rrf0-1 RFDHk"
+  <h1
+    className="indexstyles__Title-sc-1dnxw1y-0 gCvGgx"
   >
     Register
-  </h3>
-  <div
-    className="container"
-  >
+  </h1>
+  <div>
     <form
       className="Registerstyles__Form-e9rrf0-3 ddBFjK"
       id="form"
