@@ -1,20 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import classNames from 'classname';
 import { Label, Span, InputStyled } from './Input.styles';
 import './input.css';
 
 class Input extends Component {
-
   errorClass() {
     const { formErrors, name } = this.props;
-    if (formErrors[name] && formErrors[name].valid) {
-      return 'success';
+    if (formErrors[name]) {
+      return (formErrors[name].valid) ? '#abe2b7' : 'red';
     }
-    if (formErrors[name] && !formErrors[name].valid) {
-      return 'error';
-    }
-    return '';
+    return '#fff';
   }
 
   render() {
@@ -25,13 +20,14 @@ class Input extends Component {
       <div className="field">
         <Label htmlFor={name}>
           <InputStyled
+            theme={{ error: this.errorClass() }}
             type={type}
             onChange={onChange}
             onBlur={handleBlur}
             name={name}
             id={name}
             placeholder={name}
-            className={`${this.errorClass()} input`}
+            className="input"
           />
           <Span>{text}</Span>
         </Label>

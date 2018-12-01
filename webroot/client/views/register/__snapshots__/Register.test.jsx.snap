@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register view When loading check if the user is logged in and Should load the registration form snapshot 1`] = `
+<div
+  className="container"
+>
+  <h3
+    className="Registerstyles__Title-e9rrf0-1 RFDHk"
+  >
+    Register
+  </h3>
+  <div
+    className="container"
+  >
+    <form
+      className="Registerstyles__Form-e9rrf0-3 ddBFjK"
+      id="form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="field"
+      >
+        <label
+          className="Inputstyles__Label-sc-7bsp2f-0 jzlRQo"
+          htmlFor="username"
+        >
+          <input
+            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            id="username"
+            name="username"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="username"
+            type="text"
+          />
+          <span
+            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+          >
+            username
+          </span>
+        </label>
+      </div>
+      <div
+        className="field"
+      >
+        <label
+          className="Inputstyles__Label-sc-7bsp2f-0 jzlRQo"
+          htmlFor="email"
+        >
+          <input
+            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            id="email"
+            name="email"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="email"
+            type="text"
+          />
+          <span
+            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+          >
+            email
+          </span>
+        </label>
+      </div>
+      <div
+        className="field"
+      >
+        <label
+          className="Inputstyles__Label-sc-7bsp2f-0 jzlRQo"
+          htmlFor="password"
+        >
+          <input
+            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            id="password"
+            name="password"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="password"
+            type="password"
+          />
+          <span
+            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+          >
+            password
+          </span>
+        </label>
+      </div>
+      <button
+        className="submit btn btn-secondary"
+        disabled={true}
+        type="submit"
+      >
+        Sign up
+      </button>
+    </form>
+  </div>
+</div>
+`;

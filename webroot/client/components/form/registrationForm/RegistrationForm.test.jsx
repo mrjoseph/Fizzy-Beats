@@ -40,6 +40,7 @@ describe('RegistrationForm', () => {
           username: 'trevor',
           password: 'password',
           email: 'test@test.com',
+          status: null,
         };
         component.setState(state);
         form.simulate('submit', { preventDefault() {} });

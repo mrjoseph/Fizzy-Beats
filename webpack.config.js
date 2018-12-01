@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
     plugins.push(devServerHTML());
   }
   return {
-    entry: './webroot/client/index.js',
+    entry: './webroot/client/index.jsx',
     output: {
       path: path.resolve(__dirname, 'build'),
       filename: 'js/bundle.js',

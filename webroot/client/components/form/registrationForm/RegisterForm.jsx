@@ -1,38 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../input/Input';
+
 import _ from 'lodash';
 import validation from '../validation/validation';
 import { Form, Title } from '../../../views/register/Register.styles';
 import AuthService from '../../../AuthService/AuthService';
-
-const USERNAME = [
-  { Component: Input,
-    text: 'username',
-    name: 'username',
-    type: 'text',
-  },
-];
-
-const PASSWORD = [
-  {
-    Component: Input,
-    text: 'password',
-    name: 'password',
-    type: 'password',
-  },
-];
-const EMAIL = [
-  {
-    Component: Input,
-    text: 'email',
-    name: 'email',
-    type: 'text',
-  },
-];
-
-const LOGIN = [USERNAME, EMAIL, PASSWORD];
-
+import LOGIN from '../formConfig/formConfig';
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -85,9 +58,7 @@ class RegisterForm extends Component {
 
   }
   render() {
-    const {
-      formErrors, emailValid, passwordValid, status, usernameValid,
-    } = this.state;
+    const { formErrors, status } = this.state;
     return (
         <div className="container">
           {status && (
@@ -128,5 +99,5 @@ RegisterForm.propTypes = {
 RegisterForm.defaultProps = {
   addUser: () => {},
 };
-
+RegisterForm.displayName = 'RegisterForm';
 export default RegisterForm;

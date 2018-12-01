@@ -1,32 +1,59 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
+import renderer from 'react-test-renderer';
+import { MockedProvider } from 'react-apollo/test-utils';
 import Register from './Register';
+import AuthService from '../../AuthService/AuthService';
+import RegistrationForm from '../../components/form/registrationForm';
+import { ADD_USER_MUTATION } from '../../graphql/queries/queries';
 
-describe.skip('Register', () => {
-  const spy = jest.spyOn(Register.prototype, 'handleSubmit');
+jest.mock('../../AuthService/AuthService');
+let returnValue;
+AuthService.mockImplementation(
+  () => ({
+    loggedIn: () => returnValue,
+    logout: () => jest.fn(),
+  }),
+);
+
+describe('Register view', () => {
   let component;
-  const addUserSpy = jest.fn();
+  const replaceSpy = jest.fn();
   const props = {
-    addUser: addUserSpy,
+    history: {
+      replace: replaceSpy,
+    },
   };
   beforeEach(() => {
-    component = shallow(<Register {...props} />);
+    AuthService.mockClear();
   });
 
-  describe('When Submitting the registration registrationForm', () => {
-    describe('submit', () => {
-      it('Should call my handleSubmit', () => {
-        const form = component.find('#registrationForm');
-        const state = {
-          username: 'trevor',
-          password: 'password',
-          email: 'test@test.com',
-        };
-        component.setState(state);
-        form.simulate('submit', { preventDefault() {} });
-        expect(spy).toHaveBeenCalled();
-        expect(addUserSpy).toHaveBeenCalled();
+  describe('When loading', () => {
+    describe('check if the user is logged in', () => {
+      it('and Should redirect the user to the homepage', () => {
+        returnValue = true;
+        component = shallow(<Register {...props} />);
+        expect(replaceSpy).toHaveBeenCalled();
+        expect(replaceSpy).toHaveBeenCalledWith('/');
+      });
+
+      describe('and Should load the registration form', () => {
+        beforeEach(() => {
+          returnValue = false;
+          component = shallow(<Register {...props} />);
+        });
+        it('should load the registeration form', () => {
+          const registrationForm = component.find(RegistrationForm);
+          expect(registrationForm).toHaveLength(1);
+        });
+        it('snapshot', () => {
+          const tree = renderer.create(
+            <MockedProvider client={ADD_USER_MUTATION}>
+              <Register {...props} />
+            </MockedProvider>,
+          ).toJSON();
+          expect(tree).toMatchSnapshot();
+        });
       });
     });
   });

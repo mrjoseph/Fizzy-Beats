@@ -43,7 +43,7 @@ describe('Input', () => {
           value: 'trevor',
         },
       });
-      expect(input.hasClass('error')).toBe(true);
+      expect(input.props().theme).toEqual({ error: 'red' });
     });
   });
 
@@ -52,18 +52,18 @@ describe('Input', () => {
       username: {
         field: 'username',
         message: '',
-        valid: true,
+        valid: false,
       },
     };
     const propsWithError = {
-      formErrors, ...props,
+      ...props, formErrors,
     };
     beforeEach(() => {
       component = shallow(<Input {...propsWithError} />);
     });
     it('input should have a error class', () => {
       const input = component.find('.input');
-      expect(input.hasClass('error')).toBe(true);
+      expect(input.props().theme).toEqual({ error: 'red' });
     });
   });
 
@@ -72,18 +72,18 @@ describe('Input', () => {
       username: {
         field: 'username',
         message: '',
-        valid: false,
+        valid: true,
       },
     };
     const propsWithError = {
-      formErrors, ...props,
+      ...props, formErrors,
     };
     beforeEach(() => {
       component = shallow(<Input {...propsWithError} />);
     });
     it('input should have a success class', () => {
       const input = component.find('.input');
-      expect(input.hasClass('success')).toBe(false);
+      expect(input.props().theme).toEqual({ error: '#abe2b7' });
     });
   });
 });

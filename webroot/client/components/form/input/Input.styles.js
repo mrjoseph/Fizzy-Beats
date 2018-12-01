@@ -17,10 +17,10 @@ export const Span = styled.span`
 
 
 export const InputStyled = styled.input`
+    border: 1px solid ${props => props.theme.error};
     font: 18px Helvetica, Arial, sans-serif;
     box-sizing: border-box;
     display: block;
-    border: 1px solid #fff;
     padding: 18px;
     width: 300px;
     margin-bottom: 20px;

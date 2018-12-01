@@ -7,9 +7,6 @@ import { Title } from './Register.styles';
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      status: null,
-    };
     this.Auth = new AuthService();
   }
 
@@ -26,15 +23,9 @@ class Register extends Component {
   }
 
   render() {
-    const { status } = this.state;
     return (
       <div className="container">
         <Title>Register</Title>
-        {status && (
-        <div className="alert alert-primary" role="alert">
-          It looks like you already have a account
-        </div>
-        )}
         <RegistrationForm />
       </div>
     );
@@ -45,7 +36,8 @@ Register.propTypes = {
   history: PropTypes.shape([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.func,
   ]).isRequired,
 };
-
+Register.displayName = 'Register';
 export default Register;
