@@ -6,3 +6,7 @@
 input.error{
     border:1px solid red;
 }
+
+input.success {
+    border:1px solid #abe2b7;
+}

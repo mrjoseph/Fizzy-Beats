@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme/build/index';
+import { shallow } from 'enzyme';
 import React from 'react';
 import RegistrationForm from './RegisterForm';
 
@@ -21,7 +21,7 @@ describe('RegistrationForm', () => {
   });
 
 
-  describe('When Submitting the registration registrationForm', () => {
+  describe('When Submitting the registrationForm', () => {
     describe('submit', () => {
       const fields = [{
         value: 'trevor',
@@ -47,7 +47,7 @@ describe('RegistrationForm', () => {
         expect(addUserSpy).toHaveBeenCalled();
       });
 
-      it('should call the handleChange function on username', () => {
+      it('should call the handleChange for the username input', () => {
         const expectedState = {
           username: 'trevor',
           password: 'foobar1',
@@ -69,7 +69,7 @@ describe('RegistrationForm', () => {
         expect(component.state().formErrors.username.valid)
           .toEqual(expectedState.formErrors.username.valid);
       });
-      it('should call the handleChange function on email', () => {
+      it('should call the handleChange for the email input', () => {
         const expectedState = {
           username: 'trevor',
           password: 'foobar1',
@@ -91,7 +91,7 @@ describe('RegistrationForm', () => {
         expect(component.state().formErrors.email.valid)
           .toEqual(expectedState.formErrors.email.valid);
       });
-      it('should call the handleChange function on password', () => {
+      it('should call the handleChange for the password input', () => {
         const expectedState = {
           username: 'trevor',
           password: 'password1',
