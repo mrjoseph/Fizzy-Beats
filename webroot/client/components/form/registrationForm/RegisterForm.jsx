@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import validation from '../validation/validation';
 import { Form, Title } from '../../../views/register/Register.styles';
@@ -60,10 +60,10 @@ class RegisterForm extends Component {
   render() {
     const { formErrors, status } = this.state;
     return (
-        <div className="container">
+        <div>
           {status && (
               <div className="alert alert-primary" role="alert">
-                It looks like you already have a account
+                It looks like you already have a account <Link to="/login">login</Link>
               </div>
           )}
           <Form id="form" onSubmit={this.handleSubmit}>
@@ -100,4 +100,4 @@ RegisterForm.defaultProps = {
   addUser: () => {},
 };
 RegisterForm.displayName = 'RegisterForm';
-export default RegisterForm;
+export default withRouter(RegisterForm);

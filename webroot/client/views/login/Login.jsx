@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './login.css';
-// import { Container, Title, Box } from './home.styles';
+import { Title } from '../../styledComponents/index.styles';
 
 class Login extends Component {
   render() {
     return (
-      <h1>Login...</h1>
+      <div className="container">
+        <Title>Login</Title>
+      </div>
     );
   }
 }

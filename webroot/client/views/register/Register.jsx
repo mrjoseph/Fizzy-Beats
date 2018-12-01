@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AuthService from '../../AuthService/AuthService';
 import RegistrationForm from '../../components/form/registrationForm';
-import { Title } from './Register.styles';
+import { Title } from '../../styledComponents/index.styles';
 
 class Register extends Component {
   constructor(props) {
