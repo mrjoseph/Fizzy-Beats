@@ -1,32 +1,30 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
-const devServerHTML = () => {
-    return new HtmlWebPackPlugin({
-      template: "./webroot/template/index.html",
-      filename: "./index.html"
-    });
-}
+const devServerHTML = () => new HtmlWebPackPlugin({
+  template: './webroot/template/index.html',
+  filename: './index.html',
+});
 module.exports = (env, argv) => {
   const { mode } = argv;
   const plugins = [
     new MiniCssExtractPlugin({
-      filename: "css/[name].css",
-      chunkFilename: "[id].css"
-    })
-]
+      filename: 'css/[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ];
   if (mode === 'development') {
-    plugins.push(devServerHTML())
+    plugins.push(devServerHTML());
   }
   return {
-    entry: './webroot/client/index.js',
+    entry: './webroot/client/index.jsx',
     output: {
       path: path.resolve(__dirname, 'build'),
       filename: 'js/bundle.js',
     },
     resolve: {
-      extensions: ['.mjs','.js', '.jsx']
+      extensions: ['.mjs', '.js', '.jsx'],
     },
     module: {
       rules: [
@@ -34,29 +32,29 @@ module.exports = (env, argv) => {
           test: /\.html$/,
           use: [
             {
-              loader: "html-loader",
-              options: { minimize: true }
-            }
-          ]
+              loader: 'html-loader',
+              options: { minimize: true },
+            },
+          ],
         },
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader"
-          }
+            loader: 'babel-loader',
+          },
         },
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, "css-loader"]
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
-               {
-                 test: /\.(png|svg|jpg|gif)$/,
-             use: [
-               'file-loader'
-             ]
-         }
-      ]
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            'file-loader',
+          ],
+        },
+      ],
     },
     plugins,
     devServer: {
@@ -64,7 +62,7 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
       contentBase: path.join(__dirname, 'build'),
       compress: true,
-      port: 9000
-    }
+      port: 9000,
+    },
   };
-}
+};
