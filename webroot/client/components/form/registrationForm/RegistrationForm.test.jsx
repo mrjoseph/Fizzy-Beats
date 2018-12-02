@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import RegistrationForm from './RegisterForm';
 
+
 describe('RegistrationForm', () => {
   const spy = jest.spyOn(RegistrationForm.prototype, 'handleSubmit');
   let component;

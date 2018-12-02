@@ -18,14 +18,17 @@ mutation(
   }
 }
 `;
-export const GET_USER_QUERY = gql`
-  query User($username: String){
-    user(username: $username){
+export const LOGIN_QUERY = gql`
+  query
+    (
+      $email: String, $password: String
+    ){
+    user(email: $email,password: $password){
+      auth,
       email
       username
       id
-      password
-      salt
+      status
     }
   }
 `;

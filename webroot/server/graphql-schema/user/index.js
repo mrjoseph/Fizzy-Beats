@@ -1,5 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { slatHashPassword } from '../../utils/encription';
+import { slatHashPassword, unHashPassword } from '../../utils/encription';
+
 const graphql = require('graphql');
 const User = require('../../mongoDb-models/user');
 
@@ -38,11 +39,38 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {
-        username: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        status: { type: GraphQLString },
+        auth: { type: GraphQLString },
       },
       resolve: async (parent, args) => {
-        const user = await User.findOne({ username: args.username });
-        return user;
+        const error = { status: 'INCORRECT_USERNAME_OR_PASSWORD' };
+        const user = await User.findOne({ email: args.email });
+        if (!user) {
+          return error;
+        }
+        const {
+          username,
+          email: storedEmail,
+          salt,
+          password: storedPassword,
+          id,
+        } = user;
+        const passwordHash = unHashPassword(args.password, salt);
+        if (storedPassword === passwordHash && storedEmail === args.email) {
+          const auth = jsonwebtoken.sign({ username: user.username, id: user.id, email: user.email },
+            'my_secret_jwt',
+            { expiresIn: '1y' });
+          return {
+            auth,
+            status: 'SUCCESS',
+            username,
+            email: args.email,
+            id,
+          };
+        }
+        return error;
       },
     },
   },

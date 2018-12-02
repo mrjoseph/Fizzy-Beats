@@ -1,9 +1,6 @@
-import { compose, graphql } from 'react-apollo';
-import { ADD_USER_MUTATION } from '../../../graphql/queries/queries';
+import { withApollo } from 'react-apollo';
+import { withRouter } from 'react-router';
 import LoginForm from './LoginForm';
 
-// export default compose(
-//   graphql(ADD_USER_MUTATION, { name: 'addUser' }),
-// )(LoginForm);
 
-export default LoginForm;
+export default withApollo(withRouter(LoginForm));

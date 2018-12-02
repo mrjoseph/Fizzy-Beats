@@ -45,7 +45,11 @@ class RegisterForm extends Component {
     e.preventDefault();
     const { addUser } = this.props;
     this.Auth.register(addUser, this.state).then((data) => {
-      this.setState({ status: data.addUser.status });
+      if(data.status === 'SUCCESS') {
+        this.props.history.replace('/profile');
+      } else {
+        this.setState({ status: data.status });
+      }
     });
   }
 
@@ -100,4 +104,4 @@ RegisterForm.defaultProps = {
   addUser: () => {},
 };
 RegisterForm.displayName = 'RegisterForm';
-export default RegisterForm;
+export default (RegisterForm);

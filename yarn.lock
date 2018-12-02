@@ -222,6 +222,17 @@
     "@babel/helper-remap-async-to-generator" "^7.1.0"
     "@babel/plugin-syntax-async-generators" "^7.0.0"
 
+"@babel/plugin-proposal-class-properties@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.1.0.tgz#9af01856b1241db60ec8838d84691aa0bd1e8df4"
+  dependencies:
+    "@babel/helper-function-name" "^7.1.0"
+    "@babel/helper-member-expression-to-functions" "^7.0.0"
+    "@babel/helper-optimise-call-expression" "^7.0.0"
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.1.0"
+    "@babel/plugin-syntax-class-properties" "^7.0.0"
+
 "@babel/plugin-proposal-json-strings@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-json-strings/-/plugin-proposal-json-strings-7.0.0.tgz#3b4d7b5cf51e1f2e70f52351d28d44fc2970d01e"
@@ -254,6 +265,12 @@
 "@babel/plugin-syntax-async-generators@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-async-generators/-/plugin-syntax-async-generators-7.0.0.tgz#bf0891dcdbf59558359d0c626fdc9490e20bc13c"
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
+"@babel/plugin-syntax-class-properties@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0.tgz#e051af5d300cbfbcec4a7476e37a803489881634"
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
@@ -1295,6 +1312,10 @@ babel-plugin-jest-hoist@^23.2.0:
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     lodash "^4.17.10"
+
+babel-plugin-syntax-async-functions@^6.13.0:
+  version "6.13.0"
+  resolved "http://registry.npmjs.org/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
 
 babel-plugin-syntax-object-rest-spread@^6.13.0:
   version "6.13.0"
@@ -6085,6 +6106,10 @@ react-is@^16.3.2, react-is@^16.6.0:
 react-is@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
+
+react-mock-router@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/react-mock-router/-/react-mock-router-1.0.15.tgz#01c823a7ed366e7e834565e879bc72443131b4e1"
 
 react-router-dom@^4.3.1:
   version "4.3.1"

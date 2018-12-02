@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
 
 const Auth = new AuthService();

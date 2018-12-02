@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -15,7 +15,7 @@ const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
 });
-const App = () => <BrowserRouter><Routes /></BrowserRouter>;
+const App = () => <Router><Routes /></Router>;
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />

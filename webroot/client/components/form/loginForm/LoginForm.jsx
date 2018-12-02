@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { ApolloConsumer } from 'react-apollo';
 import _ from 'lodash';
 import validation from '../validation/validation';
 import { Form } from '../../../views/register/Register.styles';
@@ -41,10 +41,14 @@ class LoginForm extends Component {
   }
 
   handleSubmit(e) {
+    const { client, history } = this.props;
     e.preventDefault();
-    const { addUser } = this.props;
-    this.Auth.register(addUser, this.state).then((data) => {
-      this.setState({ status: data.addUser.status });
+    this.Auth.login(client, this.state).then((data) => {
+      if (data.user.status === 'SUCCESS') {
+        history.replace('/profile');
+      } else {
+        this.setState({ status: data.user.status });
+      }
     });
   }
 
@@ -60,13 +64,7 @@ class LoginForm extends Component {
       <div>
         {status && (
           <div className="alert alert-primary" role="alert">
-                It looks like you already have a account
-            {' '}
-            <Link
-              to="/login"
-            >
-            login
-            </Link>
+            {status}
           </div>
         )}
         <Form id="form" onSubmit={this.handleSubmit}>
@@ -89,12 +87,5 @@ class LoginForm extends Component {
   }
 }
 
-LoginForm.propTypes = {
-  addUser: PropTypes.func,
-};
-
-LoginForm.defaultProps = {
-  addUser: () => {},
-};
 LoginForm.displayName = 'LoginForm';
 export default LoginForm;

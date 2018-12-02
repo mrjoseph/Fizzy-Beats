@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
@@ -47,6 +48,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
     "body-parser": "^1.18.3",
     "classname": "^0.0.0",
     "cors": "^2.8.5",
@@ -85,6 +87,7 @@
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",
     "react-dom": "^16.5.2",
+    "react-mock-router": "^1.0.15",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "regenerator-runtime": "^0.12.1",
