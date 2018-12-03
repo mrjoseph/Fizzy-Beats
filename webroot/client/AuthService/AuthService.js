@@ -1,3 +1,4 @@
+/* global localStorage */
 import decode from 'jwt-decode';
 import { LOGIN_QUERY } from '../graphql/queries/queries';
 

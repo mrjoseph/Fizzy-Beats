@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import graphqlHTTP from 'express-graphql';
 import cors from 'cors';
 import renderHTML from './routes/index';
-import schema from './graphql-schema/user/index';
+import schema from './graphql-schema';
 
 const uri = 'mongodb://127.0.0.1:27017/mixdown';
 

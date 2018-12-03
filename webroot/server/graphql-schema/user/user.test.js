@@ -1,21 +1,12 @@
 // frame works
+import { GraphQLString } from 'graphql';
 import { mockServer } from 'graphql-tools';
-import schema, { UserType } from './index';
+import { UserType } from './user';
+import schema from '../index';
 
-const graphql = require('graphql');
-
-const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull,
-} = graphql;
 describe('mock server', () => {
   it('should mock the server call', async () => {
-    const myMockServer = mockServer(schema, {
+    const myMockServer = await mockServer(schema, {
       String: () => 'Hello',
     });
     const response = await myMockServer.query(`{
