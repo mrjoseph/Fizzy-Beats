@@ -23,7 +23,7 @@ export const LOGIN_QUERY = gql`
     (
       $email: String, $password: String
     ){
-    user(email: $email,password: $password){
+    loginUser(email: $email,password: $password){
       auth,
       email
       username

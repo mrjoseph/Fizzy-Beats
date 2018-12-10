@@ -8,8 +8,8 @@ import {
   GraphQLNonNull,
 } from 'graphql';
 
-import { UserType } from '../user/user';
-import User from '../../mongoDb-models/user';
+import { UserType } from '../user/old-user';
+import User from '../user/userModel';
 
 export const TrackType = new GraphQLObjectType({
   name: 'Track',

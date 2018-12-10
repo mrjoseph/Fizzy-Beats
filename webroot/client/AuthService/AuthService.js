@@ -10,6 +10,7 @@ export default class AuthService {
 
   logout() {
     localStorage.removeItem(this.token);
+    localStorage.removeItem('apollo-cache-persist');
   }
 
   loggedIn() {
@@ -43,10 +44,10 @@ export default class AuthService {
       query: LOGIN_QUERY,
       variables: { email, password },
     });
-    if (data.user.status === 'INCORRECT_USERNAME_OR_PASSWORD') {
+    if (data.loginUser.status === 'INCORRECT_USERNAME_OR_PASSWORD') {
       return data;
     }
-    this.authToken = data.user.auth;
+    this.authToken = data.loginUser.auth;
     this.setToken();
     return data;
   };

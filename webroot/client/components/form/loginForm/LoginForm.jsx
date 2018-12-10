@@ -44,10 +44,10 @@ class LoginForm extends Component {
     const { client, history } = this.props;
     e.preventDefault();
     this.Auth.login(client, this.state).then((data) => {
-      if (data.user.status === 'SUCCESS') {
+      if (data.loginUser.status === 'SUCCESS') {
         history.replace('/profile');
       } else {
-        this.setState({ status: data.user.status });
+        this.setState({ status: data.loginUser.status });
       }
     });
   }

@@ -1,7 +1,7 @@
 // frame works
 import { GraphQLString } from 'graphql';
 import { mockServer } from 'graphql-tools';
-import { UserType } from './user';
+import { UserType } from './old-user';
 import schema from '../index';
 
 describe('mock server', () => {

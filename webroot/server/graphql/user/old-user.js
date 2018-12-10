@@ -13,7 +13,7 @@ import { TrackType } from '../track/track';
 import Tracks from '../../mongoDb-models/track';
 
 import { slatHashPassword, unHashPassword } from '../../utils/encription';
-import User from '../../mongoDb-models/user';
+import User from './userModel';
 
 // ---------------------------------- TYPES
 export const UserType = new GraphQLObjectType({

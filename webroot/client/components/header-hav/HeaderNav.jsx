@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
-
-const Auth = new AuthService();
+import { HeaderNavContainer } from './HeaderNav.styles';
 
 class Nav extends Component {
   constructor() {
     super();
     this.handleLogout = this.handleLogout.bind(this);
+    this.toggleNav = this.toggleNav.bind(this);
+    this.state = { showHideNav: false };
+    this.Auth = new AuthService();
   }
 
   handleLogout() {
-    Auth.logout();
+    this.Auth.logout();
     this.props.history.replace('/login');
+  }
+
+  toggleNav(e) {
+    e.preventDefault();
+    this.setState({ showHideNav: !this.state.showHideNav });
   }
 
   render() {
@@ -23,13 +30,27 @@ class Nav extends Component {
             <strong>Fizzy Beats</strong>
           </Link>
         </div>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <button
+            onClick={this.toggleNav}
+            className={`navbar-toggler ${this.state.showHideNav ? 'collapsed' : ''}`}
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="true"
+            aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <HeaderNavContainer
+            className={`navbar-collapse ${this.state.showHideNav ? 'showContent' : 'hideContent'}`}
+            id="navbarSupportedContent"
+        >
           <ul className="navbar-nav mr-auto">
-            {Auth.getProfile() && (
+            {this.Auth.getProfile() && (
               <li className="nav-item active">
-                <span className="btn btn-link">
-                  {' '}
-                  { Auth.getProfile().username}
+                <span className="btn btn-link current-user">
+                  { this.Auth.getProfile().username}
                 </span>
               </li>
             )}
@@ -39,33 +60,33 @@ class Nav extends Component {
                   About
               </Link>
             </li>
-            { Auth.loggedIn() ? (
+            { this.Auth.loggedIn() ? (
               <li className="nav-item">
-                <Link to="/profile" className="nav-link">
+                <Link to="/profile" className="nav-link profile-link">
                   Profile
                 </Link>
               </li>
             ) : (
               <li className="nav-item">
-                <Link to="/login" className="nav-link">
+                <Link to="/login" className="nav-link login-link">
            Login
                 </Link>
               </li>
             )}
-            {!Auth.loggedIn() && (
+            {!this.Auth.loggedIn() && (
             <li className="nav-item">
-              <Link to="/register" className="nav-link">
+              <Link to="/register" className="nav-link register-link">
                       Register
               </Link>
             </li>
             )}
-            {Auth.loggedIn() && (
+            {this.Auth.loggedIn() && (
               <li className="nav-item">
-                <button onClick={this.handleLogout} className="btn btn-link">Logout</button>
+                <button onClick={this.handleLogout} className="btn btn-link logout-link">Logout</button>
               </li>
             )}
           </ul>
-        </div>
+        </HeaderNavContainer>
       </nav>
     );
   }
