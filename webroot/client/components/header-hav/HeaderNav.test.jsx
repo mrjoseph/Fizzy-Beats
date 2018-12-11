@@ -5,7 +5,6 @@ import 'jest-styled-components';
 import AuthService from '../../AuthService/AuthService';
 
 const handleLogoutSpy = jest.spyOn(HeaderNav.prototype, 'handleLogout');
-const toggleNavSpy = jest.spyOn(HeaderNav.prototype, 'toggleNav');
 
 jest.mock('../../AuthService/AuthService');
 describe('HeaderNav', () => {
@@ -41,7 +40,7 @@ describe('HeaderNav', () => {
     it('should display the logged in user when logged in', () => {
       const currentUser = component.find('.current-user');
       expect(currentUser).toHaveLength(1);
-      expect(currentUser.text()).toEqual('Tony Stark');
+      expect(currentUser.text()).toEqual('Logged in as Tony Stark');
     });
     it('should display the profile link', () => {
       const profileLink = component.find('.profile-link');

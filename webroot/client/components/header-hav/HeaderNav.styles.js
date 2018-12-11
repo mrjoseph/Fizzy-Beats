@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HeaderNavContainer = styled.div`   
+const HeaderNavContainer = styled.div`   
   transition:max-height .5s ease-in-out;
   overflow:hidden;
     &.showContent {
@@ -23,11 +23,16 @@ export const HeaderNavContainer = styled.div`
 }
 `;
 
-
-const foo = `
-  &.showContent {
-    max-height:600px;
-     height:auto;
-  }
- 
+export const LogoutButton = styled.button`
+   @media only screen and (max-width: 991px) {
+      padding: 0;
+        
+    }
 `;
+
+export const ProfileName = styled.span`
+  @media only screen and (max-width: 991px) {
+    padding: 0;      
+  }
+`;
+export default HeaderNavContainer;

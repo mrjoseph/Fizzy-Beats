@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
-import { HeaderNavContainer } from './HeaderNav.styles';
+import HeaderNavContainer, { LogoutButton, ProfileName } from './HeaderNav.styles';
 
 class Nav extends Component {
   constructor() {
@@ -49,9 +49,9 @@ class Nav extends Component {
           <ul className="navbar-nav mr-auto">
             {this.Auth.getProfile() && (
               <li className="nav-item active">
-                <span className="btn btn-link current-user">
-                  { this.Auth.getProfile().username}
-                </span>
+                <ProfileName className="btn current-user">
+                  { `Logged in as ${this.Auth.getProfile().username}`}
+                </ProfileName>
               </li>
             )}
 
@@ -82,7 +82,7 @@ class Nav extends Component {
             )}
             {this.Auth.loggedIn() && (
               <li className="nav-item">
-                <button onClick={this.handleLogout} className="btn btn-link logout-link">Logout</button>
+                <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
               </li>
             )}
           </ul>
