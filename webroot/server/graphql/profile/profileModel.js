@@ -5,8 +5,6 @@ const usersSchema = new Schema({
   salt: String,
   username: String,
   email: String,
-}, {
-  versionKey: false
-});
+}, { versionKey: false });
 
-module.exports = mongoose.model('User', usersSchema);
+export default mongoose.model('User', usersSchema);

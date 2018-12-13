@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import validation from '../validation/validation';
 import { Form, Title } from '../../../views/register/Register.styles';
 import AuthService from '../../../AuthService/AuthService';
-import LOGIN from '../formConfig/formConfig';
+import { REGISTER } from '../formConfig/formConfig';
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -45,7 +45,11 @@ class RegisterForm extends Component {
     e.preventDefault();
     const { addUser } = this.props;
     this.Auth.register(addUser, this.state).then((data) => {
-      this.setState({ status: data.addUser.status });
+      if(data.status === 'SUCCESS') {
+        this.props.history.replace('/profile');
+      } else {
+        this.setState({ status: data.status });
+      }
     });
   }
 
@@ -67,10 +71,10 @@ class RegisterForm extends Component {
               </div>
           )}
           <Form id="form" onSubmit={this.handleSubmit}>
-            {LOGIN.map(elements => elements.map(props => {
-              const { Component, ...rest } = props;
+            {REGISTER.map(elements => elements.map(props => {
+              const { Components, ...rest } = props;
               return (
-                  <Component
+                  <Components
                       formErrors={formErrors}
                       key={props.name}
                       onChange={this.handleChange}
@@ -100,4 +104,4 @@ RegisterForm.defaultProps = {
   addUser: () => {},
 };
 RegisterForm.displayName = 'RegisterForm';
-export default withRouter(RegisterForm);
+export default (RegisterForm);

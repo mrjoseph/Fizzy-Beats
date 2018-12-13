@@ -1,10 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import graphqlHTTP from 'express-graphql';
 import cors from 'cors';
 import renderHTML from './routes/index';
-import schema from './graphql-schema/user/index';
+// import { typeDefs as usersTypes, resolvers as userResolvers } from './graphql/user/user';
+// const { ApolloServer } = require('apollo-server-express');
+import server from './graphql';
 
 const uri = 'mongodb://127.0.0.1:27017/mixdown';
 
@@ -20,19 +21,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('build'));
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  graphiql: true,
-}));
+// const server = new ApolloServer({ typeDefs: [usersTypes], resolvers: [userResolvers] });
+server.applyMiddleware({ app });
 app.use('/', async (req, res) => {
   const html = await renderHTML(req, res);
   res.send(html);
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+
+app.listen({ port: 5000 }, () => console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`));
 
 /* App set up
 * TODO and 500 pages

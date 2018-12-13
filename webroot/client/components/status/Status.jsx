@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import { GET_USER_QUERY } from '../../graphql/queries/queries';
+import { GET_USERS_QUERY } from '../../graphql/queries/queries';
 
 class Status extends Component {
   render() {
@@ -8,7 +9,7 @@ class Status extends Component {
     if (data.user) {
       return (
         <div>
-hello
+          hello
           {data.user.username}
         </div>
       );
@@ -17,7 +18,10 @@ hello
   }
 }
 
-export default graphql(GET_USER_QUERY, {
+Status.propTypes = {
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
+}
+export default graphql(GET_USERS_QUERY, {
   options: props => ({
     variables: {
       username: props.username,

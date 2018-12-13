@@ -1,4 +1,6 @@
+/* global localStorage */
 import decode from 'jwt-decode';
+import { LOGIN_QUERY } from '../graphql/queries/queries';
 
 export default class AuthService {
   constructor() {
@@ -8,6 +10,7 @@ export default class AuthService {
 
   logout() {
     localStorage.removeItem(this.token);
+    localStorage.removeItem('apollo-cache-persist');
   }
 
   loggedIn() {
@@ -36,25 +39,28 @@ export default class AuthService {
     }
   }
 
-  register(addUser, { username, password, email }) {
-    return new Promise((resolve) => {
-      addUser(
-        {
-          variables:
-                {
-                  username,
-                  email,
-                  password,
-                },
-          update: (cache, { data }) => {
-            if (data.addUser.status === 'SUCCESS') {
-              this.authToken = data.addUser.auth;
-              this.setToken();
-            }
-            resolve(data);
-          },
-        },
-      );
+  login = async (client, { password, email }) => {
+    const { data } = await client.query({
+      query: LOGIN_QUERY,
+      variables: { email, password },
     });
+    if (data.loginUser.status === 'INCORRECT_USERNAME_OR_PASSWORD') {
+      return data;
+    }
+    this.authToken = data.loginUser.auth;
+    this.setToken();
+    return data;
+  };
+
+  register = async (addUser, { username, password, email }) => {
+    const { data } = await addUser({
+      variables: { username, email, password },
+    });
+    if (data.addUser.status === 'USER_EXISTS') {
+      return (data.addUser);
+    }
+    this.authToken = data.addUser.auth;
+    this.setToken();
+    return (data.addUser);
   }
 }

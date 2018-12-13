@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
+import MockRouter from 'react-mock-router';
 import { MockedProvider } from 'react-apollo/test-utils';
 import Register from './Register';
 import AuthService from '../../AuthService/AuthService';
@@ -48,9 +49,11 @@ describe('Register view', () => {
         });
         it('snapshot', () => {
           const tree = renderer.create(
-            <MockedProvider client={ADD_USER_MUTATION}>
-              <Register {...props} />
-            </MockedProvider>,
+            <MockRouter>
+              <MockedProvider client={ADD_USER_MUTATION}>
+                <Register {...props} />
+              </MockedProvider>
+            </MockRouter>,
           ).toJSON();
           expect(tree).toMatchSnapshot();
         });

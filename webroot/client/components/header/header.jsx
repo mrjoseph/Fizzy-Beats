@@ -1,10 +1,13 @@
 import React from 'react';
 import HeaderNav from '../header-hav/HeaderNav';
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 function Header({ history }) {
   return (
     <header>
-      <HeaderNav history={history} />
+      <ErrorBoundary>
+        <HeaderNav history={history} />
+      </ErrorBoundary>
     </header>
   );
 }

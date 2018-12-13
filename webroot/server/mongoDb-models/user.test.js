@@ -1,5 +1,5 @@
 import mockingoose from 'mockingoose';
-import User from './user';
+import User from '../graphql/user/userModel';
 
 describe('User Model', () => {
   const data = [
