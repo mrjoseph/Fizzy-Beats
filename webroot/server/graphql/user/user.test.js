@@ -1,86 +1,33 @@
 // frame works
-import { GraphQLString } from 'graphql';
-import { mockServer } from 'graphql-tools';
-import { UserType } from './old-user';
-import schema from '../index';
+import { makeExecutableSchema, mockServer } from 'graphql-tools';
+import { typeDefs } from '../index';
+
+// const schema = makeExecutableSchema({ typeDefs });
 
 describe('mock server', () => {
   it('should mock the server call', async () => {
-    const myMockServer = await mockServer(schema, {
-      String: () => 'Hello',
+    const myMockServer = await mockServer(typeDefs, {
+      getProfile: () => ({
+        email: 'tony.stark@gmail.com',
+      }),
     });
-    const response = await myMockServer.query(`{
-        users {
-          username,
-          password,
-        }
-    }`);
+    const query = ` 
+    query
+    {
+      getProfile(email:"tony.stark@gmail.com"){
+        username
+        email
+      }
+    }
+  `;
+    const response = await myMockServer.query(query);
     const expected = {
       data: {
-        users: [
-          {
-            username: 'Hello',
-          },
-          {
-            username: 'Hello',
-          },
-        ],
+        getProfile: {
+          username: 'Hello World',
+          email: 'Hello World',
+        },
       },
-    };
-    expect(response).toMatchObject(expected);
-  });
-});
-describe('UserTypes', () => {
-  let userTypeFields;
-  beforeEach(() => {
-    userTypeFields = UserType.getFields();
-  });
-
-  it('Should have type of id', () => {
-    expect(userTypeFields).toHaveProperty('id');
-    expect(userTypeFields.username.type).toMatchObject(GraphQLString);
-  });
-  it('Should have type of username', () => {
-    expect(userTypeFields).toHaveProperty('username');
-    expect(userTypeFields.username.type).toMatchObject(GraphQLString);
-  });
-
-  it('Should have type of email', () => {
-    expect(userTypeFields).toHaveProperty('email');
-    expect(userTypeFields.username.type).toMatchObject(GraphQLString);
-  });
-
-  it('Should have type of salt', () => {
-    expect(userTypeFields).toHaveProperty('salt');
-    expect(userTypeFields.username.type).toMatchObject(GraphQLString);
-  });
-  it('Should have type of password', () => {
-    expect(userTypeFields).toHaveProperty('password');
-    expect(userTypeFields.username.type).toMatchObject(GraphQLString);
-  });
-
-  it('should mock the server call', async () => {
-    const myMockServer = mockServer(schema, {
-      String: () => 'hello',
-    });
-
-    const response = await myMockServer.query(`mutation {
-  addUser(username:"testUser", password: "password",email:"test@test.com") {
-    username,
-    password,
-    email
-  }
-}`);
-    const expected = {
-      data:
-          {
-            addUser:
-                {
-                  username: 'hello',
-                  password: 'hello',
-                  email: 'hello',
-                },
-          },
     };
     expect(response).toMatchObject(expected);
   });

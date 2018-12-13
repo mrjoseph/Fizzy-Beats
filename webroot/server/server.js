@@ -3,8 +3,9 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import renderHTML from './routes/index';
-import { typeDefs, resolvers } from './graphql/user/user';
-const { ApolloServer } = require('apollo-server-express');
+// import { typeDefs as usersTypes, resolvers as userResolvers } from './graphql/user/user';
+// const { ApolloServer } = require('apollo-server-express');
+import server from './graphql';
 
 const uri = 'mongodb://127.0.0.1:27017/mixdown';
 
@@ -20,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('build'));
 
-const server = new ApolloServer({ typeDefs, resolvers });
+// const server = new ApolloServer({ typeDefs: [usersTypes], resolvers: [userResolvers] });
 server.applyMiddleware({ app });
 app.use('/', async (req, res) => {
   const html = await renderHTML(req, res);
