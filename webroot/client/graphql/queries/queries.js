@@ -33,15 +33,12 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
-
 export const GET_USERS_QUERY = gql`
-{
-  users {
-    email
-    username
-    id
-    password
-    salt
+  query ($email: String){
+      getProfile(email:$email){
+      username
+      password
+      email
+    }
   }
-}
 `;

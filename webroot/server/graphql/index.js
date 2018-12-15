@@ -1,34 +1,32 @@
 import { gql, ApolloServer } from 'apollo-server-express';
 
-import {
-  UserType, loginUserQuery, addUserMutation, loginUser, addUser,
-} from './user/user';
+import { typeDefs as profileTypeDefs, resolvers as profileResolvers } from './profile/profile';
+import { typeDefs as userTypeDefs, resolvers as userResolvers } from './user/user';
+import Tracks from './track/tracksModel';
+import User from './user/userModel';
 
-import { getProfile, getProfileQuery, ProfileType } from './profile/profile';
-
-export const typeDefs = gql`
-  ${UserType}
-  ${ProfileType}
-  type Query{
-    ${loginUserQuery}
-    ${getProfileQuery}
+const context = {
+  Tracks,
+  User,
+};
+const linkSchema = gql`
+  type Query {
+    _: Boolean
   }
-   type Mutation {
-    ${addUserMutation}
-   }
+
+  type Profile {
+    _: Boolean
+  }
+  
+    type Mutation {
+    _: Boolean
+  }
 `;
 
-
-const resolvers = {
-  Query: {
-    getProfile,
-    loginUser,
-  },
-  Mutation: {
-    addUser,
-  },
-};
-
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs: [linkSchema, profileTypeDefs, userTypeDefs],
+  resolvers: [profileResolvers, userResolvers],
+  context,
+});
 
 export default server;
