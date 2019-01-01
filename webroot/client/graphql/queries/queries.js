@@ -34,11 +34,15 @@ export const LOGIN_QUERY = gql`
 `;
 
 export const GET_USERS_QUERY = gql`
-  query ($email: String){
-      getProfile(email:$email){
+  query ($id: ID){
+      profile(id:$id){
       username
-      password
       email
+      track{
+        name
+        genre
+        id
+      }
     }
   }
 `;

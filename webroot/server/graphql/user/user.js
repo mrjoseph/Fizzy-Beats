@@ -1,7 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { gql } from 'apollo-server-express';
 
-import User from './userModel';
 import { slatHashPassword, unHashPassword } from '../../utils/encription';
 
 export const typeDefs = gql`
@@ -34,10 +33,10 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    loginUser: async (parent, args) => { // --> LOGIN
+    loginUser: async (parent, { email, password }, { User }) => {
       const error = { status: 'INCORRECT_USERNAME_OR_PASSWORD' };
       const errorNoUser = { status: 'NO_USER_FOUND' };
-      const user = await User.findOne({ email: args.email });
+      const user = await User.findOne({ email });
       if (!user) {
         return errorNoUser;
       }
@@ -48,8 +47,8 @@ export const resolvers = {
         password: storedPassword,
         id,
       } = user;
-      const passwordHash = unHashPassword(args.password, salt);
-      if (storedPassword === passwordHash && storedEmail === args.email) {
+      const passwordHash = unHashPassword(password, salt);
+      if (storedPassword === passwordHash && storedEmail === email) {
         const auth = jsonwebtoken.sign({
           username: user.username,
           id: user.id,
@@ -61,7 +60,7 @@ export const resolvers = {
           auth,
           status: 'SUCCESS',
           username,
-          email: args.email,
+          email,
           id,
         };
       }
@@ -69,15 +68,15 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, args) => {
-      const { passwordHash, salt } = slatHashPassword(args.password);
+    addUser: async (parent, { username, email, password }, { User }) => {
+      const { passwordHash, salt } = slatHashPassword(password);
       const user = new User({
-        username: args.username,
-        email: args.email,
+        username,
+        email,
         salt,
         password: passwordHash,
       });
-      const existingUser = await User.findOne({ email: args.email });
+      const existingUser = await User.findOne({ email });
       if (existingUser) {
         return { status: 'USER_EXISTS' };
       }
@@ -91,8 +90,8 @@ export const resolvers = {
       { expiresIn: '1y' });
       return {
         auth,
-        username: args.username,
-        email: args.email,
+        username,
+        email,
         status: 'SUCCESS',
       };
     },

@@ -9,11 +9,27 @@ class Profile extends Component {
     const { data } = this.props;
     if (data.loading) return 'Loading...';
     if (data.error) return 'Error...';
-    const { getProfile: { email, username } } = data;
+    const { profile: { email, username, track } } = data;
     return (
-      <div>
+      <div className="container">
         <div>{email}</div>
         <div>{username}</div>
+        <div>
+          {
+          track && track.map(({ name, genre, id }) => (
+            <div key={id}>
+              <div>
+                name:
+                {name}
+              </div>
+              <div>
+                genre:
+                {genre}
+              </div>
+            </div>
+          ))
+        }
+        </div>
       </div>
     );
   }
@@ -29,7 +45,7 @@ export default withAuth(graphql(GET_USERS_QUERY, {
   options: props => ({
     name: 'userData',
     variables: {
-      email: props.user && props.user.email,
+      id: props.user && props.user.id,
     },
   }),
 })(Profile));
