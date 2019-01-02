@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
 import HeaderNavContainer, { LogoutButton, ProfileName } from './HeaderNav.styles';
@@ -14,15 +15,18 @@ class Nav extends Component {
 
   handleLogout() {
     this.Auth.logout();
-    this.props.history.replace('/login');
+    const { history: { replace } } = this.props;
+    replace('/login');
   }
 
   toggleNav(e) {
     e.preventDefault();
-    this.setState({ showHideNav: !this.state.showHideNav });
+    const { showHideNav } = this.state;
+    this.setState({ showHideNav: !showHideNav });
   }
 
   render() {
+    const { showHideNav } = this.state;
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
@@ -31,20 +35,20 @@ class Nav extends Component {
           </Link>
         </div>
         <button
-            onClick={this.toggleNav}
-            className={`navbar-toggler ${this.state.showHideNav ? 'collapsed' : ''}`}
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="true"
-            aria-label="Toggle navigation"
+          onClick={this.toggleNav}
+          className={`navbar-toggler ${showHideNav ? 'collapsed' : ''}`}
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
         </button>
         <HeaderNavContainer
-            className={`navbar-collapse ${this.state.showHideNav ? 'showContent' : 'hideContent'}`}
-            id="navbarSupportedContent"
+          className={`navbar-collapse ${showHideNav ? 'showContent' : 'hideContent'}`}
+          id="navbarSupportedContent"
         >
           <ul className="navbar-nav mr-auto">
             {this.Auth.getProfile() && (
@@ -91,5 +95,9 @@ class Nav extends Component {
     );
   }
 }
-
+Nav.propTypes = {
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }).isRequired,
+};
 export default Nav;
