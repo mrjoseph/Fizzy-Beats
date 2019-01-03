@@ -77,12 +77,18 @@ class Nav extends Component {
                 </Link>
               </li>
             )}
-            {!this.Auth.loggedIn() && (
-            <li className="nav-item">
-              <Link to="/register" className="nav-link register-link">
+            {!this.Auth.loggedIn() ? (
+              <li className="nav-item">
+                <Link to="/register" className="nav-link register-link">
                       Register
-              </Link>
-            </li>
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link to="/register" className="nav-link register-link">
+                    Add release
+                </Link>
+              </li>
             )}
             {this.Auth.loggedIn() && (
               <li className="nav-item">
