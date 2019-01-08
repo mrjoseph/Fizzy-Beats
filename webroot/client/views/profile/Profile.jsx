@@ -3,15 +3,18 @@ import { graphql } from 'react-apollo';
 import withAuth from '../../AuthService/withAuth';
 import { Title } from '../../styledComponents/index.styles';
 import { GET_USERS_QUERY } from '../../graphql/queries/queries';
+import UploadForm from '../../components/form/uploadForm/uploadForm';
 
 class Profile extends Component {
   render() {
-    const { data } = this.props;
+    const { data, user } = this.props;
     if (data.loading) return 'Loading...';
     if (data.error) return 'Error...';
     const { profile: { email, username, track } } = data;
+    const { id: userId } = user;
     return (
       <div className="container">
+        <UploadForm userId={userId} />
         <div>{email}</div>
         <div>{username}</div>
         <div>

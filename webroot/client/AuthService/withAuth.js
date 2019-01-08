@@ -27,9 +27,14 @@ const withAuth = AuthComponent => class AuthWrapped extends Component {
   }
 
   render() {
-    if (this.state.user) {
+    const { user } = this.state;
+    const { history } = this.props;
+    if (user) {
       return (
-        <AuthComponent history={this.props.history} user={this.state.user} />
+        <AuthComponent
+          history={history}
+          user={user}
+        />
       );
     }
 
