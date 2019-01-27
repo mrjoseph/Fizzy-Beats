@@ -30,9 +30,21 @@ export const LogoutButton = styled.button`
     }
 `;
 
-export const ProfileName = styled.span`
+export const ProfileName = styled.div`
   @media only screen and (max-width: 991px) {
     padding: 0;      
   }
+`;
+
+export const ProfileImage = styled.div`
+  width: 30px;
+  height:30px;
+  img {
+    width:100%;
+  }
+`;
+
+export const ProfileBlock = styled.li`
+  display:flex;
 `;
 export default HeaderNavContainer;

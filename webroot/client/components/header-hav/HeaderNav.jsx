@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
-import HeaderNavContainer, { LogoutButton, ProfileName } from './HeaderNav.styles';
+import HeaderNavContainer, {
+  LogoutButton,
+  ProfileName,
+  ProfileImage,
+  ProfileBlock,
+} from './HeaderNav.styles';
 
 class Nav extends Component {
   constructor() {
@@ -25,8 +30,20 @@ class Nav extends Component {
     this.setState({ showHideNav: !showHideNav });
   }
 
+  getProfileImage () {
+    let profileImage;
+    try {
+      profileImage = this.Auth.getProfile() && require(`../../assets/${this.Auth.getProfile().id}/profile-pic.jpg`);
+      return profileImage;
+    }
+    catch (e) {
+      throw (e);
+    }
+  }
+
   render() {
     const { showHideNav } = this.state;
+
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
@@ -51,14 +68,6 @@ class Nav extends Component {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mr-auto">
-            {this.Auth.getProfile() && (
-              <li className="nav-item active">
-                <ProfileName className="btn current-user">
-                  { `Logged in as ${this.Auth.getProfile().username}`}
-                </ProfileName>
-              </li>
-            )}
-
             <li className="nav-item">
               <Link to="/about" className="nav-link">
                   About
@@ -94,6 +103,16 @@ class Nav extends Component {
               <li className="nav-item">
                 <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
               </li>
+            )}
+            {this.Auth.getProfile() && (
+              <ProfileBlock className="nav-item active">
+                <ProfileName className="btn current-user">
+                  { `Logged in as ${this.Auth.getProfile().username}`}
+                </ProfileName>
+                <ProfileImage>
+                  <img src={this.getProfileImage()} alt="picture" />
+                </ProfileImage>
+              </ProfileBlock>
             )}
           </ul>
         </HeaderNavContainer>

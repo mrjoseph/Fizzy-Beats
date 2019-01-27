@@ -1,5 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { gql } from 'apollo-server-express';
+import fs from 'fs';
 
 import { slatHashPassword, unHashPassword } from '../../utils/encription';
 
@@ -21,7 +22,7 @@ export const typeDefs = gql`
         auth: String
       ): User
    }
-      extend type Mutation {
+    extend type Mutation {
      addUser(
         username: String,
         email: String,
@@ -81,6 +82,9 @@ export const resolvers = {
         return { status: 'USER_EXISTS' };
       }
       user.save();
+      fs.mkdir(`./webroot/client/assets/${user.id}`, { recursive: true }, (err) => {
+        if (err) throw err;
+      });
       const auth = jsonwebtoken.sign({
         username: user.username,
         id: user.id,

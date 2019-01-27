@@ -28,6 +28,7 @@ node_modules
 # Ignore build files
 build/
 uploads/
+webroot/client/assets/
 
 .idea
 .idea/workspace.xml

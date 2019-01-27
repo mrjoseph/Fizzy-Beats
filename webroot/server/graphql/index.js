@@ -10,15 +10,15 @@ const { createWriteStream } = require('fs');
 
 const uploadTypeDefs = `
   extend type Mutation {
-    uploadFile(file: Upload!): Boolean
+    uploadFile(file: Upload!, userId: String!): Boolean
   }
   extend type Query {
     hello: String
   }
 `;
 
-const storeUpload = ({ stream, filename }) => new Promise((resolve, reject) => stream
-  .pipe(createWriteStream(`images/${filename}`))
+const storeUpload = ({ stream, filename, userId }) => new Promise((resolve, reject) => stream
+  .pipe(createWriteStream(`./webroot/client/assets/${userId}/${filename}`))
   .on('finish', () => resolve())
   .on('error', reject));
 
@@ -30,9 +30,9 @@ const context = {
 const uploadResolvers = {
   Mutation: {
     uploadFile: async (parent, { file, userId }) => {
-      console.log(parent);
+      console.log(userId);
       const { stream, filename } = await file;
-      await storeUpload({ stream, filename });
+      await storeUpload({ stream, filename, userId });
       return true;
     },
   },
@@ -40,7 +40,7 @@ const uploadResolvers = {
     hello: () => 'hi',
   },
 };
-const linkSchema = gql`
+export const linkSchema = gql`
   type Query {
     _: Boolean
   }
@@ -53,9 +53,9 @@ const linkSchema = gql`
     _: Boolean
   }
 `;
-
+export const typeDefs = [linkSchema, profileTypeDefs, userTypeDefs, uploadTypeDefs];
 const server = new ApolloServer({
-  typeDefs: [linkSchema, profileTypeDefs, userTypeDefs, uploadTypeDefs],
+  typeDefs,
   resolvers: [profileResolvers, userResolvers, uploadResolvers],
   context,
 });

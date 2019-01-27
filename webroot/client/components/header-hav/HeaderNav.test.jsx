@@ -26,7 +26,7 @@ describe('HeaderNav', () => {
         email: 'test@test.com',
         exp: 1575838244,
         iat: 1544280644,
-        id: '5c031d9f39b17a5a5744bc7f',
+        id: '5c410f6e84d980e324c5ade8',
         username: 'Tony Stark',
       };
       AuthService.mockImplementation(
@@ -49,6 +49,7 @@ describe('HeaderNav', () => {
     });
     it('should display the logout button', () => {
       const logout = component.find('.logout-link');
+      console.log('logout', logout.debug());
       expect(logout).toHaveLength(1);
       expect(logout.props().children).toEqual('Logout');
     });
@@ -90,12 +91,12 @@ describe('HeaderNav', () => {
         email: 'test@test.com',
         exp: 1575838244,
         iat: 1544280644,
-        id: '5c031d9f39b17a5a5744bc7f',
+        id: '5c410f6e84d980e324c5ade8',
         username: 'Tony Stark',
       };
       AuthService.mockImplementation(
         () => ({
-          loggedIn: () => true,
+          loggedIn: () => jest.fn(() => true),
           logout: () => jest.fn(),
           getProfile: jest.fn().mockReturnValue(getProfileReturnValue),
         }),
@@ -104,7 +105,6 @@ describe('HeaderNav', () => {
     });
     it('should logout the user', () => {
       const logout = component.find('.logout-link');
-
       logout.simulate('click', { preventDefault() {} });
       expect(handleLogoutSpy).toHaveBeenCalled();
       expect(replaceSpy).toHaveBeenCalled();
