@@ -4,17 +4,25 @@ import withAuth from '../../AuthService/withAuth';
 import { Title } from '../../styledComponents/index.styles';
 import { GET_USERS_QUERY } from '../../graphql/queries/queries';
 import UploadForm from '../../components/form/uploadForm/uploadForm';
+import ProfileImage from '../../components/profile-image/ProfileImage';
+import S3Uploader from '../../components/form/s3Uploader/s3Uploader';
 
 class Profile extends Component {
   render() {
     const { data, user } = this.props;
     if (data.loading) return 'Loading...';
     if (data.error) return 'Error...';
-    const { profile: { email, username, track } } = data;
+    const { profile: { email, username, track, profileImage } } = data;
     const { id: userId } = user;
     return (
       <div className="container">
-        <UploadForm userId={userId} />
+        <S3Uploader userId={userId} />
+        <ProfileImage
+          width="300px"
+          userId={userId}
+          username={username}
+          profileImage={profileImage}
+        />
         <div>{email}</div>
         <div>{username}</div>
         <div>

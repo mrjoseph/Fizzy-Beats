@@ -38,6 +38,7 @@ export const GET_USERS_QUERY = gql`
       profile(id:$id){
       username
       email
+      profileImage
       track{
         name
         genre

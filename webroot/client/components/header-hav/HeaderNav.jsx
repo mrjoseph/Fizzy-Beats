@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
+import ProfileImage from '../profile-image/ProfileImage';
 import HeaderNavContainer, {
   LogoutButton,
   ProfileName,
-  ProfileImage,
   ProfileBlock,
 } from './HeaderNav.styles';
+
 
 class Nav extends Component {
   constructor() {
@@ -30,20 +31,9 @@ class Nav extends Component {
     this.setState({ showHideNav: !showHideNav });
   }
 
-  getProfileImage () {
-    let profileImage;
-    try {
-      profileImage = this.Auth.getProfile() && require(`../../assets/${this.Auth.getProfile().id}/profile-pic.jpg`);
-      return profileImage;
-    }
-    catch (e) {
-      throw (e);
-    }
-  }
-
   render() {
     const { showHideNav } = this.state;
-
+    console.log(this.props);
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
@@ -109,9 +99,12 @@ class Nav extends Component {
                 <ProfileName className="btn current-user">
                   { `Logged in as ${this.Auth.getProfile().username}`}
                 </ProfileName>
-                <ProfileImage>
-                  <img src={this.getProfileImage()} alt="picture" />
-                </ProfileImage>
+                <ProfileImage
+                  width="30px"
+                  userId={this.Auth.getProfile().id}
+                  username={this.Auth.getProfile().username}
+                  profileImage={false}
+                />
               </ProfileBlock>
             )}
           </ul>

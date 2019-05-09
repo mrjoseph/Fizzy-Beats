@@ -1,10 +1,11 @@
 import { gql, ApolloServer } from 'apollo-server-express';
-
+import fs from 'fs';
 import { typeDefs as profileTypeDefs, resolvers as profileResolvers } from './profile/profile';
 import { typeDefs as userTypeDefs, resolvers as userResolvers } from './user/user';
 import Tracks from './track/tracksModel';
 import User from './user/userModel';
 
+const pngToJpeg = require('png-to-jpeg');
 const { GraphQLServer } = require('graphql-yoga');
 const { createWriteStream } = require('fs');
 
@@ -30,14 +31,17 @@ const context = {
 const uploadResolvers = {
   Mutation: {
     uploadFile: async (parent, { file, userId }) => {
-      console.log(userId);
       const { stream, filename } = await file;
       await storeUpload({ stream, filename, userId });
+      const buffer = fs.readFileSync(`./webroot/client/assets/${userId}/${filename}`);
+      pngToJpeg({ quality: 90 })(buffer)
+        .then(output => fs.writeFileSync(`./webroot/client/assets/${userId}/profile-pic.jpg`, output));
+      fs.unlinkSync(`./webroot/client/assets/${userId}/${filename}`);
       return true;
     },
   },
   Query: {
-    hello: () => 'hi',
+    hello: () => 'Upload to Node JS',
   },
 };
 export const linkSchema = gql`
@@ -48,7 +52,7 @@ export const linkSchema = gql`
   type Profile {
     _: Boolean
   }
-  
+
     type Mutation {
     _: Boolean
   }

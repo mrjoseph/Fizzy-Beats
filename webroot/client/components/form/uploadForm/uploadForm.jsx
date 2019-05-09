@@ -20,8 +20,30 @@ const helloQuery = gql`
 `;
 
 class UploadForm extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: [],
+    };
+    this.onDrop = this.onDrop.bind(this);
+  }
+
+  onDrop(mutate) {
     const { userId } = this.props;
+    return ([file]) => mutate({
+      variables: {
+        file,
+        userId,
+      },
+    });
+  }
+
+  formatFileName(name) {
+    console.log(name);
+    return name;
+  }
+
+  render() {
     return (
       <div>
         <Query query={helloQuery}>
@@ -38,7 +60,7 @@ class UploadForm extends Component {
 
         <Mutation mutation={uploadFileMutation}>
           {mutate => (
-            <Dropzone onDrop={([file]) => mutate({ variables: { file, userId } })}>
+            <Dropzone onDrop={this.onDrop(mutate)}>
               {({ getRootProps, getInputProps, isDragActive }) => (
                 <DropArea
                   {...getRootProps()}

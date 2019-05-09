@@ -76,6 +76,7 @@ export const resolvers = {
         email,
         salt,
         password: passwordHash,
+        profileImage: false,
       });
       const existingUser = await User.findOne({ email });
       if (existingUser) {
@@ -84,6 +85,10 @@ export const resolvers = {
       user.save();
       fs.mkdir(`./webroot/client/assets/${user.id}`, { recursive: true }, (err) => {
         if (err) throw err;
+        fs.copyFile('./webroot/client/assets/images/profile-pic.jpg', `./webroot/client/assets/${user.id}/profile-pic.jpg`, (error) => {
+          if (error) throw err;
+          console.log('image copied!');
+        });
       });
       const auth = jsonwebtoken.sign({
         username: user.username,

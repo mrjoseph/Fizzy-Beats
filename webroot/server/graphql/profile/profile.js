@@ -9,6 +9,7 @@ export const typeDefs = gql`
     password: String
     status: String
     auth: String
+    profileImage: Boolean
     track: [Track!]!
   }
     extend type Query{
