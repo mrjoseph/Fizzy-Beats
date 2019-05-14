@@ -31,19 +31,3 @@ app.use('/', async (req, res) => {
 
 app.listen({ port: 5000 }, () => console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`));
 
-/* App set up
-* TODO and 500 pages
-* TODO add environment variables
-* TODO add Redux to handle app state server side
-* TODO add redux logger for development build
-* TODO set up social media accounts, TW, YouTube, SC, BandCamp
-* TODO How do we render content in the header? React helmet
-* TODO add pre commit hook
-* TODO Build assets
-* TODO FAVICON
-* */
-
-/* Design app
-* TODO Design homespage
-* TODO Design admin
-* */
