@@ -23,15 +23,6 @@ class Upload extends React.Component {
     });
   };
 
-  uploadToS3 = async (file, signedRequest) => {
-    const options = {
-      headers: {
-        'Content-Type': file.type,
-      },
-    };
-    await axios.put(signedRequest, file, options);
-  };
-
   formatFilename = (filename) => {
     const date = moment().format('YYYYMMDD');
     const randomString = Math.random()
@@ -42,32 +33,41 @@ class Upload extends React.Component {
     return newFilename.substring(0, 60);
   };
 
+  uploadToS3 = async (file, signedRequest) => {
+    const options = {
+      headers: {
+        'Content-Type': file.type,
+      },
+    };
+    await fetch(signedRequest, file, options);
+  };
+
   submit = async () => {
     const { name, file } = this.state;
-    const response = await this.props.s3Sign({
-      variables: {
-        filename: this.formatFilename(file.name),
-        filetype: file.type,
-      },
-    });
+    const signedRequest = 'http://localhost:3003/upload';
+    // const response = await this.props.s3Sign({
+    //   variables: {
+    //     filename: this.formatFilename(file.name),
+    //     filetype: file.type,
+    //   },
+    // });
 
-    const { signedRequest, url } = response.data.signS3;
+    // const { signedRequest, url } = response.data.signS3;
     await this.uploadToS3(file, signedRequest);
 
-    const graphqlResponse = await this.props.createChampion({
-      variables: {
-        name,
-        pictureUrl: url,
-      },
-    });
+    // const graphqlResponse = await this.props.createChampion({
+    //   variables: {
+    //     name,
+    //     pictureUrl: url,
+    //   },
+    // });
 
-    this.props.history.push(
-      `/champion/${graphqlResponse.data.createChampion.id}`,
-    );
+    // this.props.history.push(
+    //   `/champion/${graphqlResponse.data.createChampion.id}`,
+    // );
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Dropzone onDrop={this.onDrop}>
@@ -91,13 +91,13 @@ class Upload extends React.Component {
   }
 }
 
-const CreateChampionMutation = gql`
-  mutation($name: String!, $pictureUrl: String!) {
-    createChampion(name: $name, pictureUrl: $pictureUrl) {
-      id
-    }
-  }
-`;
+// const CreateChampionMutation = gql`
+//   mutation($name: String!, $pictureUrl: String!) {
+//     createChampion(name: $name, pictureUrl: $pictureUrl) {
+//       id
+//     }
+//   }
+// `;
 
 const s3SignMutation = gql`
   mutation($filename: String!, $filetype: String!) {
@@ -109,6 +109,6 @@ const s3SignMutation = gql`
 `;
 
 export default compose(
-  graphql(CreateChampionMutation, { name: 'createChampion' }),
+  //graphql(CreateChampionMutation, { name: 'createChampion' }),
   graphql(s3SignMutation, { name: 's3Sign' }),
 )(Upload);

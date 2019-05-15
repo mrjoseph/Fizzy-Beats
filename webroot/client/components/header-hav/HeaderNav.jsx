@@ -33,7 +33,6 @@ class Nav extends Component {
 
   render() {
     const { showHideNav } = this.state;
-    console.log(this.props);
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">

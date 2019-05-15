@@ -2,6 +2,7 @@ import { gql, ApolloServer } from 'apollo-server-express';
 import fs from 'fs';
 import { typeDefs as profileTypeDefs, resolvers as profileResolvers } from './profile/profile';
 import { typeDefs as userTypeDefs, resolvers as userResolvers } from './user/user';
+// import { typeDefs as uploadTypeDefs, resolvers as uploadResolvers } from './user/user';
 import Tracks from './track/tracksModel';
 import User from './user/userModel';
 
@@ -17,6 +18,29 @@ const uploadTypeDefs = `
     hello: String
   }
 `;
+
+const s3TypeDefs = `
+extend type Query {
+  url: String!,
+}
+extend type Mutation {
+  signS3(filename: String!, filetype: String!): Boolean
+}
+`;
+
+
+export const s3Resolver = {
+  Mutation: {
+    signS3: async () => {
+      // add file to database
+    }
+  },
+  Query:{
+    url: () => 'http://localhost:3003/upload',
+  }
+}
+
+
 
 const storeUpload = ({ stream, filename, userId }) => new Promise((resolve, reject) => stream
   .pipe(createWriteStream(`./webroot/client/assets/${userId}/${filename}`))
@@ -44,6 +68,8 @@ const uploadResolvers = {
     hello: () => 'Upload to Node JS',
   },
 };
+
+
 export const linkSchema = gql`
   type Query {
     _: Boolean
@@ -57,7 +83,7 @@ export const linkSchema = gql`
     _: Boolean
   }
 `;
-export const typeDefs = [linkSchema, profileTypeDefs, userTypeDefs, uploadTypeDefs];
+export const typeDefs = [linkSchema, profileTypeDefs, userTypeDefs, uploadTypeDefs, s3TypeDefs];
 const server = new ApolloServer({
   typeDefs,
   resolvers: [profileResolvers, userResolvers, uploadResolvers],

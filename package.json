@@ -10,7 +10,8 @@
     "start:dev": "webpack-dev-server --mode=development --open",
     "start:cdn": "nodemon webroot/cdn/index.js",
     "start:db": "./start-db.sh",
-    "stop:db": " mongod --quiet"
+    "stop:db": " mongod --quiet",
+    "start": "concurrently \"yarn start:cdn \" \"yarn start:dev \" \"yarn start:server \""
   },
   "repository": {
     "type": "git",
@@ -58,6 +59,7 @@
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "body-parser": "^1.18.3",
     "classname": "^0.0.0",
+    "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "css-loader": "^1.0.0",
     "dotenv": "^6.1.0",
