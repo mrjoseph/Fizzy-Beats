@@ -6,7 +6,7 @@ import { ProfileImageCropArea } from './profileImage.styles';
 class ProfileImage extends Component {
   getProfileImage() {
     const { userId } = this.props;
-    const image = require(`../../assets/${userId}/profile-pic.jpg`);
+    const image = `http://localhost:3003/static/${userId}/profile-pic.jpg`;
     return image;
   }
 

@@ -1,7 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { gql } from 'apollo-server-express';
-import fs from 'fs';
-
+import axios from 'axios';
 import { slatHashPassword, unHashPassword } from '../../utils/encription';
 
 export const typeDefs = gql`
@@ -83,13 +82,18 @@ export const resolvers = {
         return { status: 'USER_EXISTS' };
       }
       user.save();
-      fs.mkdir(`./webroot/client/assets/${user.id}`, { recursive: true }, (err) => {
-        if (err) throw err;
-        fs.copyFile('./webroot/client/assets/images/profile-pic.jpg', `./webroot/client/assets/${user.id}/profile-pic.jpg`, (error) => {
-          if (error) throw err;
-          console.log('image copied!');
-        });
-      });
+      // fs.mkdir(`./webroot/client/assets/${user.id}`, { recursive: true }, (err) => {
+      //   if (err) throw err;
+      //   fs.copyFile('./webroot/client/assets/images/profile-pic.jpg', `./webroot/client/assets/${user.id}/profile-pic.jpg`, (error) => {
+      //     if (error) throw err;
+      //     console.log('image copied!');
+      //   });
+      // });
+
+      axios.post('http://localhost:3003/create-storage', {
+        userId: user.id,
+      })
+   
       const auth = jsonwebtoken.sign({
         username: user.username,
         id: user.id,

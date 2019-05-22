@@ -17,12 +17,6 @@ class Profile extends Component {
     return (
       <div className="container">
         <S3Uploader userId={userId} />
-        <ProfileImage
-          width="300px"
-          userId={userId}
-          username={username}
-          profileImage={profileImage}
-        />
         <div>{email}</div>
         <div>{username}</div>
         <div>

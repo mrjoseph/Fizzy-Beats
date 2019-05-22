@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import moment from 'moment';
@@ -6,22 +6,51 @@ import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import { DropArea } from '../uploadForm/uploadForm.styles';
 import classNames from 'classname';
+import { UploaderImage, Image, PreviewItemsUl } from './uploader.styles';
 
-class Upload extends React.Component {
-  state = {
-    name: '',
-    file: null,
-  };
+
+const PreviewItems = ({ items }) => {
+  return(<PreviewItemsUl>
+    {
+        items.map(({ item }) => {
+          if(item) {
+            return (
+              <UploaderImage key={item}>
+                 <Image src={item} alt="" />
+              </UploaderImage>
+              )
+          }
+        })
+    }
+  </PreviewItemsUl>)
+}
+
+class Upload extends Component {
+  constructor(props){
+    super();
+    this.state = {
+      name: '',
+      file: null,
+      images: []
+    };
+  }
+
 
   onDrop = async (files) => {
-    this.setState({ file: files[0] });
+    this.setState({ file: files });   
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onabort = () => console.log('file reading was aborted')
+      reader.onerror = () => console.log('file reading has failed')
+      reader.onload = () => { 
+        const currentState = this.state.images;
+         const result = [{item: reader.result}, ...currentState]
+         this.setState({images: result});
+      }
+    }); 
   };
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
 
   formatFilename = (filename) => {
     const date = moment().format('YYYYMMDD');
@@ -33,38 +62,36 @@ class Upload extends React.Component {
     return newFilename.substring(0, 60);
   };
 
-  uploadToS3 = async (file, signedRequest) => {
+  uploadAssets = async (fileList, signedRequest, userId) => {
+    const data = new FormData();
+    fileList.forEach((file) => { data.append('files', file); })
+    data.append('userId', userId);
     const options = {
-      headers: {
-        'Content-Type': file.type,
-      },
+      method: 'POST',
+      body: data
     };
-    await fetch(signedRequest, file, options);
+    try {
+      const response = await fetch(signedRequest, options);
+      if (response.ok) {
+        return response.json();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   submit = async () => {
-    const { name, file } = this.state;
-    const signedRequest = 'http://localhost:3003/upload';
-    // const response = await this.props.s3Sign({
-    //   variables: {
-    //     filename: this.formatFilename(file.name),
-    //     filetype: file.type,
-    //   },
-    // });
-
-    // const { signedRequest, url } = response.data.signS3;
-    await this.uploadToS3(file, signedRequest);
-
-    // const graphqlResponse = await this.props.createChampion({
-    //   variables: {
-    //     name,
-    //     pictureUrl: url,
-    //   },
-    // });
-
-    // this.props.history.push(
-    //   `/champion/${graphqlResponse.data.createChampion.id}`,
-    // );
+    const { file } = this.state;
+    const url = 'http://localhost:3003/upload';
+    await this.uploadAssets(file, url,this.props.userId);
+    const files = file.map(({name, size, type}) => ({ name, size, type }));
+    const res = await this.props.addAssets({
+        variables: {
+          files: files,
+          userId: this.props.userId,
+        },
+      });
+      this.setState({successMessage: res.data.addAssets.message})
   };
 
   render() {
@@ -85,30 +112,24 @@ class Upload extends React.Component {
             </DropArea>
           )}
         </Dropzone>
+        {this.state.successMessage && <div> {this.state.successMessage}</div>}
+        {this.state.images && <PreviewItems items={this.state.images} />}
+       
         <button onClick={this.submit}>Submit</button>
       </div>
     );
   }
 }
 
-// const CreateChampionMutation = gql`
-//   mutation($name: String!, $pictureUrl: String!) {
-//     createChampion(name: $name, pictureUrl: $pictureUrl) {
-//       id
-//     }
-//   }
-// `;
-
-const s3SignMutation = gql`
-  mutation($filename: String!, $filetype: String!) {
-    signS3(filename: $filename, filetype: $filetype) {
-      url
-      signedRequest
+const addAssetsMutation = gql`
+  mutation($files: [File]!, $userId: String!) {
+    addAssets(files: $files, userId: $userId) {
+      message
     }
   }
 `;
 
 export default compose(
   //graphql(CreateChampionMutation, { name: 'createChampion' }),
-  graphql(s3SignMutation, { name: 's3Sign' }),
+  graphql(addAssetsMutation, { name: 'addAssets' }),
 )(Upload);
