@@ -13,7 +13,7 @@ class ProfileImage extends Component {
   render() {
     const { username } = this.props;
     const theme = {
-      width: '60px',
+      width: '40px',
     };
     return (
       <ThemeProvider theme={theme}>

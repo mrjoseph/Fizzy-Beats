@@ -56,7 +56,7 @@ class Nav extends Component {
           className={`navbar-collapse ${showHideNav ? 'showContent' : 'hideContent'}`}
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/about" className="nav-link">
                   About
@@ -64,8 +64,8 @@ class Nav extends Component {
             </li>
             { this.Auth.loggedIn() ? (
               <li className="nav-item">
-                <Link to="/profile" className="nav-link profile-link">
-                  Profile
+                <Link to="/upload" className="nav-link profile-link">
+                  Upload
                 </Link>
               </li>
             ) : (
@@ -96,10 +96,9 @@ class Nav extends Component {
             {this.Auth.getProfile() && (
               <ProfileBlock className="nav-item active">
                 <ProfileName className="btn current-user">
-                  { `Logged in as ${this.Auth.getProfile().username}`}
+                  { `${this.Auth.getProfile().username}`}
                 </ProfileName>
                 <ProfileImage
-                  width="30px"
                   userId={this.Auth.getProfile().id}
                   username={this.Auth.getProfile().username}
                   profileImage={false}

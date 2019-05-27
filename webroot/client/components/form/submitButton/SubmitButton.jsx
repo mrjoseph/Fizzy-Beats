@@ -10,7 +10,7 @@ export class SubmitButton extends Component {
         type="submit"
         disabled={this.props.submitDisabled()}
     >
-      Sign up
+      {this.props.children ? this.props.children : 'Sign up'}
     </button>;
   }
 }

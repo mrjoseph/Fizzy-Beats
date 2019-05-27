@@ -8,3 +8,8 @@ export const DropArea = styled.div`
   margin: 100px auto;
   padding: 20px;
 `;
+
+export const UploadForm = styled.form`
+  display: table;
+  margin: 40px auto;
+`;

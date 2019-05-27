@@ -6,6 +6,7 @@ import User from './views/user/user';
 import About from './views/about/about';
 import Register from './views/register/Register';
 import Profile from './views/profile/Profile';
+import Upload from './views/upload/Upload';
 import NotFound from './views/not-found/not-found';
 import Header from './components/header/header';
 import Login from './views/login/Login';
@@ -21,7 +22,7 @@ const App = ({ history }) => (
       <Route exact path="/about" component={About} />
       <Route exact path="/user" component={User} />
       <Route exact path="/register" component={Register} />
-      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/upload" component={Upload} />
       <Route exact path="/login" component={Login} />
       <Route component={NotFound} />
     </Switch>

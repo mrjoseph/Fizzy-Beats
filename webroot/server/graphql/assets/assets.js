@@ -1,4 +1,3 @@
-import jsonwebtoken from 'jsonwebtoken';
 import { gql } from 'apollo-server-express';
 
 
@@ -40,18 +39,19 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     getAssets: async (parent, args, { Assets }) => Assets.find({}),
-    getAsset: async (parent, { userId }, { Assets }) => Assets.findOne({userId}),
+    getAsset: async (parent, { userId }, { Assets }) => {
+      return Assets.findOne({userId});
+    },
 
   },
   Mutation: {
     addAssets: async (parent, obj, { Assets }) => {
       const { userId, files } = obj; 
       const currentAssets = await Assets.findOne({userId});
-      
-      if(userId) {
+      if(userId && currentAssets !== null) {
         const query = {userId: userId}
-        const response = await Assets.findOneAndUpdate(query, { $set: { files: [...files, ...currentAssets.files] }})
-        console.log(response);
+        await Assets.findOneAndUpdate(query, { $set: { files: [...files, ...currentAssets.files] }})
+       
         return {
           userId,
           files,

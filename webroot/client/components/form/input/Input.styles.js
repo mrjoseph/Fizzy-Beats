@@ -15,6 +15,9 @@ export const Span = styled.span`
       transition: all 0.2s ease-in-out;
   `;
 
+export const UploadInput = styled.input`
+    border: 1px solid ${props => props.theme.error};
+`;
 
 export const InputStyled = styled.input`
     border: 1px solid ${props => props.theme.error};

@@ -1,28 +1,44 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import { DropArea } from '../uploadForm/uploadForm.styles';
 import classNames from 'classname';
-import { UploaderImage, Image, PreviewItemsUl } from './uploader.styles';
+import { UploaderImage, Image, PreviewItemsUl, UploadForm } from './uploader.styles';
+import Images from '../../images/images';
+import { UPLOADER } from '../formConfig/formConfig';
+
+import { SubmitButton } from '../submitButton/SubmitButton';
 
 
 const PreviewItems = ({ items }) => {
-  return(<PreviewItemsUl>
-    {
-        items.map(({ item }) => {
-          if(item) {
-            return (
-              <UploaderImage key={item}>
-                 <Image src={item} alt="" />
-              </UploaderImage>
+  return(
+  <ol className="list-group">
+    {  
+        items.map(({ item, name, size }) => {       
+            if(item.match(/data\:audio\/mp3/g) !== null && item.match(/data\:audio\/mp3/g)[0] === 'data:audio/mp3'){
+           return(
+            <li key={item} className="list-group-item">
+            <div className="text-secondary">{name}</div>
+            <div><strong>Size:</strong>{size}</div>
+              {/* <audio key={item} controls>
+                <source src={item} type="audio/mpeg" />
+              </audio> */}
+            </li>
               )
-          }
+            }
+           if(item.match(/data\:image\/jpeg/g)[0] !== null && item.match(/data\:image\/jpeg/g)[0] === 'data:image/jpeg'){
+              return (
+                <li key={item} className="list-group-item">
+                   <Image src={item} alt="" />
+                </li>
+              )
+           }
         })
     }
-  </PreviewItemsUl>)
+  </ol>)
 }
 
 class Upload extends Component {
@@ -31,40 +47,39 @@ class Upload extends Component {
     this.state = {
       name: '',
       file: null,
-      images: []
+      images: [],
+      formErrors: {}
     };
   }
 
 
-  onDrop = async (files) => {
+  onDrop = async (e) => {
+    const { files } = e.target;
+    
     this.setState({ file: files });   
-    files.forEach((file) => {
+    this.setState({ successMessage: null})
+    Object.keys(files).forEach((item) => {
+      
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[item]);
       reader.onabort = () => console.log('file reading was aborted')
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => { 
-        const currentState = this.state.images;
-         const result = [{item: reader.result}, ...currentState]
+          const currentState = this.state.images;
+         const result = [{
+           item: reader.result,
+           name: files[item].name,
+           size: files[item].size,
+          }, ...currentState]
          this.setState({images: result});
       }
     }); 
   };
 
 
-  formatFilename = (filename) => {
-    const date = moment().format('YYYYMMDD');
-    const randomString = Math.random()
-      .toString(36)
-      .substring(2, 7);
-    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-');
-    const newFilename = `images/${date}-${randomString}-${cleanFileName}`;
-    return newFilename.substring(0, 60);
-  };
-
   uploadAssets = async (fileList, signedRequest, userId) => {
     const data = new FormData();
-    fileList.forEach((file) => { data.append('files', file); })
+    Object.keys(fileList).forEach((item) => { data.append('files', fileList[item]); })
     data.append('userId', userId);
     const options = {
       method: 'POST',
@@ -80,42 +95,74 @@ class Upload extends Component {
     }
   };
 
-  submit = async () => {
+  submit = async (e) => {
+    e.preventDefault();
     const { file } = this.state;
+    if(!file) return;
+    const { history } = this.props;
     const url = 'http://localhost:3003/upload';
     await this.uploadAssets(file, url,this.props.userId);
-    const files = file.map(({name, size, type}) => ({ name, size, type }));
+    const files = Object.keys(file).map((item) => {
+      return { 
+        name: file[item].name, 
+        size:file[item].size, 
+        type:file[item].type 
+      }
+    });
+    
     const res = await this.props.addAssets({
         variables: {
           files: files,
           userId: this.props.userId,
         },
       });
-      this.setState({successMessage: res.data.addAssets.message})
+      this.setState({
+        successMessage: res.data.addAssets.message,
+        images: null,
+        file: null,
+        formErrors: {},
+      });
   };
-
+  submitDisabled = () => { return false}
+  handleBlur = () => {}
   render() {
+    const { formErrors, status } = this.state;
     return (
       <div>
-        <Dropzone onDrop={this.onDrop}>
-          {({ getRootProps, getInputProps, isDragActive }) => (
-            <DropArea
-              {...getRootProps()}
-              className={classNames('dropzone', { 'dropzone--isActive': isDragActive })}
-            >
-              <input {...getInputProps()} />
-              {
-                isDragActive
-                  ? <p>Drop files here...</p>
-                  : <p>Try dropping some files here, or click to select files to upload.</p>
-              }
-            </DropArea>
-          )}
-        </Dropzone>
-        {this.state.successMessage && <div> {this.state.successMessage}</div>}
-        {this.state.images && <PreviewItems items={this.state.images} />}
-       
-        <button onClick={this.submit}>Submit</button>
+        <UploadForm id="form" onSubmit={this.submit} className="modal-content">
+        <div className="modal-header">
+        <h5 className="modal-title">Upload your tracks</h5>
+        </div>
+        <div className="modal-body">
+        {UPLOADER.map(elements => elements.map((props) => {
+            const { Components, ...rest } = props;
+            return (
+              <Components
+                formErrors={formErrors}
+                key={props.name}
+                onChange={this.onDrop}
+                handleBlur={this.handleBlur}
+                {...rest}
+              />
+            );
+          }))}
+          <div className="modal-body">
+          {this.state.successMessage ?
+        <div>
+          {this.state.successMessage}
+          </div> : <div>
+          {this.state.images && <PreviewItems items={this.state.images} />}
+          </div>}
+          </div>
+        </div>    
+        <div className="modal-footer">
+        <SubmitButton submitDisabled={this.submitDisabled}>
+          Upload audio files
+          </ SubmitButton>
+        </div>     
+        </UploadForm>
+        <hr />
+        <Images userId={this.props.userId}/>
       </div>
     );
   }
@@ -129,7 +176,8 @@ const addAssetsMutation = gql`
   }
 `;
 
-export default compose(
-  //graphql(CreateChampionMutation, { name: 'createChampion' }),
+
+
+export default withRouter(compose(
   graphql(addAssetsMutation, { name: 'addAssets' }),
-)(Upload);
+)(Upload));
