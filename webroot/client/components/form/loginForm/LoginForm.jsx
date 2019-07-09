@@ -45,7 +45,7 @@ class LoginForm extends Component {
     e.preventDefault();
     this.Auth.login(client, this.state).then((data) => {
       if (data.loginUser.status === 'SUCCESS') {
-        history.replace('/profile');
+        history.replace('/upload');
       } else {
         this.setState({ status: data.loginUser.status });
       }

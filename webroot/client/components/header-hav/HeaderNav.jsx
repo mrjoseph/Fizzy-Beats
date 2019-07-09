@@ -33,11 +33,11 @@ class Nav extends Component {
 
   render() {
     const { showHideNav } = this.state;
-    return (
+    return (  
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
           <Link className="navbar-brand" to="/">
-            <strong>Fizzy Beats</strong>
+            <img src={this.props.logo} alt="Fizzy Beats" style={{height: '40px'}}/>
           </Link>
         </div>
         <button
@@ -62,12 +62,20 @@ class Nav extends Component {
                   About
               </Link>
             </li>
+            {this.Auth.loggedIn() &&
+              <li className="nav-item">
+              <Link to="/my-account" className="nav-link profile-link">
+                My account
+              </Link>
+            </li>
+            }
             { this.Auth.loggedIn() ? (
               <li className="nav-item">
-                <Link to="/upload" className="nav-link profile-link">
+                <Link to="/upload" className="nav-link">
                   Upload
                 </Link>
               </li>
+              
             ) : (
               <li className="nav-item">
                 <Link to="/login" className="nav-link login-link">
@@ -95,14 +103,16 @@ class Nav extends Component {
             )}
             {this.Auth.getProfile() && (
               <ProfileBlock className="nav-item active">
-                <ProfileName className="btn current-user">
+              <Link to={`${this.Auth.getProfile().profileUsername}`}>
+              <ProfileName className="btn current-user">
                   { `${this.Auth.getProfile().username}`}
                 </ProfileName>
+              </Link>
+              <Link to={`${this.Auth.getProfile().profileUsername}`}>
                 <ProfileImage
                   userId={this.Auth.getProfile().id}
-                  username={this.Auth.getProfile().username}
-                  profileImage={false}
                 />
+                </Link>
               </ProfileBlock>
             )}
           </ul>

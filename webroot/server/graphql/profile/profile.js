@@ -9,27 +9,26 @@ export const typeDefs = gql`
     password: String
     status: String
     auth: String
-    profileImage: Boolean
-    track: [Track!]!
+    profileImage: String
+    profileUsername: String
+    assets: [Assets!]!
+    defaults: Defaults!
   }
     extend type Query{
-    profiles: [Profile!]
-      profile(id: ID): Profile
-  }
-    type Track {
-    id: ID!
-    name: String!
-    genre:  String!
-    profile: Profile!
+      profiles: [Profile!]
+      profile(profileUsername: String): Profile
+      profileId(id: ID): Profile
   }
 `;
 
 export const resolvers = {
   Query: {
-    profile: async (parent, { id }, { User }) => User.findById(id),
+    profile: async (parent, { profileUsername }, { User }) => await User.findOne({ profileUsername }),
+    profileId: async (parent, { id }, { User }) => await User.findById(id),
     profiles: (parent, args, { User }) => User.find({}),
   },
   Profile: {
-    track: ({ id }, args, { Tracks }) => Tracks.find({ userId: id }),
+    assets: async ({_id}, args, { Assets }) => await Assets.find({ userId: _id}),
+    defaults: () => ({ cdn: process.env.CDN })
   },
 };

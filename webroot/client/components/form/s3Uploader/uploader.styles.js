@@ -2,7 +2,6 @@ import styled from 'styled-components';
 export const UploadForm = styled.form`
   background: #fff;
   border-radius:5px;
-  max-width: 500px;
   margin: 1.75rem auto;
   input {
     display:none;

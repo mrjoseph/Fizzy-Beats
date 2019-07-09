@@ -1,10 +1,10 @@
 import React from 'react';
 import HeaderNav from '../header-hav/HeaderNav';
-
-function Header({ history }) {
+import logo from './images/fizzy-logo-black.svg';
+function Header({ history, data }) {
   return (
     <header>
-      <HeaderNav history={history} />
+      <HeaderNav history={history} data={data} logo={logo} />
     </header>
   );
 }

@@ -1,55 +1,58 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
-import { graphql, compose, Query } from 'react-apollo';
-import { GET_USERS_QUERY } from '../../graphql/queries/queries';
+import { graphql, compose } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import { GET_USERS_QUERY, GET_ALL_USERS } from '../../graphql/queries/queries';
+import cdn from '../../constants';
 import './home.css';
 import withAuth from '../../AuthService/withAuth';
-import Images from '../../components/images/images';
-// import { Container, Title, Box } from './home.styles';
-const logErrorToMyService = (error, info) => {
-  console.log(error, info);
-}
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, info) {
-    // You can also log the error to an error reporting service
-    logErrorToMyService(error, info);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
-    }
-
-    return this.props.children; 
-  }
-}
 
 class Home extends Component {
   render() {
-    return( 
-      <ErrorBoundary><Images userId={this.props.user.id}/></ErrorBoundary> 
-    );
+    const { profiles } = this.props.profileList;
+    const { profileId, error, loading } = this.props.data;
+    if( error ) return <div> error</div>
+    if( loading ) return <div> loading...</div>
+    if ( profileId ){
+      const { username } = profileId;
+      return(
+      <div className="container">
+     <div>
+     {username}
+     </div>
+     <div className="row">
+     {profiles && profiles.map(({ username, id, profileUsername, profileImage }) => {
+       const profileImageURL = `${cdn}/${id}${profileImage}`;
+        return (
+        <div key={id} className="col-sm-6 col-md-3 col px-md-2">
+        <div className="card">
+        <div className="card-body">
+            <div className="card-title">
+              <Link to={profileUsername}>{username}</Link>
+              <img src={profileImageURL} alt="" />
+            </div>
+          </div>
+        </div>
+        </div>)
+      })}
+     </div>
+    </div>
+      )
+    }
+  
+    return (<div className="container">welcome to Fizzy Beats</div>)
   }
 }
 
 export default withAuth(compose(
+  graphql(GET_ALL_USERS, {name: 'profileList' }),
   graphql(GET_USERS_QUERY, {
-    options: props => ({
-      name: 'userData',
-      variables: {
-        id: props.user && props.user.id,
-      },
-    }),
+    name: 'data',
+    options: (props) => {
+      return {
+        variables: {
+          id: props.user && props.user.id,
+        },
+      }
+    },
   })
 )(Home));

@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<about /> snapshot render component should console.log component 1`] = `null`;

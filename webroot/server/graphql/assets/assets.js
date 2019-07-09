@@ -4,9 +4,10 @@ import { gql } from 'apollo-server-express';
 export const typeDefs = gql`
   type Assets {
     id: ID
+    status: String
     userId: String
     message: String
-    files: [FileInput]!
+    file: FileInput
   }
 
   type FileInput {
@@ -23,14 +24,14 @@ export const typeDefs = gql`
 
   extend type Query{
     getAssets: [Assets!]
-    getAsset(userId: String): Assets
+    getAsset(userId: String): [Assets]
   }
 
   extend type Mutation {
     addAssets(
       userId: String!
       message: String
-      files: [File]!
+      file: [File]!
       ): Assets
   }
 `;
@@ -38,34 +39,26 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    getAssets: async (parent, args, { Assets }) => Assets.find({}),
-    getAsset: async (parent, { userId }, { Assets }) => {
-      return Assets.findOne({userId});
+    getAssets: async (parent, args, { Assets }) => {
+      const result = await Assets.find({});
+      console.log(result);
+      return await result;
     },
-
+    getAsset: async (parent, { userId }, { Assets }) => {
+      const result = await Assets.find({ userId: userId });
+      console.log(result);
+      return result;
+    }
   },
   Mutation: {
-    addAssets: async (parent, obj, { Assets }) => {
-      const { userId, files } = obj; 
-      const currentAssets = await Assets.findOne({userId});
-      if(userId && currentAssets !== null) {
-        const query = {userId: userId}
-        await Assets.findOneAndUpdate(query, { $set: { files: [...files, ...currentAssets.files] }})
-       
+    addAssets: async (parent, { userId, file }, { Assets }) => {
+        file.map((file) => {
+          const assets = new Assets({ userId, status: 'pending', file });
+          assets.save();
+        });       
         return {
-          userId,
-          files,
-          message: 'assets have been updated!'
-        }
-      } else {
-        const assets = new Assets({ userId, files });
-        assets.save();
-        return {
-          userId,
-          files,
           message: 'assets saved!'
         }
-      }
     },
   },
 };

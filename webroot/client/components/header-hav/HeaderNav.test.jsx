@@ -1,10 +1,13 @@
-import { shallow } from 'enzyme';
 import React from 'react';
 import HeaderNav from './HeaderNav';
 import 'jest-styled-components';
 import AuthService from '../../AuthService/AuthService';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
 
 const handleLogoutSpy = jest.spyOn(HeaderNav.prototype, 'handleLogout');
+const toggleNavSpy = jest.spyOn(HeaderNav.prototype,'toggleNav');
 
 jest.mock('../../AuthService/AuthService');
 describe('HeaderNav', () => {
@@ -40,12 +43,12 @@ describe('HeaderNav', () => {
     it('should display the logged in user when logged in', () => {
       const currentUser = component.find('.current-user');
       expect(currentUser).toHaveLength(1);
-      expect(currentUser.text()).toEqual('Logged in as Tony Stark');
+      expect(currentUser.text()).toEqual('Tony Stark');
     });
     it('should display the profile link', () => {
       const profileLink = component.find('.profile-link');
       expect(profileLink).toHaveLength(1);
-      expect(profileLink.props().children).toEqual('Profile');
+      expect(profileLink.props().children).toEqual('My account');
     });
     it('should display the logout button', () => {
       const logout = component.find('.logout-link');
@@ -109,6 +112,14 @@ describe('HeaderNav', () => {
       expect(handleLogoutSpy).toHaveBeenCalled();
       expect(replaceSpy).toHaveBeenCalled();
       expect(replaceSpy).toHaveBeenCalledWith('/login');
+    });
+  });
+  describe('toggleNav button', () => {
+    const component = shallow(<HeaderNav />)
+    it('should toggle the nav header', () => {
+      const navBarToggler = component.find('.navbar-toggler');
+      navBarToggler.simulate('click', { preventDefault() {} });
+      expect(toggleNavSpy).toHaveBeenCalled();
     });
   });
 });

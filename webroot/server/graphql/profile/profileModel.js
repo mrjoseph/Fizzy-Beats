@@ -5,7 +5,7 @@ const usersSchema = new Schema({
   salt: String,
   username: String,
   email: String,
-  profileImage: Boolean,
+  profileImage: String,
 }, { versionKey: false });
 
 export default mongoose.model('User', usersSchema);

@@ -1,50 +1,74 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { withRouter } from 'react-router';
-import moment from 'moment';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import { DropArea } from '../uploadForm/uploadForm.styles';
 import classNames from 'classname';
 import { UploaderImage, Image, PreviewItemsUl, UploadForm } from './uploader.styles';
 import Images from '../../images/images';
-import { UPLOADER } from '../formConfig/formConfig';
+import { UPLOADER, UPLOADER_DETAILS } from '../formConfig/formConfig';
 
 import { SubmitButton } from '../submitButton/SubmitButton';
 
 
-const PreviewItems = ({ items }) => {
-  return(
-  <ol className="list-group">
-    {  
-        items.map(({ item, name, size }) => {       
-            if(item.match(/data\:audio\/mp3/g) !== null && item.match(/data\:audio\/mp3/g)[0] === 'data:audio/mp3'){
-           return(
-            <li key={item} className="list-group-item">
-            <div className="text-secondary">{name}</div>
-            <div><strong>Size:</strong>{size}</div>
-              {/* <audio key={item} controls>
-                <source src={item} type="audio/mpeg" />
-              </audio> */}
-            </li>
-              )
-            }
-           if(item.match(/data\:image\/jpeg/g)[0] !== null && item.match(/data\:image\/jpeg/g)[0] === 'data:image/jpeg'){
-              return (
-                <li key={item} className="list-group-item">
-                   <Image src={item} alt="" />
-                </li>
-              )
-           }
-        })
-    }
-  </ol>)
+
+class UloadItem extends Component {
+  constructor() {
+    super()
+    this.state = {
+      toggle: false
+    };
+  }
+  toggle = (e) => {
+    this.setState({ toggle: !this.state.toggle})
+  }
+  render(){ 
+    const { item, size, name, formErrors, handleBlur } = this.props;
+    return (
+      <li key={item} className="list-group-item">                       
+      <div className="text-secondary">
+          {name}
+      </div>
+      <div>
+        <strong>Size:</strong>{size}
+      </div>
+    </li>
+    );
+  }
+}
+
+class PreviewItems extends Component {
+  render(){
+    const { items, formErrors, handleBlur } = this.props;
+
+    return(
+      <ol className="list-group">
+        {  
+            items.map(({ item, name, size }) => {       
+                if(item.match(/data\:audio\/mp3/g) !== null && item.match(/data\:audio\/mp3/g)[0] === 'data:audio/mp3'){
+               return(
+                  <UloadItem key={name} item={item} name={name} size={size} formErrors={formErrors} handleBlur={handleBlur }/>
+                  )
+                }
+              //  if(item.match(/data\:image\/jpeg/g)[0] !== null && item.match(/data\:image\/jpeg/g)[0] === 'data:image/jpeg'){
+              //     return (
+              //       <li key={item} className="list-group-item">
+              //          <Image src={item} alt="" />
+              //       </li>
+              //     )
+              //  }
+            })
+        }
+      </ol>)
+  }
 }
 
 class Upload extends Component {
   constructor(props){
     super();
     this.state = {
+      loadingPreview: false,
       name: '',
       file: null,
       images: [],
@@ -55,12 +79,13 @@ class Upload extends Component {
 
   onDrop = async (e) => {
     const { files } = e.target;
-    
+    this.setState({ loadingPreview: true }); 
     this.setState({ file: files });   
     this.setState({ successMessage: null})
     Object.keys(files).forEach((item) => {
       
       const reader = new FileReader();
+      
       reader.readAsDataURL(files[item]);
       reader.onabort = () => console.log('file reading was aborted')
       reader.onerror = () => console.log('file reading has failed')
@@ -72,6 +97,7 @@ class Upload extends Component {
            size: files[item].size,
           }, ...currentState]
          this.setState({images: result});
+         this.setState({ loadingPreview: false }); 
       }
     }); 
   };
@@ -112,7 +138,7 @@ class Upload extends Component {
     
     const res = await this.props.addAssets({
         variables: {
-          files: files,
+          file: files,
           userId: this.props.userId,
         },
       });
@@ -151,7 +177,14 @@ class Upload extends Component {
         <div>
           {this.state.successMessage}
           </div> : <div>
-          {this.state.images && <PreviewItems items={this.state.images} />}
+          { this.state.loadingPreview ? <> loading...</> : 
+            <PreviewItems
+            items={this.state.images}
+            formErrors={formErrors}
+            handleBlur={this.handleBlur}
+            loadingPreview={this.state.loadingPreview}
+            />
+        }
           </div>}
           </div>
         </div>    
@@ -162,15 +195,15 @@ class Upload extends Component {
         </div>     
         </UploadForm>
         <hr />
-        <Images userId={this.props.userId}/>
+       
       </div>
     );
   }
 }
 
 const addAssetsMutation = gql`
-  mutation($files: [File]!, $userId: String!) {
-    addAssets(files: $files, userId: $userId) {
+  mutation($file: [File]!, $userId: String!) {
+    addAssets(file: $file, userId: $userId) {
       message
     }
   }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Label, Span, InputStyled, UploadInput } from './Input.styles';
+import { Label, Span, InputStyled, UploadInput, UploadLabel } from './Input.styles';
 import './input.css';
 
 class Input extends Component {
@@ -11,40 +11,52 @@ class Input extends Component {
     }
     return '#fff';
   }
-
+  handleDrag = () => {
+    console.log('do something')
+  }
+  handleLeave = () => {
+    console.log('do something else')
+  }
   render() {
     const {
-      name, text, onChange, type, handleBlur,
+      name, text, onChange, type, handleBlur, multiple, accept
     } = this.props;
+    
     return (
       <div className="field">
-        <Label htmlFor={name}>
-        {type === 'file' ? 
-      <UploadInput 
-        theme={{ error: this.errorClass() }}
-        type={type}
-        onChange={onChange}
-        onBlur={handleBlur}
-        name={name}
-        id={name}
-        placeholder={name}
-        className="input"
-        multiple={type === 'file' ? true : false}
-        accept={type === 'file' && '.mp3,audio/*'}
-      /> : 
-      <InputStyled
-        theme={{ error: this.errorClass() }}
-        type={type}
-        onChange={onChange}
-        onBlur={handleBlur}
-        name={name}
-        id={name}
-        placeholder={name}
-        className="input"
-      />  
-      }
-          {type === 'file' ? <div>{text}</div> : <Span>{text}</Span>}
-        </Label>
+       {type === 'file' ?
+        <UploadLabel htmlFor={name}>
+          <UploadInput 
+            theme={{ error: this.errorClass() }}
+            type={type}
+            onChange={onChange}
+            onBlur={handleBlur}
+            onDragEnter={this.handleDrag}
+            onDragLeave={this.handleLeave}
+            name={name}
+            id={name}
+            placeholder={name}
+            className="input"
+            multiple={multiple}
+            accept={accept}
+          /> 
+          <div>{text}</div>
+       </UploadLabel>
+       : 
+       <Label htmlFor={name}>
+        <InputStyled
+          theme={{ error: this.errorClass() }}
+          type={type}
+          onChange={onChange}
+          onBlur={handleBlur}
+          name={name}
+          id={name}
+          placeholder={name}
+          className="input"
+        /> 
+        <Span>{text}</Span>
+      </Label>
+      }  
         {/* {this.errorWarnings()} */}
       </div>
     );
