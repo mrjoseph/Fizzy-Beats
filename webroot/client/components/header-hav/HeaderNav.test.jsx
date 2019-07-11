@@ -10,6 +10,7 @@ const handleLogoutSpy = jest.spyOn(HeaderNav.prototype, 'handleLogout');
 const toggleNavSpy = jest.spyOn(HeaderNav.prototype,'toggleNav');
 
 jest.mock('../../AuthService/AuthService');
+
 describe('HeaderNav', () => {
   const replaceSpy = jest.fn();
   const props = {
@@ -24,6 +25,7 @@ describe('HeaderNav', () => {
   describe('When user is logged in', () => {
     let component;
     let getProfileReturnValue;
+    let Auth = new AuthService();
     beforeEach(() => {
       getProfileReturnValue = {
         email: 'test@test.com',
@@ -32,7 +34,8 @@ describe('HeaderNav', () => {
         id: '5c410f6e84d980e324c5ade8',
         username: 'Tony Stark',
       };
-      AuthService.mockImplementation(
+      
+      Auth.mockImplementation(
         () => ({
           loggedIn: () => true,
           getProfile: jest.fn().mockReturnValue(getProfileReturnValue),

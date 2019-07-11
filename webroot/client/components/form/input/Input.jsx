@@ -11,12 +11,6 @@ class Input extends Component {
     }
     return '#fff';
   }
-  handleDrag = () => {
-    console.log('do something')
-  }
-  handleLeave = () => {
-    console.log('do something else')
-  }
   render() {
     const {
       name, text, onChange, type, handleBlur, multiple, accept

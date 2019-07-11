@@ -1,6 +1,11 @@
-import renderer from 'react-test-renderer';
-import { shallow, mount } from 'enzyme';
 import React from 'react';
+import renderer from 'react-test-renderer';
+
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
+
+
 import { MockedProvider } from 'react-apollo/test-utils';
 import LoginForm from './LoginForm';
 import {
