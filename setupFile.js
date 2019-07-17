@@ -1,3 +1,4 @@
+import 'isomorphic-fetch';
 const jsdom = require("jsdom");
 
 const { JSDOM } = jsdom;

@@ -11,6 +11,7 @@ const toggleNavSpy = jest.spyOn(HeaderNav.prototype,'toggleNav');
 
 jest.mock('../../AuthService/AuthService');
 
+// jest.unmock('../../AuthService/AuthService');
 describe('HeaderNav', () => {
   const replaceSpy = jest.fn();
   const props = {
@@ -25,7 +26,6 @@ describe('HeaderNav', () => {
   describe('When user is logged in', () => {
     let component;
     let getProfileReturnValue;
-    let Auth = new AuthService();
     beforeEach(() => {
       getProfileReturnValue = {
         email: 'test@test.com',
@@ -34,8 +34,8 @@ describe('HeaderNav', () => {
         id: '5c410f6e84d980e324c5ade8',
         username: 'Tony Stark',
       };
-      
-      Auth.mockImplementation(
+
+      AuthService.mockImplementation(
         () => ({
           loggedIn: () => true,
           getProfile: jest.fn().mockReturnValue(getProfileReturnValue),
@@ -55,7 +55,6 @@ describe('HeaderNav', () => {
     });
     it('should display the logout button', () => {
       const logout = component.find('.logout-link');
-      console.log('logout', logout.debug());
       expect(logout).toHaveLength(1);
       expect(logout.props().children).toEqual('Logout');
     });
@@ -117,9 +116,29 @@ describe('HeaderNav', () => {
       expect(replaceSpy).toHaveBeenCalledWith('/login');
     });
   });
+
   describe('toggleNav button', () => {
-    const component = shallow(<HeaderNav />)
+    let component;
+    let getProfileReturnValue;
+    beforeEach(() => {
+      getProfileReturnValue = {
+        email: 'test@test.com',
+        exp: 1575838244,
+        iat: 1544280644,
+        id: '5c410f6e84d980e324c5ade8',
+        username: 'Tony Stark',
+      };
+      AuthService.mockImplementation(
+        () => ({
+          loggedIn: () => jest.fn(() => true),
+          logout: () => jest.fn(),
+          getProfile: jest.fn().mockReturnValue(getProfileReturnValue),
+        }),
+      );
+      component = shallow(<HeaderNav {...props} />);
+    });
     it('should toggle the nav header', () => {
+     
       const navBarToggler = component.find('.navbar-toggler');
       navBarToggler.simulate('click', { preventDefault() {} });
       expect(toggleNavSpy).toHaveBeenCalled();

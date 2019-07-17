@@ -36,7 +36,6 @@ ProfileImage.propTypes = {
 export default graphql(GET_USERS_QUERY, {
   name: 'data',
   options: (props) => {
-    console.log(props);
     return {
       variables: {
         id: props.userId,
