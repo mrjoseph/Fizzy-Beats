@@ -44,6 +44,7 @@ class LoginForm extends Component {
     const { client, history } = this.props;
     e.preventDefault();
     this.Auth.login(client, this.state).then((data) => {
+      console.log(data)
       if (data.loginUser.status === 'SUCCESS') {
         history.replace('/upload');
       } else {
@@ -60,6 +61,7 @@ class LoginForm extends Component {
 
   render() {
     const { formErrors, status } = this.state;
+    
     return (
       <div>
         {status && (
