@@ -42,6 +42,7 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(e) {
+    console.log(this.prop)
     e.preventDefault();
     const { addUser } = this.props;
     this.Auth.register(addUser, this.state).then((data) => {

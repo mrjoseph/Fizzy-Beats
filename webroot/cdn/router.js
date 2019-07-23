@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.post('/create-storage', async (req, res) => {
+    console.log('asdasdasdasd');
     const { userId } = req.body;
     const dir =  path.join(__dirname + `/uploads/${userId}`)
     const src = path.join(`${__dirname}/uploads/temp/default-profile-pic.jpg`);

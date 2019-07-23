@@ -4,7 +4,6 @@ describe('validation', () => {
   const formErrors = { username: '', email: '', password: '' };
   describe('username', () => {
     const fieldName = 'username';
-    it('should return a message that the username is invalid', () => {
       const value = 'tr';
       const expected = {
         formErrors: {
@@ -16,7 +15,10 @@ describe('validation', () => {
           },
         },
       };
-      expect(validation(fieldName, value, formErrors)).toEqual(expected);
+
+    it('should return a message that the username is invalid', () => {
+      const result = validation(fieldName, value, formErrors);
+      expect(result).toEqual(expected);
     });
 
     it('should not return a message that the username is invalid', () => {
@@ -98,6 +100,13 @@ describe('validation', () => {
         },
       };
       expect(validation(fieldName, value, formErrors)).toEqual(expected);
+    });
+
+    it('should exit without returning anything', () => {
+      const value = 'password1';
+
+      const expected = undefined;
+      expect(validation('', value, formErrors)).toEqual(expected);
     });
   });
 });

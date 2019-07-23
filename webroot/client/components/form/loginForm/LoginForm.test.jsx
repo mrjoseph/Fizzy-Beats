@@ -17,15 +17,6 @@ jest.mock('../../../AuthService/AuthService');
 
 describe('LoginForm', () => {
   const replaceSpy = jest.fn();
-  const state = {
-    password: "password1",
-    email: "trev_jos@hotmail.com",
-    formErrors: {
-      email: {field: "email", message: "", valid: true},
-      password: {field: "password", message: "", valid: true},
-    },
-    status: null
-  }
   const props = {
     client: {},
     history: {
