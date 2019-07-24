@@ -54,16 +54,26 @@ app.post('/upload', upload.array('files', 12), (req, res) => {
     res.send({ status: uploadStatus, files });
 });
 
-app.post('/create-storage', (req, res) => {
+app.post('/create-storage', async (req, res) => {
     const { userId } = req.body;
     console.log(userId)
     const dir =  path.join(__dirname + `/uploads/${userId}`)
     let message;
+    let origin = path.join(__dirname + `/uploads/temp/default-profile-pic.jpg`);
+    let destination = path.join(__dirname + `/uploads/${userId}/`);
+
     if (fs.existsSync(dir)) {
         message = 'user directory exists';
         
     } else {
         fs.mkdirSync(dir);
+        fs.createReadStream(origin).pipe(fs.createWriteStream(`${destination}/default-profile-pic.jpg`));
+        // fs.mkdir(dir, { recursive: true }, (err) => {
+        //     if (err) throw err;
+        //     //console.log(destination, origin);
+        //     //fs.renameSync(origin, destination);
+            
+        //   });
         message = 'user directory created!';
     }
     res.send(message);
