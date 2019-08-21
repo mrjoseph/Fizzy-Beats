@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
-import { withRouter } from 'react-router';
-import gql from 'graphql-tag';
-import { compose, graphql } from 'react-apollo';
-import { DropArea } from '../uploadForm/uploadForm.styles';
-import classNames from 'classname';
 import { UploaderImage, Image, PreviewItemsUl, UploadForm } from './uploader.styles';
-import Images from '../../images/images';
-import { UPLOADER, UPLOADER_DETAILS } from '../formConfig/formConfig';
+import { UPLOADER } from '../formConfig/formConfig';
 
 import { SubmitButton } from '../submitButton/SubmitButton';
-
-
 
 class UloadItem extends Component {
   constructor() {
@@ -79,6 +70,7 @@ class Upload extends Component {
 
   onDrop = async (e) => {
     const { files } = e.target;
+    console.log(JSON.stringify(files, null, 2));
     this.setState({ loadingPreview: true }); 
     this.setState({ file: files });   
     this.setState({ successMessage: null})
@@ -91,7 +83,7 @@ class Upload extends Component {
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => { 
           const currentState = this.state.images;
-         const result = [{
+          const result = [{
            item: reader.result,
            name: files[item].name,
            size: files[item].size,
@@ -125,18 +117,17 @@ class Upload extends Component {
     e.preventDefault();
     const { file } = this.state;
     if(!file) return;
-    const { history } = this.props;
     const url = 'http://localhost:3003/upload';
-    await this.uploadAssets(file, url,this.props.userId);
-    const files = Object.keys(file).map((item) => {
-      return { 
-        name: file[item].name, 
-        size:file[item].size, 
-        type:file[item].type 
-      }
-    });
-    
-    const res = await this.props.addAssets({
+    try {
+      await this.uploadAssets(file, url,this.props.userId);
+      const files = Object.keys(file).map((item) => {
+        return { 
+          name: file[item].name, 
+          size:file[item].size, 
+          type:file[item].type 
+        }
+      });
+      const res = await this.props.addAssets({
         variables: {
           file: files,
           userId: this.props.userId,
@@ -148,6 +139,11 @@ class Upload extends Component {
         file: null,
         formErrors: {},
       });
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  
   };
   submitDisabled = () => { return false}
   handleBlur = () => {}
@@ -201,16 +197,4 @@ class Upload extends Component {
   }
 }
 
-const addAssetsMutation = gql`
-  mutation($file: [File]!, $userId: String!) {
-    addAssets(file: $file, userId: $userId) {
-      message
-    }
-  }
-`;
-
-
-
-export default withRouter(compose(
-  graphql(addAssetsMutation, { name: 'addAssets' }),
-)(Upload));
+export default Upload;

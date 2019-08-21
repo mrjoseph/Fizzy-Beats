@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.post('/upload', upload.array('files', 12), (req, res) => {
     let files;
     if (req.files) {
-        console.log(req.files);
+       
         files = req.files.map(({ originalname }) => {
             console.log('originalname', originalname);
             if(originalname) { 
@@ -50,7 +50,7 @@ app.post('/upload', upload.array('files', 12), (req, res) => {
         var filename = 'FILE NOT UPLOADED';
         var uploadStatus = 'File Upload Failed';
     }
-        
+    console.log(files);
     res.send({ status: uploadStatus, files });
 });
 
@@ -60,20 +60,15 @@ app.post('/create-storage', async (req, res) => {
     const dir =  path.join(__dirname + `/uploads/${userId}`)
     let message;
     let origin = path.join(__dirname + `/uploads/temp/default-profile-pic.jpg`);
-    let destination = path.join(__dirname + `/uploads/${userId}/`);
+    let destination = path.join(__dirname + `/uploads/${userId}/default-profile-pic.jpg`);
 
     if (fs.existsSync(dir)) {
         message = 'user directory exists';
         
     } else {
         fs.mkdirSync(dir);
-        fs.createReadStream(origin).pipe(fs.createWriteStream(`${destination}/default-profile-pic.jpg`));
-        // fs.mkdir(dir, { recursive: true }, (err) => {
-        //     if (err) throw err;
-        //     //console.log(destination, origin);
-        //     //fs.renameSync(origin, destination);
-            
-        //   });
+        fs.createReadStream(origin).pipe(fs.createWriteStream(destination));
+     
         message = 'user directory created!';
     }
     res.send(message);

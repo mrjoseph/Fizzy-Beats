@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import withAuth from '../../AuthService/withAuth';
 import { Title } from '../../styledComponents/index.styles';
 import { GET_USERS_QUERY } from '../../graphql/queries/queries';
-import S3Uploader from '../../components/form/s3Uploader/s3Uploader';
+import S3Uploader from '../../components/form/s3Uploader';
 
 class Profile extends Component {
   render() {
