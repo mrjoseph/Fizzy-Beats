@@ -95,6 +95,7 @@
     "jsonwebtoken": "^8.4.0",
     "jwt-decode": "^2.2.0",
     "localstorage-polyfill": "^1.0.1",
+    "lodash.camelcase": "^4.3.0",
     "mini-css-extract-plugin": "^0.4.4",
     "mock-fs": "^4.10.1",
     "mockingoose": "^2.11.0",
