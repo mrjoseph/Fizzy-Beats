@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input InputStyled styled component renders correctly 1`] = `
+.c0 {
+  border: 1px solid;
+  font: 18px Helvetica,Arial,sans-serif;
+  box-sizing: border-box;
+  display: block;
+  padding: 18px;
+  width: 300px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  outline: none;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.c0::-webkit-input-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica,Arial,sans-serif;
+}
+
+.c0::-moz-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica,Arial,sans-serif;
+}
+
+.c0:-ms-input-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica,Arial,sans-serif;
+}
+
+.c0::placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica,Arial,sans-serif;
+}
+
+.c0:focus + span {
+  opacity: 1;
+  top: 10px;
+}
+
+.c0:focus,
+.c0.populated {
+  padding-top: 26px;
+  padding-bottom: 10px;
+}
+
+.c0:focus::-webkit-input-placeholder,
+.c0.populated::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.c0:focus::-moz-placeholder,
+.c0.populated::-moz-placeholder {
+  color: transparent;
+}
+
+.c0:focus:-ms-input-placeholder,
+.c0.populated:-ms-input-placeholder {
+  color: transparent;
+}
+
+.c0:focus::placeholder,
+.c0.populated::placeholder {
+  color: transparent;
+}
+
+<input
+  className="c0"
+/>
+`;
+
+exports[`Input UploadInput styled component renders correctly 1`] = `
+.c0 {
+  border: 1px solid;
+}
+
+<input
+  className="c0"
+/>
+`;

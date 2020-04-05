@@ -6,34 +6,31 @@ const withAuth = AuthComponent => class AuthWrapped extends Component {
     super();
     this.state = {
       user: null,
+
     };
     this.Auth = new AuthService();
   }
 
   componentWillMount() {
-    if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/register');
-    } else {
-      try {
-        const profile = this.Auth.getProfile();
-        this.setState({
-          user: profile,
-        });
-      } catch (err) {
-        this.Auth.logout();
-        this.props.history.replace('/login');
-      }
-    }
+  //   if (!this.Auth.loggedIn()) {
+  //     this.props.history.replace('/');
+  //  } else {
+      const profile = this.Auth.getProfile();
+      this.setState({
+        user: profile,
+      });
+   // }
   }
-
+  componentDidmount(){
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+      this.Auth.removeToken()
+   }
+  }
   render() {
-    if (this.state.user) {
-      return (
-        <AuthComponent history={this.props.history} user={this.state.user} />
-      );
-    }
-
-    return null;
+    const { user } = this.state;
+    const { history } = this.props;
+    return (<AuthComponent history={history} user={user && user}/>);
   }
 };
 

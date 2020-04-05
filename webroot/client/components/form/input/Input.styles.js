@@ -2,8 +2,21 @@ import styled from 'styled-components';
 
 export const Label = styled.label`    
   position: relative;
-    display: block;
-    `;
+  display: block;
+
+`;
+export const UploadLabel = styled.label`    
+  position: relative;
+  display: flex;
+  text-align: center;
+  background: none;
+  height: 200px;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #dae0e5;
+
+`;
 
 export const Span = styled.span`    
       color: #35dc9b;
@@ -15,6 +28,9 @@ export const Span = styled.span`
       transition: all 0.2s ease-in-out;
   `;
 
+export const UploadInput = styled.input`
+    border: 1px solid ${props => props.theme.error};
+`;
 
 export const InputStyled = styled.input`
     border: 1px solid ${props => props.theme.error};

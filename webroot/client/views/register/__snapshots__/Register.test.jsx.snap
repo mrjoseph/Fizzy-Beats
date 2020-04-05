@@ -23,7 +23,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
           htmlFor="username"
         >
           <input
-            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            className="input Inputstyles__InputStyled-sc-7bsp2f-4 izkJKX"
             id="username"
             name="username"
             onBlur={[Function]}
@@ -32,7 +32,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
             type="text"
           />
           <span
-            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+            className="Inputstyles__Span-sc-7bsp2f-2 kmmRbK"
           >
             username
           </span>
@@ -46,7 +46,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
           htmlFor="email"
         >
           <input
-            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            className="input Inputstyles__InputStyled-sc-7bsp2f-4 izkJKX"
             id="email"
             name="email"
             onBlur={[Function]}
@@ -55,7 +55,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
             type="text"
           />
           <span
-            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+            className="Inputstyles__Span-sc-7bsp2f-2 kmmRbK"
           >
             email
           </span>
@@ -69,7 +69,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
           htmlFor="password"
         >
           <input
-            className="input Inputstyles__InputStyled-sc-7bsp2f-2 EmRVR"
+            className="input Inputstyles__InputStyled-sc-7bsp2f-4 izkJKX"
             id="password"
             name="password"
             onBlur={[Function]}
@@ -78,7 +78,7 @@ exports[`Register view When loading check if the user is logged in and Should lo
             type="password"
           />
           <span
-            className="Inputstyles__Span-sc-7bsp2f-1 kytcxr"
+            className="Inputstyles__Span-sc-7bsp2f-2 kmmRbK"
           >
             password
           </span>

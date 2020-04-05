@@ -1,31 +1,42 @@
-// frame works
-import { makeExecutableSchema, mockServer } from 'graphql-tools';
+import { mockServer } from 'graphql-tools';
+
 import { typeDefs } from '../index';
 
-// const schema = makeExecutableSchema({ typeDefs });
 
 describe('mock server', () => {
   it('should mock the server call', async () => {
     const myMockServer = await mockServer(typeDefs, {
-      getProfile: () => ({
-        email: 'tony.stark@gmail.com',
+      Query: () => ({
+        loginUser: () => ({
+          email: 'trev_jos@hotmail.com',
+          id: '1234567890',
+          username: 'Tony Stark',
+          auth: 'kjhgfdwertyjhgf',
+          status: 'SUCCESS',
+        }),
       }),
     });
     const query = ` 
     query
     {
-      getProfile(email:"tony.stark@gmail.com"){
-        username
+      loginUser(email: "trev_jos@hotmail.com", password:"password1") {
         email
+        username
+        id
+        status
+        auth
       }
     }
   `;
     const response = await myMockServer.query(query);
     const expected = {
       data: {
-        getProfile: {
-          username: 'Hello World',
-          email: 'Hello World',
+        loginUser: {
+          email: 'trev_jos@hotmail.com',
+          username: 'Tony Stark',
+          id: '1234567890',
+          auth: 'kjhgfdwertyjhgf',
+          status: 'SUCCESS',
         },
       },
     };

@@ -1,42 +1,62 @@
 import React, { Component } from 'react';
-import { gql } from 'apollo-boost';
-import { graphql } from 'react-apollo';
+import { Jumbotron } from './user.styles';
+import PlayerControls from '../../components/player-controls/player-controls';
 
-const getUserQuery = gql`
-{
-  users {
-    email
-    username
-    id
-  }
-}
-`;
 
 class User extends Component {
-  render(){
-    const { data: { users } } = this.props;
-    if(users) {
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
+  render() {
+    const { profile, error, loading } = this.props.data;
+    if( error ) return <div> error</div>
+    if( loading ) return <div> loading...</div>
+    if ( profile ){
+  
+      const { id: userId, username, assets, profileImage } = profile;
+      const assetsId = assets.map(({ id }) => id);
       return(
-        <div>
-          <ul>
-            {users.map((user) => {
-              return (
-                <li key={user.id}>
-                  {user.username}
-                  {user.email}
-                  {user.password}
-                  {user.salt}
-                  </li>
-              );
+        <div className="container">
+          <Jumbotron className="jumbotron">
+            <h1 className="display-4"> {username}</h1>
+            
+              <div className="jumbo-image">
+                <img src={`http://localhost:3003/static/${userId}${profileImage}`} alt="username" />
+            
+            </div>
+          </Jumbotron>
+       
+          <div className="row">
+            {assets.map(({ file, id, status },index,array) => {
+
+              const { name, size, type } = file;
+              return(
+              <div className="col-6 col-md-4" key={id}>
+              
+                <div className="alert alert-light">
+                  <div className="card-body">
+                  <p className="card-text font-weight-lighter">{name}</p>      
+              </div>
+              <div>
+                <PlayerControls 
+                status={status} 
+                userId={userId} 
+                name={name} 
+                id={id} 
+                index={index} 
+                assetsId={assetsId} 
+                />
+              </div>
+                </div>
+              </div>       
+              )
             })}
-          </ul>
+          </div>
         </div>
-      );
-    } return (
-      <div>loading</div>
-    )
+      )
+    }
+    return (<div className="container">User profile not found</div>)
   }
 }
-
-
-export default graphql(getUserQuery)(User);
+export default User;

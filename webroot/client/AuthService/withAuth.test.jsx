@@ -1,51 +1,82 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import AuthService from './AuthService';
+import React, { Component } from 'react';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
 import withAuth from './withAuth';
+import AuthService from './AuthService';
 
 jest.mock('./AuthService');
-let returnValue;
-AuthService.mockImplementation(
-  () => ({
-    loggedIn: () => returnValue,
-    logout: () => jest.fn(),
-  }),
-);
+
+
+class MyComponent extends Component {
+  render(){
+    return (<div>hello world</div>)
+  }
+};  
+
+const replaceSpy = jest.fn();
 
 describe('withAuth', () => {
+  let returnValue;
   let wrapper;
-  const Component = () => (<div>hello world</div>);
-  const HOC = withAuth(Component);
-  const replaceSpy = jest.fn();
   const props = {
     history: {
       replace: replaceSpy,
-    },
+      location: {
+        pathname: '/my-account'
+      }
+    }
   };
-  beforeEach(() => {
-    AuthService.mockClear();
-  });
-  describe('If we are not logged in', () => {
-    it('should redirect us to the /register page', () => {
+  const HOC = withAuth(MyComponent);
+  describe('When the component mounts', () => {
+    beforeEach(() => {
+      AuthService.mockImplementation(
+        () => ({
+          loggedIn: () => returnValue,
+          logout: () => jest.fn(),
+          getProfile: jest.fn().mockReturnValue({
+            username: 'Tony',
+            email: 'tony@stark-industries.net',
+          })
+        }),
+      );
+    });
+    it('It should redirect the user to the register page if they are not logged in and they are on my-account', () => {
       localStorage.setItem('id_token', 'foobar');
       returnValue = false;
-      shallow(<HOC {...props} />);
+      const newProps = {
+        ...props, 
+        history: {
+          replace: replaceSpy,
+          location: {
+            pathname: '/my-account'
+          }
+        }
+      }
+      wrapper = shallow(<HOC {...newProps} />);
       expect(replaceSpy).toHaveBeenCalled();
-      expect(replaceSpy).toHaveBeenCalledWith('/register');
     });
-    it('should redirect us to the /register page', () => {
-      localStorage.setItem('id_token', 'foobar');
+
+    it('It should call the Auth.getProfile() function if the user is logged in' , () => {
       returnValue = true;
-      shallow(<HOC {...props} />);
-      expect(replaceSpy).toHaveBeenCalled();
-      expect(replaceSpy).toHaveBeenCalledWith('/login');
-    });
-    it('should redirect us to the /register page', () => {
-      localStorage.setItem('id_token', 'foobar');
-      returnValue = {};
-      shallow(<HOC {...props} />);
-      expect(replaceSpy).toHaveBeenCalled();
-      expect(replaceSpy).toHaveBeenCalledWith('/login');
+      const newProps = {
+        ...props, 
+        history: {
+          replace: replaceSpy,
+          location: {
+            pathname: ''
+          }
+        }
+      }
+      wrapper = shallow(<HOC {...newProps} />);
+      expect(wrapper.instance().Auth.getProfile).toHaveBeenCalled();  
     });
   });
+  describe('When the component mounts', () => {
+    describe('And the user' , () => {
+      it('it should log the user out', async () => {
+        
+      })
+    });
+  })
 });

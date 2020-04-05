@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthService from '../../AuthService/AuthService';
-import HeaderNavContainer, { LogoutButton, ProfileName } from './HeaderNav.styles';
+import ProfileImage from '../profile-image/ProfileImage';
+import HeaderNavContainer, {
+  LogoutButton,
+  ProfileName,
+  ProfileBlock,
+} from './HeaderNav.styles';
+
 
 class Nav extends Component {
   constructor() {
@@ -14,58 +21,61 @@ class Nav extends Component {
 
   handleLogout() {
     this.Auth.logout();
-    this.props.history.replace('/login');
+    const { history: { replace } } = this.props;
+    replace('/login');
   }
 
   toggleNav(e) {
     e.preventDefault();
-    this.setState({ showHideNav: !this.state.showHideNav });
+    const { showHideNav } = this.state;
+    this.setState({ showHideNav: !showHideNav });
   }
 
   render() {
-    return (
+    const { showHideNav } = this.state;
+    return (  
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand">
           <Link className="navbar-brand" to="/">
-            <strong>Fizzy Beats</strong>
+            <img src={this.props.logo} alt="Fizzy Beats" style={{height: '40px'}}/>
           </Link>
         </div>
         <button
-            onClick={this.toggleNav}
-            className={`navbar-toggler ${this.state.showHideNav ? 'collapsed' : ''}`}
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="true"
-            aria-label="Toggle navigation"
+          onClick={this.toggleNav}
+          className={`navbar-toggler ${showHideNav ? 'collapsed' : ''}`}
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
         </button>
         <HeaderNavContainer
-            className={`navbar-collapse ${this.state.showHideNav ? 'showContent' : 'hideContent'}`}
-            id="navbarSupportedContent"
+          className={`navbar-collapse ${showHideNav ? 'showContent' : 'hideContent'}`}
+          id="navbarSupportedContent"
         >
-          <ul className="navbar-nav mr-auto">
-            {this.Auth.getProfile() && (
-              <li className="nav-item active">
-                <ProfileName className="btn current-user">
-                  { `Logged in as ${this.Auth.getProfile().username}`}
-                </ProfileName>
-              </li>
-            )}
-
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/about" className="nav-link">
                   About
               </Link>
             </li>
+            {this.Auth.loggedIn() &&
+              <li className="nav-item">
+              <Link to="/my-account" className="nav-link profile-link">
+                My account
+              </Link>
+            </li>
+            }
             { this.Auth.loggedIn() ? (
               <li className="nav-item">
-                <Link to="/profile" className="nav-link profile-link">
-                  Profile
+                <Link to="/upload" className="nav-link">
+                  Upload
                 </Link>
               </li>
+              
             ) : (
               <li className="nav-item">
                 <Link to="/login" className="nav-link login-link">
@@ -73,17 +83,27 @@ class Nav extends Component {
                 </Link>
               </li>
             )}
-            {!this.Auth.loggedIn() && (
-            <li className="nav-item">
-              <Link to="/register" className="nav-link register-link">
-                      Register
-              </Link>
-            </li>
-            )}
-            {this.Auth.loggedIn() && (
+            {!this.Auth.loggedIn() ? (
               <li className="nav-item">
-                <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
+                <Link to="/register" className="nav-link register-link">
+                      Register
+                </Link>
               </li>
+            ) : (
+              <ProfileBlock className="nav-item active">
+                <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
+                
+              <Link to={`${this.Auth.getProfile().profileUsername}`}>
+              <ProfileName className="btn current-user">
+                  { `${this.Auth.getProfile().username}`}
+                </ProfileName>
+              </Link>
+              <Link to={`${this.Auth.getProfile().profileUsername}`}>
+                <ProfileImage
+                  userId={this.Auth.getProfile().id}
+                />
+                </Link>
+                </ProfileBlock>
             )}
           </ul>
         </HeaderNavContainer>
@@ -91,5 +111,9 @@ class Nav extends Component {
     );
   }
 }
-
+Nav.propTypes = {
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }).isRequired,
+};
 export default Nav;

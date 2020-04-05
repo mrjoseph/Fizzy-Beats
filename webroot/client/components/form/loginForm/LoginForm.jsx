@@ -45,7 +45,7 @@ class LoginForm extends Component {
     e.preventDefault();
     this.Auth.login(client, this.state).then((data) => {
       if (data.loginUser.status === 'SUCCESS') {
-        history.replace('/profile');
+        history.replace('/');
       } else {
         this.setState({ status: data.loginUser.status });
       }
@@ -60,6 +60,7 @@ class LoginForm extends Component {
 
   render() {
     const { formErrors, status } = this.state;
+    
     return (
       <div>
         {status && (

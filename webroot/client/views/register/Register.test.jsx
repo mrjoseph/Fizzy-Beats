@@ -1,5 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
+
 import renderer from 'react-test-renderer';
 import MockRouter from 'react-mock-router';
 import { MockedProvider } from 'react-apollo/test-utils';

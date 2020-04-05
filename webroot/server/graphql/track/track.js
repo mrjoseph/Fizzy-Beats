@@ -1,27 +1,26 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull,
-} from 'graphql';
-
-import { UserType } from '../user/old-user';
+import Tracks from './tracksModel';
 import User from '../user/userModel';
 
-export const TrackType = new GraphQLObjectType({
-  name: 'Track',
-  fields: () => ({
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    genre: { type: GraphQLString },
-    userId: {
-      type: UserType,
-      resolve(parent, args) {
-        return User.findById(parent.userId);
-      },
-    },
-  }),
-});
+export const TrackType = `
+   type TrackType {
+    id: ID
+    name: String
+    genre: String
+    userId: User
+  }
+`;
+
+export const getAllTracksQuery = `
+    getTracks: [TrackType]
+`;
+export const getTrackQuery = `
+    getTrack(userId: String):[TrackType]
+`;
+
+export const getTracks = async () => {
+  return Tracks.find({});
+};
+export const getTrack = async (parent, args) => {
+  const result = await Tracks.find({ userId: args.userId });
+  return result;
+};

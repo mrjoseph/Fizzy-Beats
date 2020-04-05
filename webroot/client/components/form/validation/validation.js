@@ -8,6 +8,7 @@ const validation = (fieldName, value, formErrors) => {
   switch (fieldName) {
     case 'username':
       usernameValid = usernameRegExp.test(value);
+     
       return {
         formErrors: {
           ...formErrors,

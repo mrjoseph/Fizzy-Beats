@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
   const { mode } = argv;
   const plugins = [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
+      filename: 'assets/css/[name].css',
       chunkFilename: '[id].css',
     }),
   ];
@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
     entry: './webroot/client/index.jsx',
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: 'js/bundle.js',
+      filename: 'assets/js/bundle.js',
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx'],
@@ -51,7 +51,12 @@ module.exports = (env, argv) => {
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
-            'file-loader',
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'assets/images/[name].[ext]',
+              },
+            },
           ],
         },
       ],

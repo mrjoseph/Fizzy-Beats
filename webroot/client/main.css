@@ -3,3 +3,13 @@ body {
     font-size:100%;
     background-color: #f1f1f1;
 }
+footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+    background-color: #e9ecef;
+}
+.container {
+    padding-bottom: 120px;
+}
