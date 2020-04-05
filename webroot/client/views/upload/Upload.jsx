@@ -15,7 +15,6 @@ class Profile extends Component {
     return (
       <div className="container">
         <S3Uploader userId={userId} />
- 
       </div>
     );
   }

@@ -9,13 +9,22 @@ export default class AuthService {
   }
 
   logout() {
+    console.log('logout')
     localStorage.removeItem(this.token);
-    localStorage.removeItem('apollo-cache-persist');
+   // localStorage.removeItem('apollo-cache-persist');
+  }
+
+  removeToken() {
+    if(this.isTokenExpired()){
+      localStorage.removeItem(this.token);
+     // localStorage.removeItem('apollo-cache-persist');
+    }
   }
 
   loggedIn() {
     const token = this.getToken();
-    return (!!token && !this.isTokenExpired(token));
+    if (token) return true;
+    // return (!!token && !this.isTokenExpired());
   }
 
   getToken = () => {
@@ -26,7 +35,6 @@ export default class AuthService {
    if(this.getToken()) {
       return  decode(this.getToken());
    }
-  
   }
 
   setToken() {
@@ -34,13 +42,10 @@ export default class AuthService {
     localStorage.setItem(this.token, this.authToken);
   }
 
-  isTokenExpired = (token) => {
-    try {
-      const decoded = decode(token);     
-      return decoded.exp < Date.now() / 1000;
-    } catch (err) {
-      return false;
-    }
+  isTokenExpired = () => {
+    if(!this.getToken()) return;
+    const decoded = decode(this.getToken());
+    return (decoded.exp * 1000) < Date.now();
   }
   login = async (client, { password, email }) => {
     const { data } = await client.query({

@@ -67,6 +67,7 @@ query{
     username
     id
     profileUsername
+    profileImage
   }
 }
 `;

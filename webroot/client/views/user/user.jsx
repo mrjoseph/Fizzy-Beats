@@ -10,7 +10,6 @@ class User extends Component {
 
   render() {
     const { profile, error, loading } = this.props.data;
-    console.log('this.props.data', this.props.data);
     if( error ) return <div> error</div>
     if( loading ) return <div> loading...</div>
     if ( profile ){

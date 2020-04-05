@@ -71,7 +71,7 @@ export const resolvers = {
         profileImage,
         defaults
       } = user;
-      console.log('profileImage', profileImage);
+  
       const passwordHash = unHashPassword(password, salt);
       if (storedPassword === passwordHash && storedEmail === email) {
         const auth = jsonwebtoken.sign({
@@ -83,7 +83,7 @@ export const resolvers = {
           defaults: user.defaults
         },
         'my_secret_jwt',
-        { expiresIn: '60' });
+        { expiresIn: 100 });
         return {
           auth,
           status: 'SUCCESS',
@@ -147,3 +147,5 @@ export const resolvers = {
     },
   },
 };
+
+

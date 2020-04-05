@@ -27,6 +27,8 @@ node_modules
 
 # Ignore build files
 build/
+uploads/*/
+!uploads/temp
 # webroot/client/assets/
 
 .idea

@@ -70,7 +70,6 @@ class Upload extends Component {
 
   onDrop = async (e) => {
     const { files } = e.target;
-    console.log(JSON.stringify(files, null, 2));
     this.setState({ loadingPreview: true }); 
     this.setState({ file: files });   
     this.setState({ successMessage: null})
@@ -106,7 +105,7 @@ class Upload extends Component {
     try {
       const response = await fetch(signedRequest, options);
       if (response.ok) {
-        return response.json();
+        return await response.json();
       }
     } catch (error) {
       console.log(error);

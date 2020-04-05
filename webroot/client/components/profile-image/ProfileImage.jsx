@@ -7,7 +7,6 @@ import { ProfileImageCropArea } from './profileImage.styles';
 import { GET_USERS_QUERY } from '../../graphql/queries/queries';
 class ProfileImage extends Component {
   render() {
-    
     const { username, data, userId } = this.props;
     const theme = {
       width: '40px',

@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { GET_USERS_QUERY, GET_ALL_USERS } from '../../graphql/queries/queries';
 import cdn from '../../constants';
+import { ProfileImage } from './home.styles';
 import './home.css';
 import withAuth from '../../AuthService/withAuth';
 
@@ -21,14 +22,17 @@ class Home extends Component {
      </div>
      <div className="row">
      {profiles && profiles.map(({ username, id, profileUsername, profileImage }) => {
-       const profileImageURL = `${cdn}/${id}${profileImage}`;
+       const profileImageURL = `${cdn}/static/${id}${profileImage}`;
+       console.log(profileImageURL);
         return (
         <div key={id} className="col-sm-6 col-md-3 col px-md-2">
         <div className="card">
         <div className="card-body">
             <div className="card-title">
               <Link to={profileUsername}>{username}</Link>
-              <img src={profileImageURL} alt="" />
+             <ProfileImage>
+             <img src={profileImageURL} alt="" />
+             </ProfileImage>
             </div>
           </div>
         </div>

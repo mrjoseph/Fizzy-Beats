@@ -5,6 +5,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Home from './views/home/home';
 import User from './views/user';
 import About from './views/about/about';
+import AuthService from './AuthService/AuthService';
 import Register from './views/register/Register';
 import Profile from './views/profile/Profile';
 import MyAccount from './views/my-account';
@@ -21,9 +22,6 @@ import './main.css';
 
 
 class App extends Component {
-  // componentDidUpdate() {
-  //   if(this.props.data) this.props.data.refetch();
-  // }
   render() {
     const { history, data } = this.props;
   

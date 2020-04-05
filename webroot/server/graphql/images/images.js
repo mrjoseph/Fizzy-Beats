@@ -45,11 +45,7 @@ export const resolvers = {
   },
   Mutation: {
     addImage: async (parent, { userId, file }, { Images, User }) => {
-      await User.findOneAndUpdate({ _id: userId }, {profileImage:`/${file[0].name}`});
-        // file.map((file) => {         
-        //   const images = new Images({ userId, status: 'pending', file });
-        //   images.save();
-        // });       
+      await User.findOneAndUpdate({ _id: userId }, {profileImage:`/${file[0].name}`});      
         return {
           message: 'image saved!'
         }

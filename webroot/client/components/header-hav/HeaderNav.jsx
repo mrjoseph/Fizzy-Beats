@@ -90,19 +90,9 @@ class Nav extends Component {
                 </Link>
               </li>
             ) : (
-              <li className="nav-item">
-                <Link to="/register" className="nav-link register-link">
-                    Add release
-                </Link>
-              </li>
-            )}
-            {this.Auth.loggedIn() && (
-              <li className="nav-item">
-                <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
-              </li>
-            )}
-            {this.Auth.getProfile() && (
               <ProfileBlock className="nav-item active">
+                <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
+                
               <Link to={`${this.Auth.getProfile().profileUsername}`}>
               <ProfileName className="btn current-user">
                   { `${this.Auth.getProfile().username}`}
@@ -113,7 +103,7 @@ class Nav extends Component {
                   userId={this.Auth.getProfile().id}
                 />
                 </Link>
-              </ProfileBlock>
+                </ProfileBlock>
             )}
           </ul>
         </HeaderNavContainer>

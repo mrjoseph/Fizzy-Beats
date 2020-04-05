@@ -9,10 +9,10 @@ import { resolvers } from './graphql/resolvers/resolvers';
 
 
 const cache = new InMemoryCache();
-persistCache({
-  cache,
-  storage: window.localStorage,
-});
+// persistCache({
+//   cache,
+//   storage: window.localStorage,
+// });
 
 
 const stateLink = withClientState({

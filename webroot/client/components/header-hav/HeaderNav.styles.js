@@ -45,7 +45,7 @@ export const ProfileImage = styled.div`
   }
 `;
 
-export const ProfileBlock = styled.li`
+export const ProfileBlock = styled.div`
   display:flex;
 `;
 export default HeaderNavContainer;
