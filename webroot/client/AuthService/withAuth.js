@@ -12,14 +12,14 @@ const withAuth = AuthComponent => class AuthWrapped extends Component {
   }
 
   componentWillMount() {
-  //   if (!this.Auth.loggedIn()) {
-  //     this.props.history.replace('/');
-  //  } else {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+   } else {
       const profile = this.Auth.getProfile();
       this.setState({
         user: profile,
       });
-   // }
+   }
   }
   componentDidmount(){
     if (!this.Auth.loggedIn()) {

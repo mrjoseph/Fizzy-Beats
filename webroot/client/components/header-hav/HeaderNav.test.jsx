@@ -43,11 +43,6 @@ describe('HeaderNav', () => {
       );
       component = shallow(<HeaderNav {...props} />);
     });
-    it('should display the logged in user when logged in', () => {
-      const currentUser = component.find('.current-user');
-      expect(currentUser).toHaveLength(1);
-      expect(currentUser.text()).toEqual('Tony Stark');
-    });
     it('should display the profile link', () => {
       const profileLink = component.find('.profile-link');
       expect(profileLink).toHaveLength(1);

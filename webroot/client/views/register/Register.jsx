@@ -10,12 +10,6 @@ class Register extends Component {
     this.Auth = new AuthService();
   }
 
-  // componentWillMount() {
-  //   if (this.Auth.loggedIn()) {
-  //     this.props.history.replace('/');
-  //   }
-  // }
-
   componentDidUpdate() {
     if (this.Auth.loggedIn()) {
       this.props.history.replace('/');

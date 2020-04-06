@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import 'jest-localstorage-mock';
 Enzyme.configure({ adapter: new Adapter() });
 import withAuth from './withAuth';
 import AuthService from './AuthService';
