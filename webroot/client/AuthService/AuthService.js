@@ -9,22 +9,18 @@ export default class AuthService {
   }
 
   logout() {
-    console.log('logout')
     localStorage.removeItem(this.token);
-   // localStorage.removeItem('apollo-cache-persist');
   }
 
   removeToken() {
     if(this.isTokenExpired()){
       localStorage.removeItem(this.token);
-     // localStorage.removeItem('apollo-cache-persist');
     }
   }
 
   loggedIn() {
     const token = this.getToken();
     if (token) return true;
-    // return (!!token && !this.isTokenExpired());
   }
 
   getToken = () => {
@@ -32,7 +28,9 @@ export default class AuthService {
   }
 
   getProfile = () => {
+    console.log('this.getToken()', this.getToken());
    if(this.getToken()) {
+     console.log('in here');
       return  decode(this.getToken());
    }
   }
@@ -43,9 +41,11 @@ export default class AuthService {
   }
 
   isTokenExpired = () => {
-    if(!this.getToken()) return;
+    // if(!this.getToken()) return;
     const decoded = decode(this.getToken());
-    return (decoded.exp * 1000) < Date.now();
+    console.log(decoded)
+    // return (decoded.exp * 1000) < Date.now();
+    return false;
   }
   login = async (client, { password, email }) => {
     const { data } = await client.query({

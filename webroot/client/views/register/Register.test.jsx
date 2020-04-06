@@ -12,13 +12,7 @@ import RegistrationForm from '../../components/form/registrationForm';
 import { ADD_USER_MUTATION } from '../../graphql/queries/queries';
 
 jest.mock('../../AuthService/AuthService');
-let returnValue;
-AuthService.mockImplementation(
-  () => ({
-    loggedIn: () => returnValue,
-    logout: () => jest.fn(),
-  }),
-);
+
 
 describe('Register view', () => {
   let component;
@@ -33,15 +27,24 @@ describe('Register view', () => {
   });
 
   describe('When loading', () => {
+    beforeEach(() => {
+      AuthService.mockImplementation(
+        () => ({
+          loggedIn: jest.fn().mockReturnValue(true),
+          logout: () => jest.fn(),
+        }),
+      );
+    });
     describe('check if the user is logged in', () => {
       it('and Should redirect the user to the homepage', () => {
-        returnValue = true;
+
         component = shallow(<Register {...props} />);
-        expect(replaceSpy).toHaveBeenCalled();
+        component.instance().componentDidUpdate()
         expect(replaceSpy).toHaveBeenCalledWith('/');
       });
 
       describe('and Should load the registration form', () => {
+        let returnValue;
         beforeEach(() => {
           returnValue = false;
           component = shallow(<Register {...props} />);

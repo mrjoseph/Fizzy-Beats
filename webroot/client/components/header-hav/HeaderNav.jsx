@@ -92,12 +92,6 @@ class Nav extends Component {
             ) : (
               <ProfileBlock className="nav-item active">
                 <LogoutButton onClick={this.handleLogout} className="btn btn-link logout-link">Logout</LogoutButton>
-                
-              <Link to={`${this.Auth.getProfile().profileUsername}`}>
-              <ProfileName className="btn current-user">
-                  { `${this.Auth.getProfile().username}`}
-                </ProfileName>
-              </Link>
               <Link to={`${this.Auth.getProfile().profileUsername}`}>
                 <ProfileImage
                   userId={this.Auth.getProfile().id}
