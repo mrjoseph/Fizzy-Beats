@@ -1,5 +1,11 @@
 import gql from 'graphql-tag';
 export const resolvers = {
+  Query: {
+    audio: (_, variables, {cache}) => {
+     // const tog = cache.readFragment({ id, fragment });
+      console.log('what the fuck is going on')
+    }
+  },
     Mutation: {
       setTextColor: (_, variables, {cache}) => {
         console.log(variables)
@@ -9,21 +15,14 @@ export const resolvers = {
         return newTextColor;
       },
       playAudio: (_, {name, userId, id}, {cache}) => {
-        const idFrag = `Audio:${id}`;
         const newAudio = {
           name,
           userId,
           id,
           __typename: "Audio"
-        }
-        const fragment = gql`
-        fragment foo on Audio {
-          name
-          id
-          userId
-        }
-      `;
-        const tog = cache.readFragment({ id: idFrag, fragment });
+        };
+
+      console.log(newAudio)
         const data = { audio: newAudio };
         cache.writeData({ data })
         return newAudio;
@@ -32,7 +31,6 @@ export const resolvers = {
         
         resetAudioPLayer(variables.assetsId, cache);
     
-        // cache.writeData({ obj })
         const id = `ToggleAudio:${variables.id}`;
         const fragment = gql`
           fragment toggled on ToggleAudio {
@@ -43,7 +41,6 @@ export const resolvers = {
         `;
         const tog = cache.readFragment({ id, fragment });
         const toggle = {
-          // ...tog,
           assetsId: variables.assetsId,
           toggle: variables.toggle,
           id: variables.id,

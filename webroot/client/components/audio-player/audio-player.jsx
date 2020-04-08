@@ -73,7 +73,6 @@ class AudioPlayer extends Component {
   
     render(){
       const { userId, name } = this.props;
-      console.log(this.props);
       const filePath =`http://localhost:3003/static/${userId}/${name}`;
       const styleDiv = { 
         width: 500, 

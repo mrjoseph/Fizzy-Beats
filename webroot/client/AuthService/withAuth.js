@@ -29,8 +29,7 @@ const withAuth = AuthComponent => class AuthWrapped extends Component {
   }
   render() {
     const { user } = this.state;
-    const { history } = this.props;
-    return (<AuthComponent history={history} user={user && user}/>);
+    return (<AuthComponent {...this.props} user={user && user}/>);
   }
 };
 

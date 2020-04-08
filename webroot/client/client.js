@@ -9,7 +9,7 @@ import { resolvers } from './graphql/resolvers/resolvers';
 
 
 const cache = new InMemoryCache();
-// persistCache({
+//persistCache({
 //   cache,
 //   storage: window.localStorage,
 // });
