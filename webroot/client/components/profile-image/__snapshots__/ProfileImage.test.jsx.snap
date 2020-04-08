@@ -1,7 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProfileImage success renders correctly 1`] = `
-<div>
-  loading
+.c0 {
+  width: 40px;
+  margin: 0 auto;
+}
+
+.c0 img {
+  width: 100%;
+  border-radius: 50px;
+}
+
+<div
+  className="c0"
+>
+  <img
+    alt="Tony Stark"
+    src="http://localhost:3003/static/undefinedundefined"
+  />
 </div>
 `;

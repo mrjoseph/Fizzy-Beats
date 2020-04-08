@@ -12,9 +12,10 @@ import MyAccount from './views/my-account';
 import Upload from './views/upload/Upload';
 import NotFound from './views/not-found/not-found';
 import Header from './components/header/header';
+import HeaderNav from './components/header-hav/HeaderNav';
 import Footer from './components/footer/footer';
 import Login from './views/login/Login';
-import { GET_USERS_QUERY, GET_DEFAULTS_QUERY } from './graphql/queries/queries';
+import { GET_USERS_QUERY, GET_DEFAULTS_QUERY, GET_ALL_USERS } from './graphql/queries/queries';
 import withAuth from './AuthService/withAuth';
 import './bootstrap.min.css';
 import './main.css';
@@ -23,13 +24,13 @@ import './main.css';
 
 class App extends Component {
   render() {
-    const { history, data } = this.props;
-  
+    const { profileList } = this.props;
+    const props = { profileList}
     return (
       <div>
-        <Header history={history} data={data} />
+        <HeaderNav {...this.props} />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={(defaultProps) => <Home {...defaultProps} {...props} />}/>
           <Route exact path="/my-account" component={MyAccount} />
           <Route exact path="/about" component={About} />
           <Route exact path="/register" component={Register} />
@@ -52,10 +53,10 @@ App.propTypes = {
 };
 
 
-export default withRouter(withAuth(compose(
- 
+export default withRouter(compose(
+  graphql(GET_ALL_USERS, {name: 'profileList' }),
   graphql(GET_USERS_QUERY, {
-    name: 'data',
+    name: 'profiles',
     options: (props) => {
       return {
         variables: {
@@ -64,4 +65,4 @@ export default withRouter(withAuth(compose(
       }
     },
   })
-)(App)));
+)(App));
