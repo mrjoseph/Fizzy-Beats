@@ -54,7 +54,7 @@
     "apollo-link-http": "^1.5.5",
     "apollo-link-state": "^0.4.2",
     "apollo-server": "^2.2.5",
-    "apollo-server-express": "^2.2.5",
+    "apollo-server-express": "^2.14.2",
     "apollo-upload-client": "^10.0.0",
     "axios": "^0.18.0",
     "babel-core": "^7.0.0-bridge.0",
